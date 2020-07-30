@@ -1,7 +1,10 @@
+using System;
+using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,14 +25,20 @@ namespace todolist
         {
 
             services.AddControllersWithViews();
-
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-        }
+            var database = Environment.GetEnvironmentVariable("TODOLIST_DB");
+            var dbPass = Environment.GetEnvironmentVariable("TODOLIST_PASSWORD");
+            var dbServer = Environment.GetEnvironmentVariable("TODOLIST_SERVER");
+            var dbUser = Environment.GetEnvironmentVariable("TODOLIST_USER");
+            Console.WriteLine(Environment.GetEnvironmentVariable("TODOLIST_CONN"));
+            services.AddDbContext<ToDoListContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("TODOLIST_CONN")));
+            services.AddScoped<IToDoListRepo, SqlToDoListRepo>();
 
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
