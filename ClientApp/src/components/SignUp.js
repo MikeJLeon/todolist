@@ -6,9 +6,9 @@ export class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      firstName: "",
-      lastName: "",
+      user_name: "",
+      first_name: "",
+      last_name: "",
       password: "",
     };
   }
@@ -21,15 +21,15 @@ export class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { username, firstName, lastName, password } = this.state;
+    const { user_name, first_name, last_name, password } = this.state;
     const url = "https://localhost:5001/account/create";
-    console.log(username, firstName, lastName, password);
-    Axios.post(url, {
-      username,
-      firstName,
-      lastName,
-      password,
-    });
+    console.log(user_name, first_name, last_name, password);
+    Axios.post(url, null, {params:{
+      "user_name":user_name,
+      "first_name":first_name,
+      "last_name":last_name,
+      "password":password
+    }});
   };
   render() {
     return (
@@ -39,8 +39,8 @@ export class SignUp extends Component {
           <label>Your user name</label>
           <input
             type="text"
-            id="username"
-            value={this.state.username}
+            id="user_name"
+            value={this.state.user_name}
             onChange={this.handleChange}
             placeholder="Your user name goes here"
           />
@@ -48,8 +48,8 @@ export class SignUp extends Component {
           <label>Your first name</label>
           <input
             type="text"
-            id="firstName"
-            value={this.state.firstName}
+            id="first_name"
+            value={this.state.first_name}
             onChange={this.handleChange}
             placeholder="Your first name goes here"
           />
@@ -57,8 +57,8 @@ export class SignUp extends Component {
           <label>Your last name</label>
           <input
             type="text"
-            id="lastName"
-            value={this.state.lastName}
+            id="last_name"
+            value={this.state.last_name}
             onChange={this.handleChange}
             placeholder="Your last name goes here"
           />

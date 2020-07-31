@@ -1,11 +1,12 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using todolist;
 
 namespace Data
 {
-    public class ToDoListContext : DbContext
+    public class ToDoListContext : IdentityDbContext
     {
-        public ToDoListContext (DbContextOptions<ToDoListContext> options)
+        public ToDoListContext(DbContextOptions<ToDoListContext> options)
             : base(options)
         {
         }
