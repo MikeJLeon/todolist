@@ -3,12 +3,12 @@ using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using todolist.Models;
 
 namespace todolist
 {
@@ -35,9 +35,12 @@ namespace todolist
             var dbServer = Environment.GetEnvironmentVariable("TODOLIST_SERVER");
             var dbUser = Environment.GetEnvironmentVariable("TODOLIST_USER");
             Console.WriteLine(Environment.GetEnvironmentVariable("TODOLIST_CONN"));
+            services.AddIdentity<UserModel, RoleModel>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ToDoListContext>();
             services.AddDbContext<ToDoListContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("TODOLIST_CONN")));
             services.AddScoped<IToDoListRepo, SqlToDoListRepo>();
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ToDoListContext>();
 
 
         }
@@ -55,12 +58,11 @@ namespace todolist
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

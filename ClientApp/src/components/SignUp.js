@@ -7,6 +7,7 @@ export class SignUp extends Component {
     super(props);
     this.state = {
       user_name: "",
+      email: "",
       first_name: "",
       last_name: "",
       password: "",
@@ -21,11 +22,12 @@ export class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { user_name, first_name, last_name, password } = this.state;
+    const { user_name, email, first_name, last_name, password } = this.state;
     const url = "https://localhost:5001/account/create";
     console.log(user_name, first_name, last_name, password);
     Axios.post(url, null, {params:{
       "user_name":user_name,
+      "email":email,
       "first_name":first_name,
       "last_name":last_name,
       "password":password
@@ -43,6 +45,15 @@ export class SignUp extends Component {
             value={this.state.user_name}
             onChange={this.handleChange}
             placeholder="Your user name goes here"
+          />
+          <br />
+          <label>Your email</label>
+          <input
+            type="text"
+            id="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            placeholder="Your email goes here"
           />
           <br />
           <label>Your first name</label>

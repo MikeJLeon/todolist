@@ -1,14 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace todolist
+namespace todolist.Models
 {
-    public class AccountModel
+    public class UserModel : IdentityUser<int>
     {
-        [Key]
-        public string UserName { get; set; }
-        [Required]
-        public string Email { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
