@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nav, { NavMenu } from "./NavMenu";
+import { Redirect } from "react-router-dom";
 import Axios from "axios";
 export class Login extends Component {
   static displayName = Login.name;
@@ -9,6 +10,8 @@ export class Login extends Component {
       user_name: "",
       password: "",
       authenticated: false,
+      redirect: false,
+      error: false,
     };
   }
 
@@ -27,15 +30,34 @@ export class Login extends Component {
         user_name: user_name,
         password: password,
       },
-    }).then(function (response) {
-      console.log(response);
+    }).then((response) => {
+      console.log(response, response.data);
+      if (!response.data) {
+        console.log("error")
+        this.setState({
+          error: true,
+        });
+      } else {
+        this.setState({
+          redirect: true,
+        });
+      }
     });
   };
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/Dashboard" />;
+    }
     return (
       <div>
-        <NavMenu />
         <form onSubmit={this.handleSubmit}>
+        {this.state.error ? (
+            <div class="error">
+              User name or password is incorrect. Try Again!
+            </div>
+          ) : (
+            ""
+          )}
           <label>Your user name</label>
           <input
             type="text"

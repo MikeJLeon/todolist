@@ -77,10 +77,18 @@ namespace todolist.Controllers
                 Console.WriteLine(userToVerify.UserName);
                 Console.WriteLine(userToVerify.Id);
                 Console.WriteLine(identity);
-                return Ok();
+                return Ok(true);
             }
 
             return Ok(false);
+        }
+        [Authorize]
+        [HttpGet]
+        [Route("/account/logout")]
+        public async Task<IActionResult> Logout(){
+            await SignInMgr.SignOutAsync();
+            Console.WriteLine("logged out");
+            return Ok();
         }
         // public UserController(IToDoListRepo repository)
         // {

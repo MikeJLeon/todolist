@@ -30,10 +30,6 @@ namespace todolist
             {
                 configuration.RootPath = "ClientApp/build";
             });
-            var database = Environment.GetEnvironmentVariable("TODOLIST_DB");
-            var dbPass = Environment.GetEnvironmentVariable("TODOLIST_PASSWORD");
-            var dbServer = Environment.GetEnvironmentVariable("TODOLIST_SERVER");
-            var dbUser = Environment.GetEnvironmentVariable("TODOLIST_USER");
             Console.WriteLine(Environment.GetEnvironmentVariable("TODOLIST_CONN"));
             services.AddIdentity<UserModel, RoleModel>(options =>
             {

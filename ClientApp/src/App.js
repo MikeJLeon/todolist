@@ -14,6 +14,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       user_name: "",
+      loading:true,
       authenticated: false,
     };
   }
@@ -23,11 +24,23 @@ export default class App extends Component {
       if (response.data) {
         this.setState({
           authenticated: true,
+          loading: false,
         });
       }
+    }).catch((error) =>{
+      this.setState({
+        loading:false,
+      })
     });
   }
   render() {
+    if(this.state.loading){
+      return(
+        <div class="Loading">
+          Loading...
+        </div>
+      )
+    }
     return (
       <Switch>
         <Route exact path="/">

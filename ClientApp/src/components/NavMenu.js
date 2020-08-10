@@ -8,6 +8,8 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import Axios from "axios";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
 
@@ -28,7 +30,6 @@ export class NavMenu extends Component {
       collapsed: !this.state.collapsed,
     });
   }
-
   render() {
     return (
       <header>
@@ -36,6 +37,7 @@ export class NavMenu extends Component {
           <span>
             Hello, {this.props.first_name} {this.props.last_name}!
           </span>
+          <button onClick={this.props.redirect}>Logout</button>
         </Navbar>
       </header>
     );

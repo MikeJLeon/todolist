@@ -65,17 +65,24 @@ export class Dashboard extends Component {
       this.getTasks();
     });
   };
+  logout = () =>{
+    Axios.get("https://localhost:5001/account/logout").then(() => {
+      //FIX THIS
+      this.setState({redirect: true});
+    });
+  }
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/Login" />;
+      return <Redirect to="/" />;
     }
     return (
       <div>
         <NavMenu
           first_name={this.state.first_name}
           last_name={this.state.last_name}
+          redirect={this.logout}
         />
-        <button onClick={this.createNewTask}></button>
+        <button onClick={this.createNewTask}>Create</button>
         <ul>
           {Object.keys(this.state.tasks).map((key) => {
             return (
