@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Nav, { NavMenu } from "./NavMenu";
 import Axios from "axios";
+import CreateTask from "./CreateTask";
 import { Redirect } from "react-router-dom";
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
@@ -67,7 +68,6 @@ export class Dashboard extends Component {
   };
   logout = () =>{
     Axios.get("https://localhost:5001/account/logout").then(() => {
-      //FIX THIS
       this.setState({redirect: true});
     });
   }

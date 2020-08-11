@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Nav, { NavMenu } from "./NavMenu";
 import { Redirect } from "react-router-dom";
+import { Loading } from "../components/Loading";
 import Axios from "axios";
 export class Login extends Component {
   static displayName = Login.name;
@@ -12,6 +13,7 @@ export class Login extends Component {
       authenticated: false,
       redirect: false,
       error: false,
+      loading: false,
     };
   }
 
@@ -22,6 +24,9 @@ export class Login extends Component {
   };
 
   handleSubmit = (e) => {
+    this.setState({
+      loading: true,
+    });
     e.preventDefault();
     const { user_name, password } = this.state;
     const url = "https://localhost:5001/account/login/";
@@ -33,7 +38,7 @@ export class Login extends Component {
     }).then((response) => {
       console.log(response, response.data);
       if (!response.data) {
-        console.log("error")
+        console.log("error");
         this.setState({
           error: true,
         });
@@ -48,11 +53,18 @@ export class Login extends Component {
     if (this.state.redirect) {
       return <Redirect to="/Dashboard" />;
     }
+    if (this.state.loading) {
+      return (
+        <div className="loadingContainer">
+          <Loading />
+        </div>
+      );
+    }
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-        {this.state.error ? (
-            <div class="error">
+          {this.state.error ? (
+            <div className="error">
               User name or password is incorrect. Try Again!
             </div>
           ) : (

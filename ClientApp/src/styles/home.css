@@ -1,0 +1,16 @@
+.home{
+    width:100vw;
+    height:100vh;
+    padding:10px;
+    text-align: center;
+}
+.buttonContainer{
+    display:Flex;
+    justify-content: center;
+    align-items: center;
+}
+.SignUpBtn{
+    border:1px solid black;
+    margin:5px;
+    padding:5px;
+}

@@ -50,7 +50,6 @@ namespace todolist.Controllers
                 return BadRequest(ex);
             }
         }
-        [Authorize]
         [HttpGet]
         [Route("/account/authorized")]
         public async Task<IActionResult> checkAuthorization(string user_name)
