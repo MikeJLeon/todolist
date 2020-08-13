@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Nav, { NavMenu } from "./NavMenu";
 import Axios from "axios";
-import CreateTask from "./CreateTask";
+import { CreateTask } from "./CreateTask";
 import { Redirect } from "react-router-dom";
+import { Calendar } from "./Calendar";
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
   constructor(props) {
@@ -14,6 +15,7 @@ export class Dashboard extends Component {
       tasks: {},
       authenticated: false,
       redirect: false,
+      createTask: false,
     };
   }
   componentDidMount() {
@@ -39,16 +41,7 @@ export class Dashboard extends Component {
         console.log("Redirecting", error);
       });
   }
-  createNewTask = () => {
-    console.log("createnewtask");
-    Axios.post("https://localhost:5001/account/tasks/create", null, {
-      params: {
-        desc: "Second task",
-      },
-    }).then((response) => {
-      this.getTasks();
-    });
-  };
+  
 
   getTasks() {
     Axios.get("https://localhost:5001/account/tasks/get/").then((response) => {
@@ -66,11 +59,11 @@ export class Dashboard extends Component {
       this.getTasks();
     });
   };
-  logout = () =>{
+  logout = () => {
     Axios.get("https://localhost:5001/account/logout").then(() => {
-      this.setState({redirect: true});
+      this.setState({ redirect: true });
     });
-  }
+  };
   render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
@@ -82,7 +75,9 @@ export class Dashboard extends Component {
           last_name={this.state.last_name}
           redirect={this.logout}
         />
-        <button onClick={this.createNewTask}>Create</button>
+        <Calendar />
+        {/* <button onClick={this.createNewTask}>Create</button>
+        {this.state.createTask ? <CreateTask /> : ""} */}
         <ul>
           {Object.keys(this.state.tasks).map((key) => {
             return (
