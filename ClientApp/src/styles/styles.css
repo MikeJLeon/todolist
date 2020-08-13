@@ -1,79 +1,113 @@
-body{
-    margin:0;
-    background-color:#eaeeee;
+body {
+  margin: 0;
+  background-color: #eaeeee;
 }
-.container{
-    color:#2c4252;
+.container {
+  color: #2c4252;
 }
-.loadingContainer{
-    height:100vh;
-    width:100vw;
-    display:Flex;
-    justify-content: center;
-    align-items: center;
+.loadingContainer {
+  height: 100vh;
+  width: 100vw;
+  display: Flex;
+  justify-content: center;
+  align-items: center;
 }
 .loading {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(90deg, #2c4252 0%, #2c4252 35%, #7ae4dc 100%);
-    animation: 2s spinOuter infinite ease-in-out;
-    padding: 5px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2c4252 0%, #2c4252 35%, #7ae4dc 100%);
+  animation: 2s spinOuter infinite ease-in-out;
+  padding: 5px;
+}
+.loadingBlank {
+  border-radius: 50%;
+  background-color: #eaeeee;
+  width: 90px;
+  height: 90px;
+  padding: 5px;
+  overflow: hidden;
+}
+.loadingInner {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2c4252 0%, #2c4252 35%, #7ae4dc 100%);
+  animation: 2s spinInner infinite ease-in-out;
+  padding: 5px;
+  background-clip: padding-box;
+}
+.loadingInnerBlank {
+  display: Flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #eaeeee;
+}
+.loadingInnerBlankSlice {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 100px solid #eaeeee;
+  margin-bottom: 20px;
+}
+@keyframes spinOuter {
+  to {
+    transform: rotate(720deg);
   }
-  .loadingBlank {
-    border-radius: 50%;
-    background-color: #eaeeee;
-    width: 90px;
-    height: 90px;
-    padding: 5px;
-    overflow: hidden;
+}
+@keyframes spinInner {
+  to {
+    transform: rotate(-1440deg);
   }
-  .loadingInner {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(90deg, #2c4252 0%, #2c4252 35%, #7ae4dc 100%);
-    animation: 2s spinInner infinite ease-in-out;
-    padding: 5px;
-    background-clip: padding-box;
-  }
-  .loadingInnerBlank {
-    display: Flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #eaeeee;
-  }
-  .loadingInnerBlankSlice {
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-top: 100px solid #eaeeee;
-    margin-bottom: 20px;
-  }
-  @keyframes spinOuter {
-    to {
-      transform: rotate(720deg);
-    }
-  }
-  @keyframes spinInner {
-    to {
-      transform: rotate(-1440deg);
-    }
-  }
-  .calendarContainer{
-    height:800px;
-    width: 1000px;
-    overflow-y: scroll;
-    border:2px solid black;
-  }
-  
-  .CalendarDate{
-    border:2px solid red;
-  }
-  .dateActive{
-    background-color:black;
-  }
+}
+.calendarContainer {
+  height: 800px;
+  width: 1000px;
+  overflow-y: scroll;
+  border: 2px solid black;
+}
+
+.CalendarDate {
+  border: 2px solid red;
+}
+
+.dateContainer {
+  border: 2px solid red;
+  text-align:center;
+  overflow: hidden;
+  position:Relative;
+  padding:25px;
+}
+.dateContainer .createTask {
+  height: 0;
+  overflow:hidden;
+}
+.dateActive {
+  border: 2px solid rebeccapurple;
+}
+.dateActive .createTask {
+  height: unset;
+}
+.taskDesc{
+  margin-top:50px;
+  margin-bottom:50px;
+}
+.dateOverlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:4;
+}
+.dateActive .dateOverlay{
+  z-index:2;
+}
+.taskDesc, .dateValue{
+  position:relative;
+  z-index:3;
+}

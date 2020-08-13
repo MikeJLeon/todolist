@@ -6,10 +6,8 @@ export class CreateTask extends Component {
   render() {
     return (
       <div className="container createTask">
-        <form>
-          <input type="textarea" className="taskDesc"></input>
-          <input type="date"></input>
-        </form>
+        <textarea className="taskDesc" rows="4" cols="50"></textarea>
+        <button>hello</button>
       </div>
     );
   }
