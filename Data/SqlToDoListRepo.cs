@@ -22,9 +22,10 @@ public class SqlToDoListRepo : IToDoListRepo
         Console.WriteLine(task);
         Console.WriteLine(task.Desc);
         Console.WriteLine(task.UserID);
+        Console.WriteLine(task.Date);
         _context.Tasks.Add(task);
     }
-    public void DeleteTask(int taskID)
+    public void DeleteTask(Guid taskID)
     {
 
         var task = _context.Tasks.Where(b => b.Id.Equals(taskID)).Single();
@@ -33,7 +34,9 @@ public class SqlToDoListRepo : IToDoListRepo
     }
     public List<TaskModel> GetTasks(int UserID)
     {
-        var data = _context.Tasks.Where(b => b.UserID.Equals(UserID)).ToList();
+        Console.WriteLine(DateTime.Now.Date);
+        Console.WriteLine(_context.Tasks.ToList());
+        var data = _context.Tasks.Where(b => b.UserID.Equals(UserID) && b.Date >= DateTime.Now.Date).ToList();
         foreach (var item in data)
         {
             Console.Write(item.Id + " ");

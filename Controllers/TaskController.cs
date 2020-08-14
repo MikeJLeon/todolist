@@ -26,15 +26,19 @@ namespace todolist.Controllers
         [Authorize]
         [HttpPost]
         [Route("/account/tasks/create")]
-        public async Task<IActionResult> Create(string desc)
+        public async Task<IActionResult> Create(string desc, string date)
         {
             Console.WriteLine(desc);
+            Console.WriteLine(date);
+            Console.WriteLine("^^^^^^");
+            Console.WriteLine(DateTime.Parse(date));
             var username = User?.Identity.Name;
             var userInfo = await UserMgr.FindByNameAsync(username);
             var newTask = new TaskModel();
+            newTask.Id = Guid.NewGuid();
             newTask.UserID = userInfo.Id;
             newTask.Desc = desc;
-
+            newTask.Date = DateTime.Parse(date);
             _repository.CreateTask(newTask);
             _repository.SaveChanges();
             return Ok("Created new task!");
@@ -52,7 +56,7 @@ namespace todolist.Controllers
         [Authorize]
         [HttpDelete]
         [Route("/account/tasks/delete/{id}")]
-        public async Task<IActionResult> DeleteTasks(int id){
+        public async Task<IActionResult> DeleteTasks(Guid id){
             Console.Write("Line 56- ");
             Console.WriteLine(id);
             _repository.DeleteTask(id);

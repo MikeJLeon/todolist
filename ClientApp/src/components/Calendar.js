@@ -40,7 +40,13 @@ export class Calendar extends Component {
     ];
     while (currentDate <= endDate) {
       console.log(currentDate);
-      dateArray.push(currentDate.toString());
+      dateArray.push(
+        (currentDate.getUTCMonth() + 1) +
+          "/" +
+          currentDate.getUTCDate() +
+          "/" +
+          currentDate.getUTCFullYear()
+      );
       currentDate.setDate(currentDate.getDate() + 1);
       // let newDiv = document.createElement("div");
       // newDiv.classList.add("CalendarDate");
@@ -59,8 +65,8 @@ export class Calendar extends Component {
     }
     this.setState({ dates: dateArray });
     console.log(dateArray);
-  }
-  dateActive(e){
+  };
+  dateActive(e) {
     console.log(e);
     if (
       document.getElementsByClassName("dateActive").length > 0 &&
@@ -77,17 +83,17 @@ export class Calendar extends Component {
     }
   }
 
-  addTask(e){
-    
+  addTask(e) {
     this.dateActive(e.currentTarget.parentElement);
-    // Axios.post("https://localhost:5001/account/tasks/create", null, {
-    //   params: {
-    //     desc: "Second task",
-    //   },
-    // }).then((response) => {
-    //   this.getTasks();
-    // });
-  };
+    let date = e.currentTarget.nextElementSibling.innerText;
+    console.log(date);
+    Axios.post("https://localhost:5001/account/tasks/create", null, {
+      params: {
+        desc: "Second task",
+        date: date,
+      },
+    });
+  }
   render() {
     return (
       <div className="calendarContainer">
@@ -95,8 +101,15 @@ export class Calendar extends Component {
           <div className="dateContainer">
             <div className="dateOverlay" onClick={this.addTask}></div>
             <span className="dateValue">{date}</span>
-            <div><ul><li></li><li></li><li></li><li></li></ul></div>
-            <CreateTask/>
+            <div>
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+            <CreateTask />
           </div>
         ))}
       </div>
