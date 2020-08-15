@@ -14,5 +14,6 @@ namespace todolist.Models
         public string Desc { get; set; }
         [Required]
         public string Date { get; set; }
+        public Boolean Completed { get; set; }
     }
 }
