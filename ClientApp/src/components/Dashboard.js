@@ -72,9 +72,11 @@ export class Dashboard extends Component {
           last_name={this.state.last_name}
           redirect={this.logout}
         />
-        <Calendar />
-        {/* <button onClick={this.createNewTask}>Create</button>
+        <div className="contentContainer">
+          <Calendar />
+          {/* <button onClick={this.createNewTask}>Create</button>
         {this.state.createTask ? <CreateTask /> : ""} */}
+        </div>
       </div>
     );
   }

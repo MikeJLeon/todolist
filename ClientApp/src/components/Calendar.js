@@ -91,6 +91,8 @@ export class Calendar extends Component {
       })
       .then((response) => {
         this.createCalendar();
+        console.log(this.state.tasks.some(task =>
+          task.date === "8/20/2020"));
       });
   }
   addTask(event, date) {
@@ -122,8 +124,12 @@ export class Calendar extends Component {
           <div className="dateContainer">
             <div className="dateOverlay" onClick={this.dateActive}></div>
             <span className="dateValue">{date}</span>
+            <hr/>
             <ul className="tasks">
-              {this.state.tasks.map((key) =>
+              {this.state.tasks.some(task => 
+              task.date === date)
+              ?
+              this.state.tasks.map((key) =>
                 key.date === date ? (
                   <li>
                     {key.desc}
@@ -136,7 +142,8 @@ export class Calendar extends Component {
                 ) : (
                   ""
                 )
-              )}
+              ) : <li>No tasks yet</li>
+              }
             </ul>
             <CreateTask addTask={this.addTask} date={date} />
           </div>
