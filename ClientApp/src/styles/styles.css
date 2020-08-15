@@ -111,3 +111,6 @@ body {
   position:relative;
   z-index:3;
 }
+.tasks{
+  text-align: left;
+}

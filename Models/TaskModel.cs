@@ -13,6 +13,6 @@ namespace todolist.Models
         [Required]
         public string Desc { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }

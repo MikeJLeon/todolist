@@ -4,6 +4,7 @@ import Axios from "axios";
 import { CreateTask } from "./CreateTask";
 import { Redirect } from "react-router-dom";
 import { Calendar } from "./Calendar";
+import { Loading } from "./Loading";
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
   constructor(props) {
@@ -16,6 +17,7 @@ export class Dashboard extends Component {
       authenticated: false,
       redirect: false,
       createTask: false,
+      loading: true,
     };
   }
   componentDidMount() {
@@ -31,7 +33,9 @@ export class Dashboard extends Component {
             last_name: response.data.lastName,
             authenticated: true,
           });
-          this.getTasks();
+          this.setState({
+            loading: false,
+          });
         }
       })
       .catch((error) => {
@@ -41,24 +45,14 @@ export class Dashboard extends Component {
         console.log("Redirecting", error);
       });
   }
-  
 
   getTasks() {
     Axios.get("https://localhost:5001/account/tasks/get/").then((response) => {
       console.log(response);
-      this.setState({ tasks: response.data });
+      this.setState({ tasks: response.data, loading: false });
     });
   }
-  deleteTask = (id) => {
-    Axios.delete("https://localhost:5001/account/tasks/delete/" + id, {
-      data: {
-        taskID: id,
-      },
-    }).then((response) => {
-      console.log("Task removed");
-      this.getTasks();
-    });
-  };
+
   logout = () => {
     Axios.get("https://localhost:5001/account/logout").then(() => {
       this.setState({ redirect: true });
@@ -67,6 +61,9 @@ export class Dashboard extends Component {
   render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
+    }
+    if (this.state.loading) {
+      return <Loading />;
     }
     return (
       <div>
@@ -78,20 +75,6 @@ export class Dashboard extends Component {
         <Calendar />
         {/* <button onClick={this.createNewTask}>Create</button>
         {this.state.createTask ? <CreateTask /> : ""} */}
-        <ul>
-          {Object.keys(this.state.tasks).map((key) => {
-            return (
-              <li>
-                {this.state.tasks[key].desc}
-                <button
-                  onClick={() => this.deleteTask(this.state.tasks[key].id)}
-                >
-                  Delete
-                </button>
-              </li>
-            );
-          })}
-        </ul>
       </div>
     );
   }

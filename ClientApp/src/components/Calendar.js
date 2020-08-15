@@ -14,7 +14,7 @@ export class Calendar extends Component {
     this.dateActive = this.dateActive.bind(this);
   }
   componentDidMount() {
-    this.createCalendar();
+    this.getTasks();
   }
   createCalendar = () => {
     let startDate = new Date();
@@ -41,7 +41,8 @@ export class Calendar extends Component {
     while (currentDate <= endDate) {
       console.log(currentDate);
       dateArray.push(
-        (currentDate.getUTCMonth() + 1) +
+        currentDate.getUTCMonth() +
+          1 +
           "/" +
           currentDate.getUTCDate() +
           "/" +
@@ -67,7 +68,7 @@ export class Calendar extends Component {
     console.log(dateArray);
   };
   dateActive(e) {
-    console.log(e);
+    e = e.currentTarget.parentElement;
     if (
       document.getElementsByClassName("dateActive").length > 0 &&
       e == document.getElementsByClassName("dateActive")[0]
@@ -82,34 +83,62 @@ export class Calendar extends Component {
       e.classList.add("dateActive");
     }
   }
-
-  addTask(e) {
-    this.dateActive(e.currentTarget.parentElement);
-    let date = e.currentTarget.nextElementSibling.innerText;
-    console.log(date);
+  getTasks() {
+    Axios.get("https://localhost:5001/account/tasks/get/")
+      .then((response) => {
+        console.log(response);
+        this.setState({ tasks: response.data, loading: false });
+      })
+      .then((response) => {
+        this.createCalendar();
+      });
+  }
+  addTask(event, date) {
+    let parent = event.currentTarget.parentElement;
+    let desc = parent.getElementsByClassName("taskDesc")[0].value;
     Axios.post("https://localhost:5001/account/tasks/create", null, {
       params: {
-        desc: "Second task",
+        desc: desc,
         date: date,
       },
+    }).then((response) => {
+      this.getTasks();
     });
   }
+  deleteTask = (id) => {
+    Axios.delete("https://localhost:5001/account/tasks/delete/" + id, {
+      data: {
+        taskID: id,
+      },
+    }).then((response) => {
+      console.log("Task removed");
+      this.getTasks();
+    });
+  };
   render() {
     return (
       <div className="calendarContainer">
         {this.state.dates.map((date) => (
           <div className="dateContainer">
-            <div className="dateOverlay" onClick={this.addTask}></div>
+            <div className="dateOverlay" onClick={this.dateActive}></div>
             <span className="dateValue">{date}</span>
-            <div>
-              <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
-            </div>
-            <CreateTask />
+            <ul className="tasks">
+              {this.state.tasks.map((key) =>
+                key.date === date ? (
+                  <li>
+                    {key.desc}
+                    <button
+                      onClick={() => this.deleteTask(this.state.tasks[key].id)}
+                    >
+                      Delete
+                    </button>
+                  </li>
+                ) : (
+                  ""
+                )
+              )}
+            </ul>
+            <CreateTask addTask={this.addTask} date={date} />
           </div>
         ))}
       </div>

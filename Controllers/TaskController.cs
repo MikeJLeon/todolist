@@ -38,7 +38,7 @@ namespace todolist.Controllers
             newTask.Id = Guid.NewGuid();
             newTask.UserID = userInfo.Id;
             newTask.Desc = desc;
-            newTask.Date = DateTime.Parse(date);
+            newTask.Date = date;
             _repository.CreateTask(newTask);
             _repository.SaveChanges();
             return Ok("Created new task!");

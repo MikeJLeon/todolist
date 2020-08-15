@@ -36,14 +36,27 @@ public class SqlToDoListRepo : IToDoListRepo
     {
         Console.WriteLine(DateTime.Now.Date);
         Console.WriteLine(_context.Tasks.ToList());
-        var data = _context.Tasks.Where(b => b.UserID.Equals(UserID) && b.Date >= DateTime.Now.Date).ToList();
-        foreach (var item in data)
+        try
         {
-            Console.Write(item.Id + " ");
-            Console.WriteLine(item.Desc);
-        }
+            var data = _context.Tasks.Where(b => b.UserID.Equals(UserID)).ToList();
+            var newData = new List<TaskModel>();
+            foreach (var item in data)
+            {
+                if (DateTime.Parse(item.Date) >= DateTime.Now.Date)
+                {
+                    newData.Add(item);
+                }
+            }
 
-        return (data);
+            return (newData);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Console.WriteLine("No tasks");
+            var data = new List<TaskModel>();
+            return (data);
+        }
     }
     public void EditTask(TaskModel task1) { }
     public bool SaveChanges()
