@@ -147,21 +147,31 @@ export class Calendar extends Component {
                 this.state.tasks.map((key) =>
                   key.date === date ? (
                     <li key={key.id}>
-                      <div onClick={() => this.setTask(key.id)}>{key.desc}</div>
-                      {key.completed ? <span>Task completed. :^)</span> : ""}
-
-                      <ModifyTask
-                        currentTask={this.state.currentTask}
-                        handleComplete={this.handleComplete}
-                        setTask={this.setTask}
-                        active={false}
-                        addTask={this.addTask}
-                        deleteTask={this.deleteTask}
-                        TaskID={key.id}
-                        TaskCompleted={key.completed}
-                        TaskDesc={key.desc}
-                        date={date}
-                      />
+                      {key.id !== this.state.currentTask ? (
+                        <div className="taskContainer" onClick={() => this.setTask(key.id)}>
+                          <span className="task">{key.desc}</span>
+                          {key.completed ? (
+                            <span>Task completed. :^)</span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      ) : (
+                        <div className="taskContainer" onClick={() => this.setTask(key.id)}>
+                          <ModifyTask
+                            currentTask={this.state.currentTask}
+                            handleComplete={this.handleComplete}
+                            setTask={this.setTask}
+                            active={false}
+                            addTask={this.addTask}
+                            deleteTask={this.deleteTask}
+                            TaskID={key.id}
+                            TaskCompleted={key.completed}
+                            TaskDesc={key.desc}
+                            date={date}
+                          />
+                        </div>
+                      )}
                     </li>
                   ) : (
                     ""
@@ -171,13 +181,19 @@ export class Calendar extends Component {
                 <li>No tasks yet</li>
               )}
             </ul>
-            <div onClick={() => this.setCreateMode(date)}>+</div>
-            <CreateTask
-              createMode={this.state.createMode}
-              resetCurrent={this.resetCurrent}
-              addTask={this.addTask}
-              date={date}
-            />
+            {this.state.createMode != date ? (
+              <div onClick={() => this.setCreateMode(date)}>+</div>
+            ) : (
+              <div>
+                <div onClick={() => this.setCreateMode(date)}>-</div>
+                <CreateTask
+                  createMode={this.state.createMode}
+                  resetCurrent={this.resetCurrent}
+                  addTask={this.addTask}
+                  date={date}
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>

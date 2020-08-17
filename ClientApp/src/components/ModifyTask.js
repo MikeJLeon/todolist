@@ -60,32 +60,28 @@ export class ModifyTask extends Component {
   render() {
     return (
       <div className="container ModifyTask">
-        {this.props.currentTask === this.props.TaskID ? (
-          <div onClick={this.activeCreate}>
-            <textarea
-              className="taskDesc"
-              rows="4"
-              cols="50"
-              value={this.state.desc}
-              onChange={this.handleText}
-            ></textarea>
-            <button onClick={(e) => this.updateTask(e, this.props.TaskID)}>
-              Update
-            </button>
-            <button onClick={() => this.deleteTask(this.props.TaskID)}>
-              Delete
-            </button>
-            <button
-              onClick={() =>
-                this.completeTask(this.props.TaskID, this.props.TaskCompleted)
-              }
-            >
-              Completed?
-            </button>
-          </div>
-        ) : (
-          ""
-        )}
+        <div onClick={this.activeCreate}>
+          <textarea
+            className="taskDesc"
+            rows="4"
+            cols="50"
+            value={this.state.desc}
+            onChange={this.handleText}
+          ></textarea>
+          <button onClick={(e) => this.updateTask(e, this.props.TaskID)}>
+            Update
+          </button>
+          <button onClick={() => this.deleteTask(this.props.TaskID)}>
+            Delete
+          </button>
+          <button
+            onClick={() =>
+              this.completeTask(this.props.TaskID, this.props.TaskCompleted)
+            }
+          >
+            Completed?
+          </button>
+        </div>
       </div>
     );
   }

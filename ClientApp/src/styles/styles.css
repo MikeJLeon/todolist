@@ -74,6 +74,8 @@ body {
   overflow: hidden;
   position:Relative;
   padding:25px;
+  margin:0 auto;
+  width:1000px;
 }
 .dateActive {
   border: 2px solid rebeccapurple;
@@ -102,4 +104,24 @@ body {
 }
 .dateValue{
   font-weight:bold;
+}
+
+.tasks li{
+  margin-top:15px;
+  margin-bottom: 15px;
+}
+.tasks li .taskContainer{
+  border:0.5px solid gray;
+  cursor:pointer;
+  padding:10px;
+  color:gray;
+  border-radius:10px;
+  margin-bottom:10px;
+  margin-top:10px;
+}
+.tasks li .taskContainer:hover{
+  border-color:black;
+  color:black;
+}
+.task{
 }
