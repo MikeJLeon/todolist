@@ -38,7 +38,7 @@ public class SqlToDoListRepo : IToDoListRepo
         Console.WriteLine(_context.Tasks.ToList());
         try
         {
-            var data = _context.Tasks.Where(b => b.UserID.Equals(UserID)).ToList();
+            var data = _context.Tasks.Where(b => b.UserID.Equals(UserID)).ToList().OrderByDescending(b => b.Completed).ThenBy(b => b.ModifiedDate);
             var newData = new List<TaskModel>();
             foreach (var item in data)
             {
@@ -64,6 +64,7 @@ public class SqlToDoListRepo : IToDoListRepo
         if (updatedTask != null)
         {
             updatedTask.Desc = TaskDesc;
+            updatedTask.ModifiedDate = DateTime.UtcNow;
         }
     }
     public void CompleteTask(int User, Guid TaskGuid, Boolean Completed)
@@ -73,6 +74,7 @@ public class SqlToDoListRepo : IToDoListRepo
         if (updatedTask != null)
         {
             updatedTask.Completed = Completed;
+            updatedTask.ModifiedDate = DateTime.UtcNow;
         }
     }
     public bool SaveChanges()
