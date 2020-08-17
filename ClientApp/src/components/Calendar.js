@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
 import { CreateTask } from "./CreateTask";
+import { ModifyTask } from "./ModifyTask";
 export class Calendar extends Component {
   static displayName = Calendar.name;
   constructor(props) {
@@ -9,9 +10,15 @@ export class Calendar extends Component {
     this.state = {
       dateActive: false,
       dates: [],
+      currentTask: "",
+      createMode: false,
     };
     this.addTask = this.addTask.bind(this);
     this.dateActive = this.dateActive.bind(this);
+    this.setTask = this.setTask.bind(this);
+    this.resetCurrent = this.resetCurrent.bind(this);
+    this.setCreateMode = this.setCreateMode.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
   }
   componentDidMount() {
     this.getTasks();
@@ -21,25 +28,23 @@ export class Calendar extends Component {
     let endDate = new Date();
     endDate.setFullYear(startDate.getFullYear() + 2);
     let currentDate = startDate;
-    let dateArray = new Array();
-    console.log(currentDate, endDate);
-    let container = document.getElementsByClassName("calendarContainer")[0];
-    let months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
+    let dateArray = [];
+    // let container = document.getElementsByClassName("calendarContainer")[0];
+    // let months = [
+    //   "January",
+    //   "February",
+    //   "March",
+    //   "April",
+    //   "May",
+    //   "June",
+    //   "July",
+    //   "August",
+    //   "September",
+    //   "October",
+    //   "November",
+    //   "December",
+    // ];
     while (currentDate <= endDate) {
-      console.log(currentDate);
       dateArray.push(
         currentDate.getUTCMonth() +
           1 +
@@ -65,13 +70,12 @@ export class Calendar extends Component {
       //newDiv.addEventListener("click", () => this.dateActive(newDiv));
     }
     this.setState({ dates: dateArray });
-    console.log(dateArray);
   };
   dateActive(e) {
     e = e.currentTarget.parentElement;
     if (
       document.getElementsByClassName("dateActive").length > 0 &&
-      e == document.getElementsByClassName("dateActive")[0]
+      e === document.getElementsByClassName("dateActive")[0]
     ) {
       e.classList.remove("dateActive");
     } else if (document.getElementsByClassName("dateActive").length > 0) {
@@ -86,13 +90,10 @@ export class Calendar extends Component {
   getTasks() {
     Axios.get("https://localhost:5001/account/tasks/get/")
       .then((response) => {
-        console.log(response);
         this.setState({ tasks: response.data, loading: false });
       })
       .then((response) => {
         this.createCalendar();
-        console.log(this.state.tasks.some(task =>
-          task.date === "8/20/2020"));
       });
   }
   addTask(event, date) {
@@ -107,45 +108,76 @@ export class Calendar extends Component {
       this.getTasks();
     });
   }
-  deleteTask = (id) => {
-    Axios.delete("https://localhost:5001/account/tasks/delete/" + id, {
-      data: {
-        taskID: id,
-      },
-    }).then((response) => {
-      console.log("Task removed");
-      this.getTasks();
-    });
-  };
+
+  setTask(id) {
+    this.setState({ createMode: false });
+    if (id === this.state.currentTask) {
+      this.setState({
+        currentTask: "",
+      });
+    } else {
+      this.setState({
+        currentTask: id,
+      });
+    }
+  }
+  handleComplete() {
+    this.getTasks();
+  }
+  resetCurrent() {
+    this.setState({ currentTask: "" });
+  }
+  setCreateMode(date) {
+    this.setState({ currentTask: "" });
+    if (this.state.createMode === date) {
+      this.setState({ createMode: "" });
+    } else {
+      this.setState({ createMode: date });
+    }
+  }
   render() {
     return (
       <div className="calendarContainer">
         {this.state.dates.map((date) => (
-          <div className="dateContainer">
-            <div className="dateOverlay" onClick={this.dateActive}></div>
+          <div key={date} className="dateContainer">
             <span className="dateValue">{date}</span>
-            <hr/>
+            <hr />
             <ul className="tasks">
-              {this.state.tasks.some(task => 
-              task.date === date)
-              ?
-              this.state.tasks.map((key) =>
-                key.date === date ? (
-                  <li>
-                    {key.desc}
-                    <button
-                      onClick={() => this.deleteTask(this.state.tasks[key].id)}
-                    >
-                      Delete
-                    </button>
-                  </li>
-                ) : (
-                  ""
+              {this.state.tasks.some((task) => task.date === date) ? (
+                this.state.tasks.map((key) =>
+                  key.date === date ? (
+                    <li key={key.id}>
+                      <div onClick={() => this.setTask(key.id)}>{key.desc}</div>
+                      {key.completed ? <span>Task completed. :^)</span> : ""}
+
+                      <ModifyTask
+                        currentTask={this.state.currentTask}
+                        handleComplete={this.handleComplete}
+                        setTask={this.setTask}
+                        active={false}
+                        addTask={this.addTask}
+                        deleteTask={this.deleteTask}
+                        TaskID={key.id}
+                        TaskCompleted={key.completed}
+                        TaskDesc={key.desc}
+                        date={date}
+                      />
+                    </li>
+                  ) : (
+                    ""
+                  )
                 )
-              ) : <li>No tasks yet</li>
-              }
+              ) : (
+                <li>No tasks yet</li>
+              )}
             </ul>
-            <CreateTask addTask={this.addTask} date={date} />
+            <div onClick={() => this.setCreateMode(date)}>+</div>
+            <CreateTask
+              createMode={this.state.createMode}
+              resetCurrent={this.resetCurrent}
+              addTask={this.addTask}
+              date={date}
+            />
           </div>
         ))}
       </div>

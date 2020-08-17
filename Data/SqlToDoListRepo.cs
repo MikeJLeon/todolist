@@ -38,7 +38,7 @@ public class SqlToDoListRepo : IToDoListRepo
         Console.WriteLine(_context.Tasks.ToList());
         try
         {
-            var data = _context.Tasks.Where(b => b.UserID.Equals(UserID) && !b.Completed).ToList();
+            var data = _context.Tasks.Where(b => b.UserID.Equals(UserID)).ToList();
             var newData = new List<TaskModel>();
             foreach (var item in data)
             {
@@ -58,8 +58,23 @@ public class SqlToDoListRepo : IToDoListRepo
             return (data);
         }
     }
-    public void EditTask(TaskModel task) { }
-    public void CompleteTask(TaskModel task){ }
+    public void UpdateTask(int User, Guid TaskGuid, String TaskDesc)
+    {
+        TaskModel updatedTask = _context.Tasks.Where(b => (b.Id.Equals(TaskGuid) && b.UserID.Equals(User))).FirstOrDefault();
+        if (updatedTask != null)
+        {
+            updatedTask.Desc = TaskDesc;
+        }
+    }
+    public void CompleteTask(int User, Guid TaskGuid, Boolean Completed)
+    {
+
+        TaskModel updatedTask = _context.Tasks.Where(b => (b.Id.Equals(TaskGuid) && b.UserID.Equals(User))).FirstOrDefault();
+        if (updatedTask != null)
+        {
+            updatedTask.Completed = Completed;
+        }
+    }
     public bool SaveChanges()
     {
         return (_context.SaveChanges() >= 0);

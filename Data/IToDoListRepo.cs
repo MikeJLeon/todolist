@@ -10,6 +10,6 @@ public interface IToDoListRepo
     void CreateTask(TaskModel task);
     void DeleteTask(Guid taskID);
     List<TaskModel> GetTasks(int UserID);
-    void EditTask(TaskModel task);
-    void CompleteTask(TaskModel task);
+    void UpdateTask(int User, Guid TaskGuid, String TaskDesc);
+    void CompleteTask(int User, Guid TaskGuid, Boolean Complete);
 }

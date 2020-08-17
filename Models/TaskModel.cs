@@ -15,5 +15,14 @@ namespace todolist.Models
         [Required]
         public string Date { get; set; }
         public Boolean Completed { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public TaskModel()
+        {
+            this.Completed = false;
+            this.CreationDate = DateTime.UtcNow;
+            this.ModifiedDate = DateTime.UtcNow;
+        }
+
     }
 }

@@ -56,12 +56,46 @@ namespace todolist.Controllers
         [Authorize]
         [HttpDelete]
         [Route("/account/tasks/delete/{id}")]
-        public async Task<IActionResult> DeleteTasks(Guid id){
+        public async Task<IActionResult> DeleteTasks(Guid id)
+        {
             Console.Write("Line 56- ");
             Console.WriteLine(id);
             _repository.DeleteTask(id);
             _repository.SaveChanges();
             return Ok();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("/account/tasks/update/description/{id}")]
+        public async Task<IActionResult> UpdateTask(String TaskID, String TaskDesc)
+        {
+            var username = User?.Identity.Name;
+            var userInfo = await UserMgr.FindByNameAsync(username);
+            var taskGuid = Guid.Parse(TaskID);
+            Console.WriteLine(userInfo.Id);
+            Console.WriteLine(taskGuid);
+            Console.WriteLine(TaskDesc);
+            Console.WriteLine("hmmmm");
+            _repository.UpdateTask(userInfo.Id, taskGuid, TaskDesc);
+            _repository.SaveChanges();
+            return Ok("Updated completion");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("/account/tasks/update/completed/{id}")]
+        public async Task<IActionResult> CompleteTask(String TaskID, Boolean Completed)
+        {
+            var username = User?.Identity.Name;
+            var userInfo = await UserMgr.FindByNameAsync(username);
+            var taskGuid = Guid.Parse(TaskID);
+            Console.WriteLine(userInfo.Id);
+            Console.WriteLine(taskGuid);
+            Console.WriteLine("hmmmm");
+            _repository.CompleteTask(userInfo.Id, taskGuid, Completed);
+            _repository.SaveChanges();
+            return Ok("Updated completion");
         }
     }
 

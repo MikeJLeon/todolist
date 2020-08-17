@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Nav, { NavMenu } from "./NavMenu";
 import { Redirect } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import Axios from "axios";
@@ -18,8 +17,6 @@ export class Login extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e);
-    console.log(e.target.id, e.target.value);
     this.setState({ [e.target.id]: e.target.value });
   };
 
@@ -36,9 +33,7 @@ export class Login extends Component {
         password: password,
       },
     }).then((response) => {
-      console.log(response, response.data);
       if (!response.data) {
-        console.log("error");
         this.setState({
           error: true,
         });

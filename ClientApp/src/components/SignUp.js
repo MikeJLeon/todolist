@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Nav, { NavMenu } from "./NavMenu";
 import Axios from "axios";
 export class SignUp extends Component {
   static displayName = SignUp.name;
@@ -16,7 +15,7 @@ export class SignUp extends Component {
 
   handleChange = (e) => {
     console.log(e);
-    console.log(e.target.id, e.target.value)
+    console.log(e.target.id, e.target.value);
     this.setState({ [e.target.id]: e.target.value });
   };
 
@@ -25,18 +24,19 @@ export class SignUp extends Component {
     const { user_name, email, first_name, last_name, password } = this.state;
     const url = "https://localhost:5001/account/create";
     console.log(user_name, first_name, last_name, password);
-    Axios.post(url, null, {params:{
-      "user_name":user_name,
-      "email":email,
-      "first_name":first_name,
-      "last_name":last_name,
-      "password":password
-    }});
+    Axios.post(url, null, {
+      params: {
+        user_name: user_name,
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        password: password,
+      },
+    });
   };
   render() {
     return (
       <div>
-        <NavMenu />
         <form onSubmit={this.handleSubmit}>
           <label>Your user name</label>
           <input

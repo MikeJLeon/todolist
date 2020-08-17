@@ -65,25 +65,15 @@ body {
     transform: rotate(-1440deg);
   }
 }
-.calendarContainer {
-  height: 800px;
-  width: 1000px;
-  border: 2px solid black;
-}
+
 
 .CalendarDate {
-  border: 2px solid red;
 }
 
 .dateContainer {
-  border: 2px solid red;
   overflow: hidden;
   position:Relative;
   padding:25px;
-}
-.dateContainer .createTask {
-  height: 0;
-  overflow:hidden;
 }
 .dateActive {
   border: 2px solid rebeccapurple;
