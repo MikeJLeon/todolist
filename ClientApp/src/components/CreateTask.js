@@ -29,13 +29,14 @@ export class CreateTask extends Component {
               rows="4"
               cols="50"
               onChange={(e) => this.handleChange(e)}
-              maxlength="100"
+              maxLength="100"
             ></textarea>
             <button onClick={(e) => this.props.addTask(e, this.props.date)}>
               Create
             </button>
+            <button onClick={this.props.handleComplete}>Cancel</button>
             <div>
-              {this.state.charCount}/100 
+              {this.state.charCount}/100
               {this.state.charCount === 100 ? (
                 <span className="warningCount"> Max characters reached!</span>
               ) : (

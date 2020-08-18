@@ -122,6 +122,7 @@ export class Calendar extends Component {
     }
   }
   handleComplete() {
+    this.setTask(this.state.currentTask);
     this.getTasks();
   }
   resetCurrent() {
@@ -148,8 +149,15 @@ export class Calendar extends Component {
                   key.date === date ? (
                     <li key={key.id}>
                       {key.id !== this.state.currentTask ? (
-                        <div className="taskContainer" onClick={() => this.setTask(key.id)}>
-                          <span className="task">{key.desc}</span>
+                        <div
+                          className={
+                            key.completed
+                              ? "taskContainer taskComplete"
+                              : "taskContainer"
+                          }
+                          onClick={() => this.setTask(key.id)}
+                        >
+                          <div className="task">{key.desc}</div>
                           {key.completed ? (
                             <span>Task completed. :^)</span>
                           ) : (
@@ -157,7 +165,7 @@ export class Calendar extends Component {
                           )}
                         </div>
                       ) : (
-                        <div className="taskContainer" onClick={() => this.setTask(key.id)}>
+                        <div className="taskContainer">
                           <ModifyTask
                             currentTask={this.state.currentTask}
                             handleComplete={this.handleComplete}
@@ -182,12 +190,23 @@ export class Calendar extends Component {
               )}
             </ul>
             {this.state.createMode != date ? (
-              <div onClick={() => this.setCreateMode(date)}>+</div>
+              <span
+                className="newTask"
+                onClick={() => this.setCreateMode(date)}
+              >
+                + Add new task
+              </span>
             ) : (
               <div>
-                <div onClick={() => this.setCreateMode(date)}>-</div>
+                <span
+                  className="newTask"
+                  onClick={() => this.setCreateMode(date)}
+                >
+                  - Add new task
+                </span>
                 <CreateTask
                   createMode={this.state.createMode}
+                  handleComplete={this.handleComplete}
                   resetCurrent={this.resetCurrent}
                   addTask={this.addTask}
                   date={date}

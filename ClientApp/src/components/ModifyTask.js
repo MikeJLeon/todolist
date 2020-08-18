@@ -60,12 +60,13 @@ export class ModifyTask extends Component {
   render() {
     return (
       <div className="container ModifyTask">
-        <div onClick={this.activeCreate}>
+        <div>
           <textarea
             className="taskDesc"
             rows="4"
             cols="50"
             value={this.state.desc}
+            maxLength="100"
             onChange={this.handleText}
           ></textarea>
           <button onClick={(e) => this.updateTask(e, this.props.TaskID)}>
@@ -81,6 +82,7 @@ export class ModifyTask extends Component {
           >
             Completed?
           </button>
+          <button onClick={this.props.handleComplete}>Cancel</button>
         </div>
       </div>
     );

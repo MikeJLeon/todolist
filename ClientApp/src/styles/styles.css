@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background-color: #eaeeee;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .container {
   color: #2c4252;
@@ -66,16 +66,16 @@ body {
   }
 }
 
-
 .CalendarDate {
 }
 
 .dateContainer {
   overflow: hidden;
-  position:Relative;
-  padding:25px;
-  margin:0 auto;
-  width:1000px;
+  position: Relative;
+  padding: 25px;
+  margin: 0 auto;
+  width: 1000px;
+  font-size: 16px;
 }
 .dateActive {
   border: 2px solid rebeccapurple;
@@ -83,45 +83,104 @@ body {
 .dateActive .createTask {
   height: unset;
 }
-.taskDesc{
-  margin-top:50px;
-  margin-bottom:50px;
+.taskDesc {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
-.dateOverlay{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:4;
+.dateOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
 }
-.dateActive .dateOverlay{
-  z-index:2;
+.dateActive .dateOverlay {
+  z-index: 2;
 }
-.taskDesc, .dateValue{
-  position:relative;
-  z-index:3;
+.taskDesc,
+.dateValue {
+  position: relative;
+  z-index: 3;
 }
-.dateValue{
-  font-weight:bold;
+.dateValue {
+  font-weight: bold;
 }
 
-.tasks li{
-  margin-top:15px;
+.tasks li {
+  margin-top: 15px;
   margin-bottom: 15px;
 }
-.tasks li .taskContainer{
-  border:0.5px solid gray;
-  cursor:pointer;
-  padding:10px;
-  color:gray;
-  border-radius:10px;
-  margin-bottom:10px;
-  margin-top:10px;
+
+.task,
+.taskDesc {
+  border: 0.5px solid gray;
+  cursor: pointer;
+  padding: 10px;
+  color: gray;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
-.tasks li .taskContainer:hover{
-  border-color:black;
+.task:hover {
+  border-color: black;
+  color: black;
+}
+.taskDesc {
+  width: 978px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  height: 19px;
+  resize: none;
+  overflow: hidden;
+  margin: 0;
+  cursor: text;
+}
+.tasks {
+  list-style: none;
+  padding: 0;
+}
+.newTask {
+  cursor: pointer;
+}
+.taskComplete .task,
+.taskComplete {
+  border-color: green;
+  color: green;
+}
+
+.taskComplete .task:hover{
+  border-color: rgb(4, 252, 4);
+  color: rgb(4, 252, 4);
+}
+textarea {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
+}
+button{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+.createTask button, .ModifyTask button{
+  background-color:#7ae4dc;
+  border:2px solid black;
   color:black;
+  padding:5px;
+  margin:5px;
 }
-.task{
+.createTask button:hover, .ModifyTask button:hover{
+  background-color:#254542;
+  color:white;
 }
