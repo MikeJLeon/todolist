@@ -22,6 +22,7 @@ export class Login extends Component {
 
   handleSubmit = (e) => {
     this.setState({
+      error: false,
       loading: true,
     });
     e.preventDefault();
@@ -32,60 +33,69 @@ export class Login extends Component {
         user_name: user_name,
         password: password,
       },
-    }).then((response) => {
-      if (!response.data) {
+    })
+      .then((response) => {
+        {
+          this.setState({
+            redirect: true,
+          });
+        }
+      })
+      .catch((error) => {
         this.setState({
           error: true,
         });
-      } else {
-        this.setState({
-          redirect: true,
-        });
-      }
-    });
+      });
   };
   render() {
     if (this.state.redirect) {
       return <Redirect to="/Dashboard" />;
     }
-    if (this.state.loading) {
-      return (
-        <div className="loadingContainer">
-          <Loading />
-        </div>
-      );
-    }
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          {this.state.error ? (
-            <div className="error">
-              User name or password is incorrect. Try Again!
+      <div className="loginContainer">
+        {this.state.loading && !this.state.error ? (
+          <div className="login">
+            <div className="loadingContainer">
+              <Loading />
             </div>
-          ) : (
-            ""
-          )}
-          <label>Your user name</label>
-          <input
-            type="text"
-            id="user_name"
-            value={this.state.user_name}
-            onChange={this.handleChange}
-            placeholder="Your user name goes here"
-          />
-          <br />
-          <label>Password</label>
-          <input
-            type="text"
-            id="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            placeholder="password"
-          />
-          <br />
-          <input type="submit" />
-        </form>
-        {this.state.authenticated ? <div>Logged in</div> : ""}
+          </div>
+        ) : (
+          <div className="login">
+            <div className="requirements">
+              <h2>Mike's Todolist</h2>
+              <h3>Welcome back! Please login :^)</h3>
+              {this.state.error ? (
+                <div className="error">
+                  User name or password is incorrect. Try Again!
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <form className="loginForm" onSubmit={this.handleSubmit}>
+              <div>Your user name</div>
+              <input
+                type="text"
+                id="user_name"
+                value={this.state.user_name}
+                onChange={this.handleChange}
+                placeholder="Your user name goes here"
+              />
+              <br />
+              <div>Password</div>
+              <input
+                type="password"
+                id="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+                placeholder="password"
+              />
+              <br />
+              <input type="submit" className="submitButton" />
+            </form>
+            {this.state.authenticated ? <div>Logged in</div> : ""}
+          </div>
+        )}
       </div>
     );
   }

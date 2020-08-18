@@ -7,8 +7,6 @@ body {
   color: #2c4252;
 }
 .loadingContainer {
-  height: 100vh;
-  width: 100vw;
   display: Flex;
   justify-content: center;
   align-items: center;
@@ -113,7 +111,9 @@ body {
 }
 
 .task,
-.taskDesc {
+.taskDesc,
+.signUpForm input,
+.loginForm input {
   border: 0.5px solid gray;
   cursor: pointer;
   padding: 10px;
@@ -149,7 +149,7 @@ body {
   color: green;
 }
 
-.taskComplete .task:hover{
+.taskComplete .task:hover {
   border-color: rgb(4, 252, 4);
   color: rgb(4, 252, 4);
 }
@@ -164,23 +164,76 @@ textarea {
 
   resize: none; /*remove the resize handle on the bottom right*/
 }
-button{
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
-.createTask button, .ModifyTask button{
-  background-color:#7ae4dc;
-  border:2px solid black;
-  color:black;
-  padding:5px;
-  margin:5px;
+.createTask button,
+.ModifyTask button {
+  background-color: #7ae4dc;
+  border: 2px solid black;
+  color: black;
+  padding: 5px;
+  margin: 5px;
 }
-.createTask button:hover, .ModifyTask button:hover{
-  background-color:#254542;
-  color:white;
+.createTask button:hover,
+.ModifyTask button:hover {
+  background-color: #254542;
+  color: white;
+}
+.signUpForm div,
+.loginForm div {
+  width: 150px;
+}
+.signUpContainer,
+.loginContainer {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.signUp,
+.login {
+  border: 2px solid gray;
+  border-radius: 25px;
+  padding: 25px;
+}
+.signUp h2,
+.login h2,
+.login h3 {
+  text-align: center;
+}
+.signUpForm,
+.loginForm {
+  width: 100%;
+}
+.signUpForm input,
+.loginForm input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.signUpForm .submitButton,
+.loginForm .submitButton {
+  background-color: #7ae4dc;
+  color: #2c4252;
+}
+
+.signUpForm .submitButton:hover,
+.loginForm .submitButton:hover {
+  background-color: #2c4252;
+  color: #eaeeee;
+}
+.signUpForm .submitButton:active,
+.loginForm .submitButton:active{
+  transform:scale(10%);
+}
+.error{
+  color:rgb(158, 1, 1);
+  margin-bottom:10px;
 }

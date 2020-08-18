@@ -79,7 +79,7 @@ namespace todolist.Controllers
                 return Ok(true);
             }
 
-            return Ok(false);
+            return Unauthorized();
         }
         [Authorize]
         [HttpGet]
