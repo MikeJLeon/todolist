@@ -10,11 +10,19 @@
   top: -45px;
   transition: 0.5s all;
 }
-
+.task{
+  height:19px;
+}
 .ModifyTask {
   position: relative;
   height: 80px;
   overflow: hidden;
+  border:none;
+  padding:0;
+  transition:height 0.5s;
+}
+.task{
+  transition:height 0.5s;
 }
 .ModifyTask button {
   margin: 0;

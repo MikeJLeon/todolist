@@ -4,6 +4,7 @@ import Axios from "axios";
 import { Redirect } from "react-router-dom";
 import { Calendar } from "./Calendar";
 import { Loading } from "./Loading";
+import "../styles/dashboard.css";
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
   constructor(props) {
@@ -31,6 +32,12 @@ export class Dashboard extends Component {
           this.setState({
             loading: false,
           });
+          let bodyContainer = document.getElementsByClassName(
+            "bodyContainerInitial"
+          )[0];
+          setTimeout(function () {
+            bodyContainer.classList.remove("bodyContainerInitial");
+          }, 500);
         }
       })
       .catch((error) => {
@@ -53,7 +60,7 @@ export class Dashboard extends Component {
       return <Loading />;
     }
     return (
-      <div>
+      <div className="bodyContainer bodyContainerInitial">
         <NavMenu
           first_name={this.state.first_name}
           last_name={this.state.last_name}

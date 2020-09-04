@@ -66,7 +66,7 @@ export class ModifyTask extends Component {
   }
   render() {
     return (
-      <div className="container ModifyTask">
+      <div className="task ModifyTask">
           <textarea
             className="taskDesc"
             rows="4"

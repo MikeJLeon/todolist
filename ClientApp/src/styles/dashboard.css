@@ -1,0 +1,8 @@
+.bodyContainer {
+  opacity: 1;
+  transition: 0.5s all;
+}
+.bodyContainerInitial {
+  opacity: 0;
+  transition: 0.5s all;
+}
