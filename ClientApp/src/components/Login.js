@@ -26,8 +26,8 @@ export class Login extends Component {
       loading: true,
     });
     e.preventDefault();
-    const { user_name, password } = this.state;
-    const url = "https://localhost:5001/account/login/";
+    let { user_name, password } = this.state;
+    let url = "https://localhost:5001/account/login/";
     Axios.post(url, null, {
       params: {
         user_name: user_name,
@@ -77,6 +77,7 @@ export class Login extends Component {
               <input
                 type="text"
                 id="user_name"
+                name="username"
                 value={this.state.user_name}
                 onChange={this.handleChange}
                 placeholder="Your user name goes here"
@@ -86,6 +87,7 @@ export class Login extends Component {
               <input
                 type="password"
                 id="password"
+                name="passwordw"
                 value={this.state.password}
                 onChange={this.handleChange}
                 placeholder="password"

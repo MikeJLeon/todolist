@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import { Redirect } from "react-router-dom";
 export class SignUp extends Component {
   static displayName = SignUp.name;
   constructor(props) {
@@ -10,6 +11,7 @@ export class SignUp extends Component {
       first_name: "",
       last_name: "",
       password: "",
+      redirect: false,
     };
   }
 
@@ -21,8 +23,8 @@ export class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { user_name, email, first_name, last_name, password } = this.state;
-    const url = "https://localhost:5001/account/create";
+    let { user_name, email, first_name, last_name, password } = this.state;
+    let url = "https://localhost:5001/account/create";
     console.log(user_name, first_name, last_name, password);
     Axios.post(url, null, {
       params: {
@@ -32,9 +34,26 @@ export class SignUp extends Component {
         last_name: last_name,
         password: password,
       },
+    }).then((response) => {
+      url = "https://localhost:5001/account/login/";
+      Axios.post(url, null, {
+        params: {
+          user_name: user_name,
+          password: password,
+        },
+      }).then((response) => {
+        {
+          this.setState({
+            redirect: true,
+          });
+        }
+      });
     });
   };
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/Dashboard" />;
+    }
     return (
       <div className="signUpContainer">
         <div className="signUp">

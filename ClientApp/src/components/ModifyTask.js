@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
+import "../styles/taskStyle.css";
 export class ModifyTask extends Component {
   static displayName = ModifyTask.name;
   constructor(props) {
@@ -13,6 +14,12 @@ export class ModifyTask extends Component {
     this.completeTask = this.completeTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.handleText = this.handleText.bind(this);
+  }
+  componentDidMount(){
+    let buttonContainer = document.getElementsByClassName("taskButtonContainerInitial")[0];
+    setTimeout(function(){
+      buttonContainer.classList.remove("taskButtonContainerInitial");
+    }, 5);
   }
   handleText(e) {
     this.setState({ desc: e.currentTarget.value });
@@ -60,7 +67,6 @@ export class ModifyTask extends Component {
   render() {
     return (
       <div className="container ModifyTask">
-        <div>
           <textarea
             className="taskDesc"
             rows="4"
@@ -69,22 +75,23 @@ export class ModifyTask extends Component {
             maxLength="100"
             onChange={this.handleText}
           ></textarea>
-          <button onClick={(e) => this.updateTask(e, this.props.TaskID)}>
-            Update
-          </button>
-          <button onClick={() => this.deleteTask(this.props.TaskID)}>
-            Delete
-          </button>
-          <button
-            onClick={() =>
-              this.completeTask(this.props.TaskID, this.props.TaskCompleted)
-            }
-          >
-            Completed?
-          </button>
-          <button onClick={this.props.handleComplete}>Cancel</button>
+          <div className="taskButtonContainer taskButtonContainerInitial">
+            <button onClick={(e) => this.updateTask(e, this.props.TaskID)}>
+              Update
+            </button>
+            <button onClick={() => this.deleteTask(this.props.TaskID)}>
+              Delete
+            </button>
+            <button
+              onClick={() =>
+                this.completeTask(this.props.TaskID, this.props.TaskCompleted)
+              }
+            >
+              Completed?
+            </button>
+            <button onClick={this.props.handleComplete}>Cancel</button>
+          </div>
         </div>
-      </div>
     );
   }
 }

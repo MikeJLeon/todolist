@@ -29,21 +29,20 @@ export class Calendar extends Component {
     endDate.setFullYear(startDate.getFullYear() + 2);
     let currentDate = startDate;
     let dateArray = [];
-    // let container = document.getElementsByClassName("calendarContainer")[0];
-    // let months = [
-    //   "January",
-    //   "February",
-    //   "March",
-    //   "April",
-    //   "May",
-    //   "June",
-    //   "July",
-    //   "August",
-    //   "September",
-    //   "October",
-    //   "November",
-    //   "December",
-    // ];
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     while (currentDate <= endDate) {
       dateArray.push(
         currentDate.getUTCMonth() +
@@ -94,6 +93,7 @@ export class Calendar extends Component {
       })
       .then((response) => {
         this.createCalendar();
+        this.resetCurrent();
       });
   }
   addTask(event, date) {
@@ -126,7 +126,10 @@ export class Calendar extends Component {
     this.getTasks();
   }
   resetCurrent() {
-    this.setState({ currentTask: "" });
+    this.setState({
+      currentTask: "",
+      createMode: "",
+    });
   }
   setCreateMode(date) {
     this.setState({ currentTask: "" });

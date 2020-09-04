@@ -1,0 +1,25 @@
+.taskButtonContainer {
+  position: absolute;
+  opacity: 1;
+  padding-left: 0;
+  top: 45px;
+  transition: 0.5s all;
+}
+.taskButtonContainerInitial {
+  opacity: 0;
+  top: -45px;
+  transition: 0.5s all;
+}
+
+.ModifyTask {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+}
+.ModifyTask button {
+  margin: 0;
+  margin-left: 5px;
+}
+.taskContainer{
+    transition:0.5s height;
+}
