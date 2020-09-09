@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using todolist.Models;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace todolist
 {
@@ -35,7 +37,7 @@ namespace todolist
             services.AddIdentity<UserModel, RoleModel>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<ToDoListContext>();
+            }).AddEntityFrameworkStores<ToDoListContext>().AddDefaultTokenProviders();
             services.AddDbContext<ToDoListContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("TODOLIST_CONN")));
             services.AddScoped<IToDoListRepo, SqlToDoListRepo>();
             services.Configure<IdentityOptions>(options =>
@@ -46,7 +48,6 @@ namespace todolist
                 options.User.RequireUniqueEmail = true;
 
             });
-
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

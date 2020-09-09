@@ -2,40 +2,24 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import Axios from "axios";
-export class Login extends Component {
-  static displayName = Login.name;
+export class Recover extends Component {
+  static displayName = Recover.name;
   constructor(props) {
     super(props);
     this.state = {
       user_name: "",
       password: "",
-      email: "",
       authenticated: false,
       redirect: false,
       error: false,
       loading: false,
-      recover: false,
     };
-    this.handleRecovery = this.handleRecovery.bind(this);
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
-  handleRecovery() {
-    this.setState({ recover: true });
-  }
-  handleRecoverySubmit = (e) =>{
-    let email = this.state.email;
-    let url = "../account/forgot/"
-    Axios.post(url, null, {
-      params: {
-        email: email,
-      }
-    }).then((response) => {
-      this.setState({recover: false});
-    });
-  }
+
   handleSubmit = (e) => {
     this.setState({
       error: false,
@@ -43,7 +27,7 @@ export class Login extends Component {
     });
     e.preventDefault();
     let { user_name, password } = this.state;
-    let url = "../account/login/";
+    let url = "https://localhost:5001/account/login/";
     Axios.post(url, null, {
       params: {
         user_name: user_name,
@@ -75,32 +59,11 @@ export class Login extends Component {
               <Loading />
             </div>
           </div>
-        ) : this.state.recover ? (
-          <div className="login">
-            <div className="requirements">
-              <h2>Mike's Todolist</h2>
-              <h3>Please enter an email to recover</h3>
-              <form className="loginForm" onSubmit={this.handleRecoverySubmit}>
-                <div>Your user name</div>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  placeholder="Your email goes here"
-                />
-                <br />
-                <input type="submit" className="submitButton" />
-              </form>
-            </div>
-          </div>
         ) : (
           <div className="login">
             <div className="requirements">
               <h2>Mike's Todolist</h2>
               <h3>Welcome back! Please login :^)</h3>
-
               {this.state.error ? (
                 <div className="error">
                   User name or password is incorrect. Try Again!
@@ -120,19 +83,9 @@ export class Login extends Component {
                 placeholder="Your user name goes here"
               />
               <br />
-              <div>Password</div>
-              <input
-                type="password"
-                id="password"
-                name="passwordw"
-                value={this.state.password}
-                onChange={this.handleChange}
-                placeholder="password"
-              />
-              <br />
               <input type="submit" className="submitButton" />
             </form>
-            <div onClick={this.handleRecovery}>Forgot Password?</div>
+            <div><Link href="/Recover">Forgot Password?</Link></div>
             {this.state.authenticated ? <div>Logged in</div> : ""}
           </div>
         )}
