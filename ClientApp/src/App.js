@@ -6,6 +6,7 @@ import { Login } from "./components/Login";
 import { Dashboard } from "./components/Dashboard";
 
 import "./custom.css";
+import { Recover } from "./components/Recover";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -16,6 +17,7 @@ export default class App extends Component {
         <Route path="/SignUp" component={SignUp} />
         <Route path="/Login" component={Login} />
         <Route path="/Dashboard" component={Dashboard} />
+        <Route path="/Recover/:email/:token" component={Recover}/>
       </Switch>
     );
   }

@@ -34,11 +34,10 @@ namespace todolist.Controllers
         {
             try
             {
-                UserModel user = await UserMgr.FindByNameAsync(user_name);
+                UserModel user = await UserMgr.FindByEmailAsync(email);
                 if (user == null)
                 {
                     user = new UserModel();
-                    user.UserName = user_name;
                     user.Email = email;
                     user.FirstName = first_name;
                     user.LastName = last_name;
@@ -56,12 +55,12 @@ namespace todolist.Controllers
         }
         [HttpGet]
         [Route("/account/authorized")]
-        public async Task<IActionResult> checkAuthorization(string user_name)
+        public async Task<IActionResult> checkAuthorization(string user_email)
         {
             if (User?.Identity.IsAuthenticated == true)
             {
                 var username = User?.Identity.Name;
-                var userInfo = await UserMgr.FindByNameAsync(username);
+                var userInfo = await UserMgr.FindByEmailAsync(user_email);
 
                 return Ok(userInfo);
             }
@@ -69,13 +68,14 @@ namespace todolist.Controllers
         }
         [HttpPost]
         [Route("/account/login/")]
-        public async Task<IActionResult> Login(string user_name, string password)
+        public async Task<IActionResult> Login(string user_email, string password)
         {   
-            var result = await SignInMgr.PasswordSignInAsync(user_name, password, true, false);
+            Console.WriteLine(user_email);
+            var userToVerify = await UserMgr.FindByEmailAsync(user_email);
+            var result = await SignInMgr.PasswordSignInAsync(userToVerify.UserName, password, true, false);
             Console.WriteLine(result.Succeeded);
             if (result.Succeeded)
             {
-                var userToVerify = await UserMgr.FindByNameAsync(user_name);
                 var identity = await UserMgr.GetClaimsAsync(userToVerify);
                 Console.WriteLine(userToVerify.UserName);
                 Console.WriteLine(userToVerify.Id);
@@ -96,7 +96,8 @@ namespace todolist.Controllers
         }
         [HttpPost]
         [Route("/account/recover")]
-        public async Task<IActionResult> Recover(string email, string token, string password){
+        public async Task<IActionResult> Recover(string email, string token, string password)
+        {
             var user = await UserMgr.FindByEmailAsync(email);
             token = HttpUtility.UrlDecode(token);
             token = token.Replace(" ", "+");
@@ -105,31 +106,33 @@ namespace todolist.Controllers
             Console.WriteLine(email);
             Console.WriteLine(token);
             Console.WriteLine(password);
-            if(result.Succeeded){
+            if (result.Succeeded)
+            {
                 return Ok();
             }
-            
+
             return BadRequest();
         }
         [HttpPost]
         [Route("/account/forgot")]
         public async Task<IActionResult> Forgot(string email)
         {
-
+            Console.WriteLine(email);
             var user = await UserMgr.FindByEmailAsync(email);
+            var todoEmail = Environment.GetEnvironmentVariable("TODOLIST_EMAIL");
+            var password = Environment.GetEnvironmentVariable("TODOLIST_EMAIL_PASSWORD");
             if (user != null)
             {
                 var token = await UserMgr.GeneratePasswordResetTokenAsync(user);
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Hello", "michaeljleonapi@gmail.com"));
-                message.To.Add(MailboxAddress.Parse("michael@michaeljleon.com"));
+                message.From.Add(new MailboxAddress("Password Recovery - Mike's Todolist", todoEmail));
+                message.To.Add(MailboxAddress.Parse(email));
                 message.Subject = "Password Recovery - Mike's Todolist";
                 message.Body = new TextPart("plain")
                 {
-                    Text = "https://localhost:5001/account/recover/?email=" + email + "&token=" + token
+                    Text = "https://localhost:5001/Recover/" + email + "/" + HttpUtility.UrlEncode(token)
                 };
-                var todoEmail = Environment.GetEnvironmentVariable("TODOLIST_EMAIL");
-                var password = Environment.GetEnvironmentVariable("TODOLIST_EMAIL_PASSWORD");
+
                 using (var client = new SmtpClient())
                 {
                     client.Connect("smtp.gmail.com", 587, false);

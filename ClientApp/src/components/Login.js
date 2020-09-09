@@ -25,17 +25,22 @@ export class Login extends Component {
   handleRecovery() {
     this.setState({ recover: true });
   }
-  handleRecoverySubmit = (e) =>{
+  handleRecoverySubmit = (e) => {
     let email = this.state.email;
-    let url = "../account/forgot/"
+    let url = "../account/forgot/";
+    e.preventDefault();
     Axios.post(url, null, {
       params: {
         email: email,
-      }
-    }).then((response) => {
-      this.setState({recover: false});
-    });
-  }
+      },
+    })
+      .then((response) => {
+        this.setState({ recover: false, error: false });
+      })
+      .catch((response) => {
+        this.setState({ error: true });
+      });
+  };
   handleSubmit = (e) => {
     this.setState({
       error: false,
@@ -46,7 +51,7 @@ export class Login extends Component {
     let url = "../account/login/";
     Axios.post(url, null, {
       params: {
-        user_name: user_name,
+        user_email: user_name,
         password: password,
       },
     })
@@ -82,6 +87,11 @@ export class Login extends Component {
               <h3>Please enter an email to recover</h3>
               <form className="loginForm" onSubmit={this.handleRecoverySubmit}>
                 <div>Your user name</div>
+                {this.state.error && this.state.recover ? (
+                  <div>User does not exist!</div>
+                ) : (
+                  ""
+                )}
                 <input
                   type="text"
                   id="email"
@@ -99,7 +109,7 @@ export class Login extends Component {
           <div className="login">
             <div className="requirements">
               <h2>Mike's Todolist</h2>
-              <h3>Welcome back! Please login :^)</h3>
+              <h3>Welcome back! Please login :^</h3>
 
               {this.state.error ? (
                 <div className="error">

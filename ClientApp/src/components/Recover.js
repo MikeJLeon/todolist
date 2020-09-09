@@ -7,15 +7,21 @@ export class Recover extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_name: "",
-      password: "",
+      email: "",
+      newPassword: "",
       authenticated: false,
       redirect: false,
       error: false,
       loading: false,
+      count: -1,
     };
   }
-
+  componentDidMount() {
+    this.setState({
+      email: this.props.match.params.email,
+      token: decodeURIComponent(this.props.match.params.token),
+    });
+  }
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -26,67 +32,72 @@ export class Recover extends Component {
       loading: true,
     });
     e.preventDefault();
-    let { user_name, password } = this.state;
-    let url = "https://localhost:5001/account/login/";
+    let { email, token, newPassword } = this.state;
+    let url = "../account/recover";
     Axios.post(url, null, {
       params: {
-        user_name: user_name,
-        password: password,
+        email: email,
+        password: newPassword,
+        token: token,
       },
     })
       .then((response) => {
         {
           this.setState({
-            redirect: true,
+            count: 5,
           });
+          setInterval(() => {
+            this.setState({ count: this.state.count - 1 });
+          }, 1000);
+          setTimeout(() => {
+            this.setState({
+              redirect: true,
+            });
+          }, 6000);
         }
       })
       .catch((error) => {
         this.setState({
           error: true,
+          loading: false,
         });
       });
   };
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/Dashboard" />;
+      return <Redirect to="/Login/" />;
     }
     return (
       <div className="loginContainer">
-        {this.state.loading && !this.state.error ? (
+        {this.state.loading ? (
           <div className="login">
-            <div className="loadingContainer">
-              <Loading />
-            </div>
+            {this.state.count >= 0 ? (
+              <div>Success! Redirecting in {this.state.count}...</div>
+            ) : (
+              ""
+            )}
+            <Loading />
           </div>
         ) : (
           <div className="login">
             <div className="requirements">
               <h2>Mike's Todolist</h2>
-              <h3>Welcome back! Please login :^)</h3>
-              {this.state.error ? (
-                <div className="error">
-                  User name or password is incorrect. Try Again!
-                </div>
-              ) : (
-                ""
-              )}
+              <h3>Changing password for {this.state.email}.</h3>
             </div>
             <form className="loginForm" onSubmit={this.handleSubmit}>
-              <div>Your user name</div>
+              {this.state.error ? <div>Password is invalid!</div> : ""}
+              <div>New password</div>
               <input
                 type="text"
-                id="user_name"
-                name="username"
-                value={this.state.user_name}
+                id="newPassword"
+                name="newPassword"
+                value={this.state.newPassword}
                 onChange={this.handleChange}
-                placeholder="Your user name goes here"
+                placeholder="Your new password goes here"
               />
               <br />
               <input type="submit" className="submitButton" />
             </form>
-            <div><Link href="/Recover">Forgot Password?</Link></div>
-            {this.state.authenticated ? <div>Logged in</div> : ""}
           </div>
         )}
       </div>
