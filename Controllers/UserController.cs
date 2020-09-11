@@ -103,15 +103,20 @@ namespace todolist.Controllers
             Console.WriteLine(firstName);
             Console.WriteLine(lastName);
             Console.WriteLine(newPassword);
-            if (newPassword == null)
+            var user = await UserMgr.FindByEmailAsync(email);
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            if (newPassword != null)
             {
-                var user = await UserMgr.FindByEmailAsync(email);
-                user.FirstName = firstName;
-                user.LastName = lastName;
-                IdentityResult result = await UserMgr.UpdateAsync(user);
-                return Ok("Account Updated");
+                await UserMgr.RemovePasswordAsync(user);
+                await UserMgr.AddPasswordAsync(user, newPassword);
             }
-            return Ok("Account not updated.");
+
+            IdentityResult result = await UserMgr.UpdateAsync(user);
+            if(result.Succeeded){
+                return Ok("Account successfully updated");
+            }
+            return Ok("Accout update failed");
 
         }
 
