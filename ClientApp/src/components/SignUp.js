@@ -70,14 +70,6 @@ export class SignUp extends Component {
             </ul>
           </div>
           <form className="signUpForm" onSubmit={this.handleSubmit}>
-            <div>User Name</div>
-            <input
-              type="text"
-              id="user_name"
-              value={this.state.user_name}
-              onChange={this.handleChange}
-              placeholder="Your user name goes here"
-            />
             <br />
             <div>Email</div>
             <input

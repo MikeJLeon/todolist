@@ -57,9 +57,13 @@ export class Login extends Component {
     })
       .then((response) => {
         {
-          this.setState({
-            redirect: true,
-          });
+          let loginContainer = document.getElementsByClassName("loginContainer")[0];
+          loginContainer.classList.add("loginFade");
+          setTimeout(() => {
+            this.setState({
+              redirect: true,
+            });
+          }, 500);
         }
       })
       .catch((error) => {

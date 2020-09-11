@@ -243,3 +243,7 @@ button {
   color: rgb(158, 1, 1);
   margin-bottom: 10px;
 }
+.loginFade{
+  opacity:0;
+  transition:0.5s all;
+}

@@ -55,12 +55,13 @@ namespace todolist.Controllers
         }
         [HttpGet]
         [Route("/account/authorized")]
-        public async Task<IActionResult> checkAuthorization(string user_email)
+        public async Task<IActionResult> checkAuthorization()
         {
             if (User?.Identity.IsAuthenticated == true)
             {
                 var username = User?.Identity.Name;
-                var userInfo = await UserMgr.FindByEmailAsync(user_email);
+                Console.WriteLine(username);
+                var userInfo = await UserMgr.FindByNameAsync(username);
 
                 return Ok(userInfo);
             }
@@ -69,7 +70,7 @@ namespace todolist.Controllers
         [HttpPost]
         [Route("/account/login/")]
         public async Task<IActionResult> Login(string user_email, string password)
-        {   
+        {
             Console.WriteLine(user_email);
             var userToVerify = await UserMgr.FindByEmailAsync(user_email);
             var result = await SignInMgr.PasswordSignInAsync(userToVerify.UserName, password, true, false);
@@ -94,6 +95,27 @@ namespace todolist.Controllers
             Console.WriteLine("logged out");
             return Ok();
         }
+        [HttpPost]
+        [Route("/account/update")]
+        public async Task<IActionResult> Update(string email, string firstName, string lastName, string newPassword)
+        {
+            Console.WriteLine(email);
+            Console.WriteLine(firstName);
+            Console.WriteLine(lastName);
+            Console.WriteLine(newPassword);
+            if (newPassword == null)
+            {
+                var user = await UserMgr.FindByEmailAsync(email);
+                user.FirstName = firstName;
+                user.LastName = lastName;
+                IdentityResult result = await UserMgr.UpdateAsync(user);
+                return Ok("Account Updated");
+            }
+            return Ok("Account not updated.");
+
+        }
+
+
         [HttpPost]
         [Route("/account/recover")]
         public async Task<IActionResult> Recover(string email, string token, string password)

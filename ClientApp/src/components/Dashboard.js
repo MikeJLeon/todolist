@@ -3,34 +3,33 @@ import { NavMenu } from "./NavMenu";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
 import { Calendar } from "./Calendar";
-import { Loading } from "./Loading";
+import { Settings } from "./Settings/Settings";
 import "../styles/dashboard.css";
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
   constructor(props) {
     super(props);
     this.state = {
-      user_name: "",
+      email: "",
       first_name: "",
       last_name: "",
       authenticated: false,
       redirect: false,
-      loading: true,
+      settingsActive: false,
     };
+    this.handleSettingsClick = this.handleSettingsClick.bind(this);
   }
   componentDidMount() {
     this.setState({ user_name: this.props });
     Axios.get("https://localhost:5001/account/authorized")
       .then((response) => {
+        console.log(response.data);
         if (response.data) {
           this.setState({
-            user_name: response.data.userName,
+            email: response.data.email,
             first_name: response.data.firstName,
             last_name: response.data.lastName,
             authenticated: true,
-          });
-          this.setState({
-            loading: false,
           });
           let bodyContainer = document.getElementsByClassName(
             "bodyContainerInitial"
@@ -52,12 +51,14 @@ export class Dashboard extends Component {
       this.setState({ redirect: true });
     });
   };
+  handleSettingsClick() {
+    this.setState({
+      settingsActive: !this.state.settingsActive,
+    });
+  }
   render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
-    }
-    if (this.state.loading) {
-      return <Loading />;
     }
     return (
       <div className="bodyContainer bodyContainerInitial">
@@ -65,9 +66,15 @@ export class Dashboard extends Component {
           first_name={this.state.first_name}
           last_name={this.state.last_name}
           redirect={this.logout}
+          settingsActive={this.state.settingsActive}
+          handleSettingsClick={this.handleSettingsClick}
         />
         <div className="contentContainer">
-          <Calendar />
+          {this.state.settingsActive ? (
+            <Settings email={this.state.email} />
+          ) : (
+            <Calendar />
+          )}
           {/* <button onClick={this.createNewTask}>Create</button>
         {this.state.createTask ? <CreateTask /> : ""} */}
         </div>
