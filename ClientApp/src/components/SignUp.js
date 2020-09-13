@@ -3,8 +3,8 @@ import Axios from "axios";
 import { Redirect } from "react-router-dom";
 export class SignUp extends Component {
   static displayName = SignUp.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       user_name: "",
       email: "",

@@ -4,7 +4,6 @@ import { Home } from "./components/Home";
 import { SignUp } from "./components/SignUp";
 import { Login } from "./components/Login";
 import { Dashboard } from "./components/Dashboard";
-import { Settings } from "./components/Settings/Settings";
 import { Recover } from "./components/Recover";
 
 export default class App extends Component {

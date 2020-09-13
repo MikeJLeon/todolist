@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,

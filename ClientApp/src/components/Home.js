@@ -7,8 +7,8 @@ import { Redirect, Link } from "react-router-dom";
 
 export class Home extends Component {
   static displayName = Home.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       loading: true,
       authenticated: false,
@@ -26,9 +26,18 @@ export class Home extends Component {
         this.setState({
           loading: false,
         });
+        
       }
+    }).then(() => {
+      let homeContainer = document.getElementsByClassName("home")[0];
+        console.log(homeContainer);
+        setTimeout(() => {
+          homeContainer.classList.add("homeShow");
+        }, 500);
     });
   }
+  transitionOn() {}
+  transitionOff() {}
   render() {
     if (this.state.loading) {
       return (

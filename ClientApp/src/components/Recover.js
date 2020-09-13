@@ -4,8 +4,8 @@ import { Loading } from "../components/Loading";
 import Axios from "axios";
 export class Recover extends Component {
   static displayName = Recover.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: "",
       newPassword: "",

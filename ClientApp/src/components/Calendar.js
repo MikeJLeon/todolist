@@ -5,8 +5,8 @@ import { CreateTask } from "./CreateTask";
 import { ModifyTask } from "./ModifyTask";
 export class Calendar extends Component {
   static displayName = Calendar.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       dateActive: false,
       dates: [],

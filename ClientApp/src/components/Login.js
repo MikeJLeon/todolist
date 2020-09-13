@@ -4,8 +4,8 @@ import { Loading } from "../components/Loading";
 import Axios from "axios";
 export class Login extends Component {
   static displayName = Login.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       user_name: "",
       password: "",

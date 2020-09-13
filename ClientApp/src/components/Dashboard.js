@@ -3,12 +3,12 @@ import { NavMenu } from "./NavMenu";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
 import { Calendar } from "./Calendar";
-import { Settings } from "./Settings/Settings";
+import { Settings } from "./Settings";
 import "../styles/dashboard.css";
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: "",
       first_name: "",
@@ -20,7 +20,6 @@ export class Dashboard extends Component {
     this.handleSettingsClick = this.handleSettingsClick.bind(this);
   }
   componentDidMount() {
-    this.setState({ user_name: this.props });
     Axios.get("https://localhost:5001/account/authorized")
       .then((response) => {
         console.log(response.data);

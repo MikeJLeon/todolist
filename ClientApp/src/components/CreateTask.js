@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../styles/styles.css";
 export class CreateTask extends Component {
   static displayName = CreateTask.name;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       charCount: 0,
     };
