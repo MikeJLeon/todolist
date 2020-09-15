@@ -2,14 +2,10 @@ body {
   margin: 0;
   background-color: #eaeeee;
   font-family: "Montserrat", sans-serif;
+  background-image: url("../img/dot-grid.png");
 }
 .container {
   color: #2c4252;
-}
-.loadingContainer {
-  display: Flex;
-  justify-content: center;
-  align-items: center;
 }
 .loading {
   width: 100px;

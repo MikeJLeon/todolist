@@ -31,3 +31,10 @@
 .taskContainer{
     transition:0.5s height;
 }
+.dateContainer{
+  border-left:2px rgb(219, 219, 219) solid;
+  border-right:2px rgb(219, 219, 219) solid;
+}
+.dateContainer, .login{
+  background-color:rgba(255,255,255);
+}

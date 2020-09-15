@@ -73,6 +73,7 @@ export class Login extends Component {
       });
   };
   render() {
+    return;
     if (this.state.redirect) {
       return <Redirect to="/Dashboard" />;
     }

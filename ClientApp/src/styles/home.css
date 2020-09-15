@@ -1,13 +1,9 @@
 .home {
-  width: 100vw;
-  height: 100vh;
-  padding: 10px;
-  text-align: center;
-  opacity: 0;
-}
-.homeShow {
   opacity: 1;
   transition: 0.5s opacity;
+}
+.homeInitial {
+  opacity: 0;
 }
 .buttonContainer {
   display: Flex;
@@ -18,4 +14,24 @@
   border: 1px solid black;
   margin: 5px;
   padding: 5px;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.upperHome{
+  display:Flex;
+}
+.handWave{
+  font-size:100px;
+  transform:rotate(-20deg);
+  transition:0.25s transform;
+}
+.handWaveAnimate{
+  transform: rotate(20deg);
+  transition:0.25s transform;
 }

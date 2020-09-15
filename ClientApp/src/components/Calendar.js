@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
+import "../styles/taskStyle.css";
 import { CreateTask } from "./CreateTask";
 import { ModifyTask } from "./ModifyTask";
 export class Calendar extends Component {

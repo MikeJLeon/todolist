@@ -21,7 +21,7 @@ export class CreateTask extends Component {
   }
   render() {
     return (
-      <div className="container createTask">
+      <div className="createTask">
         {this.props.createMode === this.props.date ? (
           <div>
             <textarea
