@@ -1,10 +1,3 @@
-.home {
-  opacity: 1;
-  transition: 0.5s opacity;
-}
-.homeInitial {
-  opacity: 0;
-}
 .buttonContainer {
   display: Flex;
   justify-content: center;
@@ -23,15 +16,15 @@
   justify-content: center;
   align-items: center;
 }
-.upperHome{
-  display:Flex;
+.upperHome {
+  display: Flex;
 }
-.handWave{
-  font-size:100px;
-  transform:rotate(-20deg);
-  transition:0.25s transform;
+.handWave {
+  font-size: 100px;
+  transform: rotate(-20deg);
+  transition: 0.25s transform;
 }
-.handWaveAnimate{
+.handWaveAnimate {
   transform: rotate(20deg);
-  transition:0.25s transform;
+  transition: 0.25s transform;
 }

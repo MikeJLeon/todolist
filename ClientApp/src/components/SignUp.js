@@ -42,11 +42,9 @@ export class SignUp extends Component {
           password: password,
         },
       }).then((response) => {
-        {
-          this.setState({
-            redirect: true,
-          });
-        }
+        this.setState({
+          redirect: true,
+        });
       });
     });
   };

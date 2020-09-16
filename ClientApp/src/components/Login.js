@@ -4,8 +4,8 @@ import { Loading } from "../components/Loading";
 import Axios from "axios";
 export class Login extends Component {
   static displayName = Login.name;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       user_name: "",
       password: "",
@@ -15,10 +15,31 @@ export class Login extends Component {
       error: false,
       loading: false,
       recover: false,
+      loginActive: false,
     };
     this.handleRecovery = this.handleRecovery.bind(this);
+    this.fade = this.fade.bind(this);
   }
-
+  componentDidMount() {
+    setTimeout(this.fade, 50);
+    window.addEventListener("beforeunload", this.handleWindowClose);
+    window.addEventListener("popstate", this.onBackButtonEvent);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.onBackButtonEvent);
+  }
+  handleWindowClose = (ev) => {
+    ev.preventDefault();
+    return (ev.returnValue = "Leaving this page will loose data");
+  };
+  onBackButtonEvent = (e) => {
+    e.preventDefault();
+    console.log(e);
+    //setTimeout(this.fade, 500);
+  };
+  fade() {
+    this.setState({ loginActive: !this.state.loginActive });
+  }
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -56,15 +77,15 @@ export class Login extends Component {
       },
     })
       .then((response) => {
-        {
-          let loginContainer = document.getElementsByClassName("loginContainer")[0];
-          loginContainer.classList.add("loginFade");
-          setTimeout(() => {
-            this.setState({
-              redirect: true,
-            });
-          }, 500);
-        }
+        let loginContainer = document.getElementsByClassName(
+          "loginContainer"
+        )[0];
+        loginContainer.classList.add("loginFade");
+        setTimeout(() => {
+          this.setState({
+            redirect: true,
+          });
+        }, 500);
       })
       .catch((error) => {
         this.setState({
@@ -73,12 +94,15 @@ export class Login extends Component {
       });
   };
   render() {
-    return;
     if (this.state.redirect) {
       return <Redirect to="/Dashboard" />;
     }
     return (
-      <div className="loginContainer">
+      <div
+        className={
+          this.state.loginActive ? "loginContainer" : "loginContainerInitial"
+        }
+      >
         {this.state.loading && !this.state.error ? (
           <div className="login">
             <div className="loadingContainer">

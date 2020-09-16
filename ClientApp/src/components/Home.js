@@ -2,59 +2,83 @@ import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
 import "../styles/home.css";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export class Home extends Component {
   static displayName = Home.name;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       homeActive: false,
-      authenticated: false,
       handWave: false,
+      handWaveID: 0,
+      redirect: false,
+      destination: "",
     };
     this.fadeOut = this.fadeOut.bind(this);
+    this.link = this.link.bind(this);
+    this.waveHandSetup = this.waveHandSetup.bind(this);
+  }
+  componentWillUnmount() {
+    clearInterval(this.state.handWaveID);
   }
   componentDidMount() {
-    Axios.get("https://localhost:5001/account/authorized")
-      .then((response) => {
-        console.log(response);
-        if (response.data) {
-          this.setState({
-            authenticated: true,
-          });
-        }
-      })
-      .then(() => {
+    Axios.get("https://localhost:5001/account/authorized").then((response) => {
+      if (response.data) {
+        this.setState({
+          redirect: true,
+          destination: "/Dashboard",
+        });
+      } else {
         setTimeout(() => {
           this.setState({
             homeActive: true,
           });
-        }, 150);
-        setInterval(() => {
-          this.setState({
-            handWave: true,
-          });
-          setTimeout(() => {
-            this.setState({ handWave: false });
-          }, 250);
-        }, 10000);
-      });
+        }, 500);
+        let handWaveID = this.waveHandSetup();
+        this.setState({
+          handWaveID: handWaveID,
+        });
+      }
+    });
   }
-  fadeOut(){
-    this.setState({homeActive: false});
+  fadeOut() {
+    this.setState({ homeActive: false });
+  }
+  waveHandSetup() {
+    let handWaveID = setInterval(() => {
+      this.setState({
+        handWave: true,
+      });
+      setTimeout(() => {
+        this.setState({ handWave: false });
+      }, 250);
+    }, 10000);
+    return handWaveID;
+  }
+  link(destination) {
+    this.props.history.push("/");
+    this.setState({
+      homeActive: false,
+    });
+    setTimeout(() => {
+      this.setState({
+        redirect: true,
+        destination: destination,
+      });
+    }, 500);
   }
   render() {
-    if (this.state.authenticated) {
-      return <Redirect to="/Dashboard" />;
+    if (this.state.redirect) {
+      return <Redirect to={this.state.destination} />;
     }
     return (
       <div
         className={
-          this.state.homeActive ? "container home" : "container homeInitial"
+          this.state.homeActive ? "homeContainer" : "homeContainerInitial"
         }
       >
-        <div className="login">
+        <div className="home">
           <div className="upperHome">
             <h1>Mike's Todolist Application</h1>
             <div
@@ -62,7 +86,7 @@ export class Home extends Component {
                 this.state.handWave ? "handWave handWaveAnimate" : "handWave"
               }
             >
-              🖐️
+              <span role="img" aria-label="handwave">🖐️</span>
             </div>
           </div>
           <p>
@@ -71,10 +95,10 @@ export class Home extends Component {
           </p>
           <div className="buttonContainer">
             <div className="SignUpBtn">
-              <Link to="/SignUp">Sign Up</Link>
+              <button onClick={() => this.link("/SignUp")}>Sign Up</button>
             </div>
             <div className="SignUpBtn">
-              <Link to="/Login" onClick={this.fadeOut}>Login</Link>
+              <button onClick={() => this.link("/Login")}>Login</button>
             </div>
           </div>
         </div>

@@ -189,15 +189,28 @@ button {
   color: white;
 }
 .signUpContainer,
-.loginContainer {
+.loginContainer,
+.homeContainer,
+.homeContainerInitial {
   display: flex;
   width: 100vw;
   height: 100vh;
   justify-content: center;
   align-items: center;
 }
+.homeContainer,
+.loginContainer {
+  opacity: 1;
+  transition: 0.5s opacity;
+}
+.homeContainerInitial,
+.loginContainerInitial {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
 .signUp,
-.login {
+.login,
+.home {
   border: 2px solid gray;
   border-radius: 25px;
   padding: 25px;
@@ -239,8 +252,7 @@ button {
   color: rgb(158, 1, 1);
   margin-bottom: 10px;
 }
-.loginFade{
-  opacity:0;
-  transition:0.5s all;
+.loginFade {
+  opacity: 0;
+  transition: 0.5s all;
 }
-

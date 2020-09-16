@@ -42,19 +42,17 @@ export class Recover extends Component {
       },
     })
       .then((response) => {
-        {
+        this.setState({
+          count: 5,
+        });
+        setInterval(() => {
+          this.setState({ count: this.state.count - 1 });
+        }, 1000);
+        setTimeout(() => {
           this.setState({
-            count: 5,
+            redirect: true,
           });
-          setInterval(() => {
-            this.setState({ count: this.state.count - 1 });
-          }, 1000);
-          setTimeout(() => {
-            this.setState({
-              redirect: true,
-            });
-          }, 6000);
-        }
+        }, 6000);
       })
       .catch((error) => {
         this.setState({

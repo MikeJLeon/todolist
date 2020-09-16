@@ -30,20 +30,20 @@ export class Calendar extends Component {
     endDate.setFullYear(startDate.getFullYear() + 2);
     let currentDate = startDate;
     let dateArray = [];
-    let months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
+    // let months = [
+    //   "January",
+    //   "February",
+    //   "March",
+    //   "April",
+    //   "May",
+    //   "June",
+    //   "July",
+    //   "August",
+    //   "September",
+    //   "October",
+    //   "November",
+    //   "December",
+    // ];
     while (currentDate <= endDate) {
       dateArray.push(
         currentDate.getUTCMonth() +
@@ -193,7 +193,7 @@ export class Calendar extends Component {
                 <li>No tasks yet</li>
               )}
             </ul>
-            {this.state.createMode != date ? (
+            {this.state.createMode !== date ? (
               <span
                 className="newTask"
                 onClick={() => this.setCreateMode(date)}

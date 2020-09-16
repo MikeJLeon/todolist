@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
-import { Login } from "./Login";
 export class Settings extends Component {
   static displayName = Settings.name;
   constructor(props) {
