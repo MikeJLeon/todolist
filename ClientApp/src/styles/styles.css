@@ -203,11 +203,6 @@ button {
   opacity: 1;
   transition: 0.5s opacity;
 }
-.homeContainerInitial,
-.loginContainerInitial {
-  opacity: 0;
-  transition: 0.5s opacity;
-}
 .signUp,
 .login,
 .home {
@@ -256,3 +251,35 @@ button {
   opacity: 0;
   transition: 0.5s all;
 }
+.fade-enter {
+  position:absolute;
+  top:0;
+  left:0;
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: 0.5s opacity;
+}
+.fade-enter-done {
+  opacity: 1;
+  transition: 0.5s opacity;
+}
+
+.fade-exit {
+  position:absolute;
+  top:0;
+  left:0;
+  opacity: 1;
+  transition: 0.5s opacity;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+.fade-exit-done {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+

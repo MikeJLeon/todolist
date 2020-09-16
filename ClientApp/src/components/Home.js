@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
 import "../styles/home.css";
-import { Redirect } from "react-router-dom";
+import { Loading } from "./Loading";
+import { Redirect, Link } from "react-router-dom";
 
 export class Home extends Component {
   static displayName = Home.name;
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       homeActive: false,
       handWave: false,
       handWaveID: 0,
@@ -16,7 +18,6 @@ export class Home extends Component {
       destination: "",
     };
     this.fadeOut = this.fadeOut.bind(this);
-    this.link = this.link.bind(this);
     this.waveHandSetup = this.waveHandSetup.bind(this);
   }
   componentWillUnmount() {
@@ -25,16 +26,20 @@ export class Home extends Component {
   componentDidMount() {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
       if (response.data) {
-        this.setState({
-          redirect: true,
-          destination: "/Dashboard",
-        });
-      } else {
+        this.setState({loading: true})
+        let container = document.getElementsByClassName("mainContainer")[0];
+        container.classList.add("fade-exit-active");
         setTimeout(() => {
           this.setState({
-            homeActive: true,
+            redirect: true,
+            destination: "/Dashboard",
           });
         }, 500);
+      } else {
+        this.setState({
+          loading: false,
+          homeActive: true,
+        });
         let handWaveID = this.waveHandSetup();
         this.setState({
           handWaveID: handWaveID,
@@ -56,37 +61,32 @@ export class Home extends Component {
     }, 10000);
     return handWaveID;
   }
-  link(destination) {
-    this.props.history.push("/");
-    this.setState({
-      homeActive: false,
-    });
-    setTimeout(() => {
-      this.setState({
-        redirect: true,
-        destination: destination,
-      });
-    }, 500);
-  }
   render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.destination} />;
     }
+    if (this.state.loading) {
+      return (
+        <div className="mainContainer">
+          <div className="home">
+            <Loading />
+          </div>
+        </div>
+      );
+    }
     return (
-      <div
-        className={
-          this.state.homeActive ? "homeContainer" : "homeContainerInitial"
-        }
-      >
+      <div className="mainContainer">
         <div className="home">
           <div className="upperHome">
-            <h1>Mike's Todolist Application</h1>
+            <h1>The Planner</h1>
             <div
               className={
                 this.state.handWave ? "handWave handWaveAnimate" : "handWave"
               }
             >
-              <span role="img" aria-label="handwave">🖐️</span>
+              <span role="img" aria-label="handwave">
+                🖐️
+              </span>
             </div>
           </div>
           <p>
@@ -94,12 +94,8 @@ export class Home extends Component {
             you've done it to keep track of things you need to do.
           </p>
           <div className="buttonContainer">
-            <div className="SignUpBtn">
-              <button onClick={() => this.link("/SignUp")}>Sign Up</button>
-            </div>
-            <div className="SignUpBtn">
-              <button onClick={() => this.link("/Login")}>Login</button>
-            </div>
+            <Link to="/SignUp" className="SignUpBtn" />
+            <Link to="/Login" className="SignUpBtn" />
           </div>
         </div>
       </div>

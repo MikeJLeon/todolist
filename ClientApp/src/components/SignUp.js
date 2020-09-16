@@ -56,7 +56,7 @@ export class SignUp extends Component {
       <div className="signUpContainer">
         <div className="signUp">
           <div className="requirements">
-            <h2>Mike's Todolist</h2>
+            <h2>The Planner</h2>
             <ul>
               <li>Username can only contain letters and numbers.</li>
               <span>Password must include the following:</span>

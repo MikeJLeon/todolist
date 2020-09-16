@@ -30,19 +30,12 @@ export class Dashboard extends Component {
             last_name: response.data.lastName,
             authenticated: true,
           });
-          let bodyContainer = document.getElementsByClassName(
-            "bodyContainerInitial"
-          )[0];
-          setTimeout(function () {
-            bodyContainer.classList.remove("bodyContainerInitial");
-          }, 500);
+        }else{
+          this.setState({
+            redirect: true,
+          });
         }
       })
-      .catch((error) => {
-        this.setState({
-          redirect: true,
-        });
-      });
   }
 
   logout = () => {
@@ -60,7 +53,7 @@ export class Dashboard extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div className="bodyContainer bodyContainerInitial">
+      <div className="dashboard">
         <NavMenu
           first_name={this.state.first_name}
           last_name={this.state.last_name}

@@ -98,19 +98,13 @@ export class Login extends Component {
       return <Redirect to="/Dashboard" />;
     }
     return (
-      <div
-        className={
-          this.state.loginActive ? "loginContainer" : "loginContainerInitial"
-        }
-      >
-        {this.state.loading && !this.state.error ? (
-          <div className="login">
+      <div className="mainContainer">
+        <div className="login">
+          {this.state.loading && !this.state.error ? (
             <div className="loadingContainer">
               <Loading />
             </div>
-          </div>
-        ) : this.state.recover ? (
-          <div className="login">
+          ) : this.state.recover ? (
             <div className="requirements">
               <h2>Mike's Todolist</h2>
               <h3>Please enter an email to recover</h3>
@@ -133,9 +127,7 @@ export class Login extends Component {
                 <input type="submit" className="submitButton" />
               </form>
             </div>
-          </div>
-        ) : (
-          <div className="login">
+          ) : (
             <div className="requirements">
               <h2>Mike's Todolist</h2>
               <h3>Welcome back! Please login :^</h3>
@@ -147,34 +139,33 @@ export class Login extends Component {
               ) : (
                 ""
               )}
+              <form className="loginForm" onSubmit={this.handleSubmit}>
+                <div>Your user name</div>
+                <input
+                  type="text"
+                  id="user_name"
+                  name="username"
+                  value={this.state.user_name}
+                  onChange={this.handleChange}
+                  placeholder="Your user name goes here"
+                />
+                <br />
+                <div>Password</div>
+                <input
+                  type="password"
+                  id="password"
+                  name="passwordw"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  placeholder="password"
+                />
+                <br />
+                <input type="submit" className="submitButton" />
+              </form>
+              <div onClick={this.handleRecovery}>Forgot Password?</div>
             </div>
-            <form className="loginForm" onSubmit={this.handleSubmit}>
-              <div>Your user name</div>
-              <input
-                type="text"
-                id="user_name"
-                name="username"
-                value={this.state.user_name}
-                onChange={this.handleChange}
-                placeholder="Your user name goes here"
-              />
-              <br />
-              <div>Password</div>
-              <input
-                type="password"
-                id="password"
-                name="passwordw"
-                value={this.state.password}
-                onChange={this.handleChange}
-                placeholder="password"
-              />
-              <br />
-              <input type="submit" className="submitButton" />
-            </form>
-            <div onClick={this.handleRecovery}>Forgot Password?</div>
-            {this.state.authenticated ? <div>Logged in</div> : ""}
-          </div>
-        )}
+          )}{" "}
+        </div>
       </div>
     );
   }
