@@ -1,9 +1,38 @@
-.dashBoard {
-  width:100%;
+.dashboard, .calendarContainer{
+  width: 100%;
   opacity: 1;
-  transition: 0.5s all;
+  transition: 0.25s opacity;
 }
-.dashBoard {
+.dashboardInitial, .calendarContainerInitial {
   opacity: 0;
-  transition: 0.5s all;
+  transition: 0.25s opacity;
+}
+.navbar {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 50px;
+  background-color: rgb(40, 97, 255);
+  color: white;
+  padding: 10px;
+  border-bottom: 2px gray solid;
+}
+.welcomeUser {
+  display:flex;
+  height:50px;
+  align-items:center;
+  overflow: hidden;
+}
+.buttonsUser{
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.buttonsUser a{
+  border:2px solid white;
+  padding:10px;
+  margin-left:10px;
+  text-decoration: none;
+}
+.buttonsUser a:visited{
+  color:white;
 }

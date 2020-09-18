@@ -32,6 +32,8 @@ export class Settings extends Component {
         lastName: lastName,
         newPassword: newPassword,
       },
+    }).then(() => {
+      this.props.authorized();
     });
   };
 

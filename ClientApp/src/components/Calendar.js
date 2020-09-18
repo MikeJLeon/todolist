@@ -6,13 +6,15 @@ import { CreateTask } from "./CreateTask";
 import { ModifyTask } from "./ModifyTask";
 export class Calendar extends Component {
   static displayName = Calendar.name;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       dateActive: false,
       dates: [],
       currentTask: "",
       createMode: false,
+      active: false,
+      tasks: [],
     };
     this.addTask = this.addTask.bind(this);
     this.dateActive = this.dateActive.bind(this);
@@ -22,7 +24,32 @@ export class Calendar extends Component {
     this.handleComplete = this.handleComplete.bind(this);
   }
   componentDidMount() {
-    this.getTasks();
+    console.log(this.props);
+    if (this.props.tasks) {
+      console.log(this.state.active);
+      this.setState(
+        {
+          tasks: this.props.tasks,
+        },
+        () => {
+          setTimeout(() => {
+            this.setState(
+              {
+                active: true,
+              },
+              () => {
+                console.log(this.state.active);
+              }
+            );
+            this.props.loadCalendar();
+            this.createCalendar();
+            this.resetCurrent();
+          }, 250);
+        }
+      );
+    } else {
+      this.getTasks();
+    }
   }
   createCalendar = () => {
     let startDate = new Date();
@@ -87,16 +114,19 @@ export class Calendar extends Component {
       e.classList.add("dateActive");
     }
   }
-  getTasks() {
+  getTasks = () => {
     Axios.get("https://localhost:5001/account/tasks/get/")
       .then((response) => {
-        this.setState({ tasks: response.data, loading: false });
+        this.setState({ tasks: response.data, active: true }, () => {
+          this.props.storeTasks(this.state.tasks);
+        });
+        this.props.loadCalendar();
       })
       .then((response) => {
         this.createCalendar();
         this.resetCurrent();
       });
-  }
+  };
   addTask(event, date) {
     let parent = event.currentTarget.parentElement;
     let desc = parent.getElementsByClassName("taskDesc")[0].value;
@@ -142,7 +172,11 @@ export class Calendar extends Component {
   }
   render() {
     return (
-      <div className="calendarContainer">
+      <div
+        className={
+          this.state.active ? "calendarContainer" : "calendarContainerInitial"
+        }
+      >
         {this.state.dates.map((date) => (
           <div key={date} className="dateContainer">
             <span className="dateValue">{date}</span>

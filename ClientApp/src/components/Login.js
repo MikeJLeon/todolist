@@ -18,27 +18,23 @@ export class Login extends Component {
       loginActive: false,
     };
     this.handleRecovery = this.handleRecovery.bind(this);
-    this.fade = this.fade.bind(this);
+    this.fadeOut = this.fadeOut.bind(this);
   }
   componentDidMount() {
-    setTimeout(this.fade, 50);
-    window.addEventListener("beforeunload", this.handleWindowClose);
-    window.addEventListener("popstate", this.onBackButtonEvent);
+    Axios.get("https://localhost:5001/account/authorized").then((response) => {
+      if (response.data) {
+        this.fadeOut();
+      }
+    });
   }
-  componentWillUnmount() {
-    window.removeEventListener("popstate", this.onBackButtonEvent);
-  }
-  handleWindowClose = (ev) => {
-    ev.preventDefault();
-    return (ev.returnValue = "Leaving this page will loose data");
-  };
-  onBackButtonEvent = (e) => {
-    e.preventDefault();
-    console.log(e);
-    //setTimeout(this.fade, 500);
-  };
-  fade() {
-    this.setState({ loginActive: !this.state.loginActive });
+  fadeOut() {
+    let main = document.getElementsByClassName("mainContainer")[0];
+    main.classList.add("fade-exit-active");
+    setTimeout(() => {
+      this.setState({
+        redirect: true,
+      });
+    }, 1000);
   }
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
@@ -77,15 +73,7 @@ export class Login extends Component {
       },
     })
       .then((response) => {
-        let loginContainer = document.getElementsByClassName(
-          "loginContainer"
-        )[0];
-        loginContainer.classList.add("loginFade");
-        setTimeout(() => {
-          this.setState({
-            redirect: true,
-          });
-        }, 500);
+        this.fadeOut();
       })
       .catch((error) => {
         this.setState({

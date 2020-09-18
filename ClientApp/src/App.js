@@ -11,7 +11,6 @@ const routes = [
   { path: "/", name: "Home", Component: Home },
   { path: "/SignUp", name: "SignUp", Component: SignUp },
   { path: "/Login", name: "Login", Component: Login },
-  { path: "/Dashboard", name: "Dashboard", Component: Dashboard },
   { path: "/Recover/:email/:token", name: "Recover", Component: Recover },
 ];
 
@@ -21,20 +20,21 @@ export default class App extends Component {
   render() {
     return (
       <div className="wrapper">
-        {routes.map(({ path, Component }) => (
-          <Route key={path} exact path={path}>
-            {({ match }) => (
-              <CSSTransition
-                in={match != null}
-                timeout={2000}
-                classNames="fade"
-                unmountOnExit
-              >
-                <Component />
-              </CSSTransition>
-            )}
-          </Route>
-        ))}
+          {routes.map(({ path, Component }) => (
+            <Route key={path} exact path={path}>
+              {({ match }) => (
+                <CSSTransition
+                  in={match != null}
+                  timeout={2000}
+                  classNames="fade"
+                  unmountOnExit
+                >
+                  <Component />
+                </CSSTransition>
+              )}
+            </Route>
+          ))}
+          <Route path="/Dashboard" component={Dashboard} />
       </div>
       /* <Switch>
             <Route exact path="/" component={Home} />
