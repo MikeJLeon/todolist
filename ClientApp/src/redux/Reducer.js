@@ -7,7 +7,6 @@ export default function reducer(state = [], action) {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           userName: action.payload.userName,
-          password: action.payload.password,
         },
       ];
     case "logout":
@@ -17,7 +16,6 @@ export default function reducer(state = [], action) {
           firstName: "",
           lastName: "",
           userName: "",
-          password: "",
         },
       ];
     default:

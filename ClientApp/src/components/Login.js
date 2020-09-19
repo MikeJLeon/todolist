@@ -25,6 +25,15 @@ export class Login extends Component {
   componentDidMount() {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
       if (response.data) {
+        store.dispatch({
+          type: "login",
+          payload: {
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            userName: response.data.email,
+          },
+        });
+        console.log(store.getState(), "componentMounted");
         this.fadeOut();
       }
     });
@@ -75,16 +84,14 @@ export class Login extends Component {
       },
     })
       .then((response) => {
-        console.log(response.data);
         store.dispatch({
-          type:"login",
-          payload:{
-            firstName: "",
-            lastName: this.state.lastName,
-            userName: this.state.user_name,
-            password: this.state.password,
-          }
-        })
+          type: "login",
+          payload: {
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            userName: response.data.email,
+          },
+        });
         console.log(store.getState());
         this.fadeOut();
       })

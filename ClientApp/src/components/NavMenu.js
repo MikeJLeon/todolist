@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar } from "reactstrap";
 import { Link } from "react-router-dom";
-
+import store from "../redux/Store";
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
@@ -12,7 +12,9 @@ export class NavMenu extends Component {
       collapsed: true,
     };
   }
-
+  componentDidMount(){
+    console.log(store.getState());
+  }
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -23,8 +25,8 @@ export class NavMenu extends Component {
       <header>
         <Navbar>
           <div className="welcomeUser">
-            <span>
-              Hello, {this.props.first_name} {this.props.last_name}!
+            <span> 
+              Hello, {""} {""}!
             </span>
           </div>
           <div className="buttonsUser">

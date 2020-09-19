@@ -61,9 +61,12 @@ namespace todolist.Controllers
             {
                 var username = User?.Identity.Name;
                 Console.WriteLine(username);
-                var userInfo = await UserMgr.FindByNameAsync(username);
-
-                return Ok(userInfo);
+                var userToVerify = await UserMgr.FindByNameAsync(username);
+                var userToSend = new UserModel();
+                userToSend.FirstName = userToVerify.FirstName;
+                userToSend.LastName = userToVerify.LastName;
+                userToSend.UserName = userToVerify.NormalizedEmail;
+                return Ok(userToSend);
             }
             return Ok(false);
         }
@@ -78,10 +81,12 @@ namespace todolist.Controllers
             if (result.Succeeded)
             {
                 var identity = await UserMgr.GetClaimsAsync(userToVerify);
-                Console.WriteLine(userToVerify.UserName);
-                Console.WriteLine(userToVerify.Id);
-                Console.WriteLine(identity);
-                return Ok(userToVerify);
+                var userToSend = new UserModel();
+                userToSend.FirstName = userToVerify.FirstName;
+                userToSend.LastName = userToVerify.LastName;
+                userToSend.UserName = userToVerify.NormalizedEmail;
+                Console.WriteLine(userToSend + "<-----");
+                return Ok(userToSend);
             }
 
             return Unauthorized();
@@ -113,7 +118,8 @@ namespace todolist.Controllers
             }
 
             IdentityResult result = await UserMgr.UpdateAsync(user);
-            if(result.Succeeded){
+            if (result.Succeeded)
+            {
                 return Ok("Account successfully updated");
             }
             return Ok("Accout update failed");

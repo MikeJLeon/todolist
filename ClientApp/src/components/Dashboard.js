@@ -5,14 +5,12 @@ import { Redirect } from "react-router-dom";
 import { Calendar } from "./Calendar";
 import { Settings } from "./Settings";
 import "../styles/dashboard.css";
+
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
   constructor() {
     super();
     this.state = {
-      email: "",
-      first_name: "",
-      last_name: "",
       authenticated: false,
       redirect: false,
       settingsActive: false,
@@ -28,14 +26,20 @@ export class Dashboard extends Component {
   componentDidMount() {
     this.authorized();
   }
+ 
   authorized = () => {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
-      console.log(response.data);
       if (response.data) {
+        store.dispatch({
+          type: "login",
+          payload: {
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            userName: response.data.email,
+          },
+        })
+        console.log(store.getState());
         this.setState({
-          email: response.data.email,
-          first_name: response.data.firstName,
-          last_name: response.data.lastName,
           authenticated: true,
           loaded: true,
         });
@@ -88,8 +92,6 @@ export class Dashboard extends Component {
         }
       >
         <NavMenu
-          first_name={this.state.first_name}
-          last_name={this.state.last_name}
           redirect={this.logout}
           settingsActive={this.state.settingsActive}
           handleSettingsClick={this.handleSettingsClick}
