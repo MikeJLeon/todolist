@@ -1,6 +1,8 @@
+import * as UserAction from "./UserAction";
+
 export default function reducer(state = [], action) {
   switch (action.type) {
-    case "login":
+    case UserAction.USER_LOGIN:
       return [
         ...state,
         {
@@ -9,7 +11,7 @@ export default function reducer(state = [], action) {
           userName: action.payload.userName,
         },
       ];
-    case "logout":
+    case UserAction.USER_LOGOUT:
       return [
         ...state,
         {

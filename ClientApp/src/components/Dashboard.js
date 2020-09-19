@@ -30,15 +30,15 @@ export class Dashboard extends Component {
   authorized = () => {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
       if (response.data) {
-        store.dispatch({
-          type: "login",
-          payload: {
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            userName: response.data.email,
-          },
-        })
-        console.log(store.getState());
+        // store.dispatch({
+        //   type: "login",
+        //   payload: {
+        //     firstName: response.data.firstName,
+        //     lastName: response.data.lastName,
+        //     userName: response.data.email,
+        //   },
+        // })
+        // console.log(store.getState());
         this.setState({
           authenticated: true,
           loaded: true,
