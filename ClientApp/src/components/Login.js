@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import Axios from "axios";
+import store from "../redux/Store";
+
 export class Login extends Component {
   static displayName = Login.name;
   constructor(props) {
@@ -73,6 +75,17 @@ export class Login extends Component {
       },
     })
       .then((response) => {
+        console.log(response.data);
+        store.dispatch({
+          type:"login",
+          payload:{
+            firstName: "",
+            lastName: this.state.lastName,
+            userName: this.state.user_name,
+            password: this.state.password,
+          }
+        })
+        console.log(store.getState());
         this.fadeOut();
       })
       .catch((error) => {

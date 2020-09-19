@@ -72,29 +72,17 @@ export class Calendar extends Component {
     //   "December",
     // ];
     while (currentDate <= endDate) {
-      dateArray.push(
+      let date =
         currentDate.getUTCMonth() +
-          1 +
-          "/" +
-          currentDate.getUTCDate() +
-          "/" +
-          currentDate.getUTCFullYear()
-      );
+        1 +
+        "/" +
+        currentDate.getUTCDate() +
+        "/" +
+        currentDate.getUTCFullYear();
+      if(dateArray.indexOf(date) === -1){
+        dateArray.push(date);
+      }
       currentDate.setDate(currentDate.getDate() + 1);
-      // let newDiv = document.createElement("div");
-      // newDiv.classList.add("CalendarDate");
-      // let newP = document.createElement("div");
-      // newP.classList.add("date");
-      // newP.innerText =
-      //   currentDate.getFullYear() +
-      //   " " +
-      //   currentDate.getDate() +
-      //   " " +
-      //   months[currentDate.getMonth()];
-      // newDiv.append(newP);
-      // newDiv.push(<CreateTask/>);
-      // container.appendChild(newDiv);
-      //newDiv.addEventListener("click", () => this.dateActive(newDiv));
     }
     this.setState({ dates: dateArray });
   };

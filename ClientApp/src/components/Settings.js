@@ -11,9 +11,19 @@ export class Settings extends Component {
       lastName: "",
       newPassword: "",
       newEmail: "",
+      firstNameEdit: false,
+      lastNameEdit: false,
+      passwordEdit: false,
     };
+    this.openEdit = this.openEdit.bind(this);
   }
-
+  componentDidMount(){
+    
+  }
+  openEdit = (e) =>{
+    console.log(e.target.id + "Edit");
+    this.setState({[e.target.id + "Edit"] : !e.target.id + "Edit"})
+  }
   handleChange = (e) => {
     console.log(e);
     console.log(e.target.id, e.target.value);
@@ -39,41 +49,45 @@ export class Settings extends Component {
 
   render() {
     return (
-      <div className="loginContainer">
-        <div className="login">
-          <h1>Settings</h1>
-          <form onSubmit={this.update}>
-            <div>
-              Email:
-              <span>{this.state.email}</span>
-            </div>
-            <div>
-              First name:
+      <div className="settings">
+        <h1>Settings</h1>
+        <form>
+          <div>
+            Email:
+            <span>{this.state.email}</span>
+          </div>
+          <div>
+            First name:
+            {this.state.firstNameEdit ? (
               <input
                 id="firstName"
                 value={this.state.firstName}
                 onChange={this.handleChange}
               ></input>
-            </div>
-            <div>
-              Last name:
-              <input
-                id="lastName"
-                value={this.state.lastName}
-                onChange={this.handleChange}
-              ></input>
-            </div>
-            <div>
-              New Password:
-              <input
-                id="newPassword"
-                value={this.state.newPassword}
-                onChange={this.handleChange}
-              ></input>
-            </div>
-            <input type="submit" className="submitButton" />
-          </form>
-        </div>
+            ) : (
+              <div className="inputContainer">
+              <div className="readOnly">{this.state.firstName}</div>
+              <div className="settingsButton" id="firstName" onClick={this.openEdit}>Edit</div></div>
+            )}
+          </div>
+          <div>
+            Last name:
+            <input
+              id="lastName"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            ></input>
+          </div>
+          <div>
+            New Password:
+            <input
+              id="newPassword"
+              value={this.state.newPassword}
+              onChange={this.handleChange}
+            ></input>
+          </div>
+          <input onClick={() => this.update} type="submit" className="submitButton" />
+        </form>
       </div>
     );
   }

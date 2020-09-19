@@ -81,7 +81,7 @@ namespace todolist.Controllers
                 Console.WriteLine(userToVerify.UserName);
                 Console.WriteLine(userToVerify.Id);
                 Console.WriteLine(identity);
-                return Ok(true);
+                return Ok(userToVerify);
             }
 
             return Unauthorized();

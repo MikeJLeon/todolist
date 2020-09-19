@@ -94,19 +94,21 @@ export class Dashboard extends Component {
           settingsActive={this.state.settingsActive}
           handleSettingsClick={this.handleSettingsClick}
         />
-        <div className="contentContainer">
-          {this.state.settingsActive ? (
+        {this.state.settingsActive ? (
+          <div className="mainContainer">
             <Settings authorized={this.authorized} email={this.state.email} />
-          ) : (
+          </div>
+        ) : (
+          <div className="contentContainer">
             <Calendar
               tasks={this.state.tasks}
               storeTasks={this.storeTasks}
               loadCalendar={this.loadCalendar}
             />
-          )}
-          {/* <button onClick={this.createNewTask}>Create</button>
+          </div>
+        )}
+        {/* <button onClick={this.createNewTask}>Create</button>
         {this.state.createTask ? <CreateTask /> : ""} */}
-        </div>
       </div>
     );
   }
