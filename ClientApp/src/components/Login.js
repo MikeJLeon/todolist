@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import Axios from "axios";
-import store from "../redux/Store";
 
 export class Login extends Component {
   static displayName = Login.name;
@@ -25,16 +24,16 @@ export class Login extends Component {
   componentDidMount() {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
       if (response.data) {
-        store.dispatch({
-          type: "login",
-          payload: {
+        this.setState(
+          {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
-            userName: response.data.email,
+            email: response.data.email,
           },
-        });
-        console.log(store.getState(), "componentMounted");
-        this.fadeOut();
+          () => {
+            this.fadeOut();
+          }
+        );
       }
     });
   }
@@ -84,16 +83,18 @@ export class Login extends Component {
       },
     })
       .then((response) => {
-        store.dispatch({
-          type: "login",
-          payload: {
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            userName: response.data.email,
-          },
-        });
-        console.log(store.getState());
-        this.fadeOut();
+        if (response.data) {
+          this.setState(
+            {
+              firstName: response.data.firstName,
+              lastName: response.data.lastName,
+              email: response.data.email,
+            },
+            () => {
+              this.fadeOut();
+            }
+          );
+        }
       })
       .catch((error) => {
         this.setState({
@@ -103,7 +104,19 @@ export class Login extends Component {
   };
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/Dashboard" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/Dashboard",
+            state: {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              email: this.state.email,
+              authorized: true,
+            },
+          }}
+        />
+      );
     }
     return (
       <div className="mainContainer">

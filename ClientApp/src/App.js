@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router";
+import { Route } from "react-router";
 import { Home } from "./components/Home";
 import { SignUp } from "./components/SignUp";
 import { Login } from "./components/Login";
 import { Dashboard } from "./components/Dashboard";
 import { Recover } from "./components/Recover";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 
 const routes = [
   { path: "/", name: "Home", Component: Home },

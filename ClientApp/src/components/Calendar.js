@@ -24,9 +24,7 @@ export class Calendar extends Component {
     this.handleComplete = this.handleComplete.bind(this);
   }
   componentDidMount() {
-    console.log(this.props);
     if (this.props.tasks) {
-      console.log(this.state.active);
       this.setState(
         {
           tasks: this.props.tasks,

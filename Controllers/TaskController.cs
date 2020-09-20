@@ -51,6 +51,7 @@ namespace todolist.Controllers
             var username = User?.Identity.Name;
             var userInfo = await UserMgr.FindByNameAsync(username);
             var data = _repository.GetTasks(userInfo.Id);
+            Console.WriteLine(data);
             return Ok(data);
         }
         [Authorize]

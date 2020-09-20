@@ -10,7 +10,7 @@ export class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       homeActive: false,
       handWave: false,
       handWaveID: 0,

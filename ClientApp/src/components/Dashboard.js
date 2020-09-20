@@ -8,10 +8,10 @@ import "../styles/dashboard.css";
 
 export class Dashboard extends Component {
   static displayName = Dashboard.name;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      authenticated: false,
+      authorized: false,
       redirect: false,
       settingsActive: false,
       calendarActive: false,
@@ -24,23 +24,19 @@ export class Dashboard extends Component {
     this.authorized = this.authorized.bind(this);
   }
   componentDidMount() {
-    this.authorized();
+    console.log(this.props);
+    if (this.state.firstName === "") {
+      this.authorized();
+    }
   }
- 
   authorized = () => {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
       if (response.data) {
-        // store.dispatch({
-        //   type: "login",
-        //   payload: {
-        //     firstName: response.data.firstName,
-        //     lastName: response.data.lastName,
-        //     userName: response.data.email,
-        //   },
-        // })
-        // console.log(store.getState());
         this.setState({
-          authenticated: true,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          authorized: true,
           loaded: true,
         });
       } else {
@@ -95,10 +91,15 @@ export class Dashboard extends Component {
           redirect={this.logout}
           settingsActive={this.state.settingsActive}
           handleSettingsClick={this.handleSettingsClick}
+          firstName={this.state.firstName}
+          lastName={this.state.lastName}
         />
         {this.state.settingsActive ? (
           <div className="mainContainer">
-            <Settings authorized={this.authorized} email={this.state.email} />
+            <Settings
+              authorized={this.state.authorized}
+              email={this.state.email}
+            />
           </div>
         ) : (
           <div className="contentContainer">
