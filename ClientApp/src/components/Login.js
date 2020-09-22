@@ -106,15 +106,7 @@ export class Login extends Component {
     if (this.state.redirect) {
       return (
         <Redirect
-          to={{
-            pathname: "/Dashboard",
-            state: {
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
-              email: this.state.email,
-              authorized: true,
-            },
-          }}
+          to={"/Dashboard"}
         />
       );
     }

@@ -39,7 +39,7 @@ export class NavMenu extends Component {
                 Settings
               </Link>
             )}
-            <Link to="" onClick={this.props.redirect}>Logout</Link>
+            <div onClick={this.props.redirect}>Logout</div>
           </div>
         </Navbar>
       </header>

@@ -13,21 +13,27 @@ export class Dashboard extends Component {
     this.state = {
       authorized: false,
       redirect: false,
-      settingsActive: false,
-      calendarActive: false,
+      firstName: "",
+      settingsActive: this.props.settingsActive,
+      calendarActive: true,
       calendarLoading: false,
       loaded: false,
       tasks: false,
+      dates: false,
     };
     this.handleSettingsClick = this.handleSettingsClick.bind(this);
     this.loadCalendar = this.loadCalendar.bind(this);
     this.authorized = this.authorized.bind(this);
+    this.storeDates = this.storeDates.bind(this);
   }
   componentDidMount() {
-    console.log(this.props);
-    if (this.state.firstName === "") {
-      this.authorized();
+    if (this.props.settingsActive) {
+      this.setState({
+        calendarActive: false,
+      });
     }
+    console.log("woo");
+    this.authorized();
   }
   authorized = () => {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
@@ -51,38 +57,49 @@ export class Dashboard extends Component {
       this.setState({ redirect: true });
     });
   };
-  handleSettingsClick() {
+  handleSettingsClick = () => {
     this.setState(
       {
-        settingsActive: !this.state.settingsActive,
-        calendarActive: false,
+        calendarActive: !this.state.calendarActive,
       },
       () => {
-        if (!this.state.settingsActive) {
-          this.loadCalendar();
-        }
+        setTimeout(() => {
+          this.setState(
+            {
+              settingsActive: !this.state.settingsActive,
+            },
+            () => {
+              if (!this.state.settingsActive) {
+                if (!this.state.tasks) {
+                  this.loadCalendar();
+                }
+              }
+            }
+          );
+        }, 50);
       }
     );
-  }
+  };
   loadCalendar = () => {
     this.setState({
-      settingsActive: false,
-      calendarActive: true,
       calendarLoading: false,
     });
   };
   storeTasks = (tasks) => {
     this.setState({ tasks: tasks });
   };
+
+  storeDates = (dates) => {
+    this.setState({ dates: dates });
+  };
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/" />;
+      return <Redirect to="/Login" />;
     }
     return (
       <div
         className={
-          this.state.loaded &&
-          (this.state.calendarActive || this.state.settingsActive)
+          this.state.loaded 
             ? "dashboard"
             : "dashboardInitial"
         }
@@ -104,14 +121,15 @@ export class Dashboard extends Component {
         ) : (
           <div className="contentContainer">
             <Calendar
+              active={this.state.calendarActive}
               tasks={this.state.tasks}
+              dates={this.state.dates}
               storeTasks={this.storeTasks}
+              storeDates={this.storeDates}
               loadCalendar={this.loadCalendar}
             />
           </div>
         )}
-        {/* <button onClick={this.createNewTask}>Create</button>
-        {this.state.createTask ? <CreateTask /> : ""} */}
       </div>
     );
   }
