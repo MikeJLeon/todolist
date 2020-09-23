@@ -14,6 +14,8 @@ export class Dashboard extends Component {
       authorized: false,
       redirect: false,
       firstName: "",
+      lastName: "",
+      email: "",
       settingsActive: this.props.settingsActive,
       calendarActive: true,
       calendarLoading: false,
@@ -27,13 +29,28 @@ export class Dashboard extends Component {
     this.storeDates = this.storeDates.bind(this);
   }
   componentDidMount() {
+    console.log(this.props.location);
     if (this.props.settingsActive) {
       this.setState({
         calendarActive: false,
       });
     }
     console.log("woo");
-    this.authorized();
+    if (this.props.location.state) {
+      if (this.props.location.state.authorized) {
+        console.log("valid :D");
+        this.setState({
+          firstName: this.props.location.state.firstName,
+          lastName: this.props.location.state.lastName,
+          authorized: this.props.location.state.authorized,
+          email: this.props.location.state.email,
+          loaded: true,
+        });
+      }
+    } else {
+      console.log("not valid :(");
+      this.authorized();
+    }
   }
   authorized = () => {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
@@ -41,7 +58,7 @@ export class Dashboard extends Component {
         this.setState({
           firstName: response.data.firstName,
           lastName: response.data.lastName,
-          email: response.data.email,
+          email: response.data.userName,
           authorized: true,
           loaded: true,
         });
@@ -97,13 +114,7 @@ export class Dashboard extends Component {
       return <Redirect to="/Login" />;
     }
     return (
-      <div
-        className={
-          this.state.loaded 
-            ? "dashboard"
-            : "dashboardInitial"
-        }
-      >
+      <div className={this.state.loaded ? "dashboard" : "dashboardInitial"}>
         <NavMenu
           redirect={this.logout}
           settingsActive={this.state.settingsActive}
@@ -112,10 +123,12 @@ export class Dashboard extends Component {
           lastName={this.state.lastName}
         />
         {this.state.settingsActive ? (
-          <div className="mainContainer">
+          <div className="settingsContainer">
             <Settings
-              authorized={this.state.authorized}
+              authorized={this.authorized}
               email={this.state.email}
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
             />
           </div>
         ) : (

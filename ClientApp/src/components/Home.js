@@ -16,6 +16,10 @@ export class Home extends Component {
       handWaveID: 0,
       redirect: false,
       destination: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      authorized:false,
     };
     this.fadeOut = this.fadeOut.bind(this);
     this.waveHandSetup = this.waveHandSetup.bind(this);
@@ -26,13 +30,18 @@ export class Home extends Component {
   componentDidMount() {
     Axios.get("https://localhost:5001/account/authorized").then((response) => {
       if (response.data) {
-        this.setState({loading: true})
+        this.setState({
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.userName,
+          authorized:true,
+          loading: true,
+        });
         let container = document.getElementsByClassName("mainContainer")[0];
         container.classList.add("fade-exit-active");
         setTimeout(() => {
           this.setState({
             redirect: true,
-            destination: "/Dashboard",
           });
         }, 500);
       } else {
@@ -63,7 +72,19 @@ export class Home extends Component {
   }
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.destination} />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/Dashboard",
+            state: {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              email: this.state.email,
+              authorized: this.state.authorized,
+            },
+          }}
+        />
+      );
     }
     if (this.state.loading) {
       return (

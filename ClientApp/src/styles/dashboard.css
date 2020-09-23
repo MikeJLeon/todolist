@@ -81,3 +81,43 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
+.userInfo,
+.inputContainer {
+  display: flex;
+}
+.userInfo{
+  margin-top:5px;
+}
+.userInfo dt {
+  width: 25%;
+}
+.userInfo dd {
+  width: 75%;
+}
+.settingsButtonContainer {
+  display:flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.inputContainer input {
+  width: 100px;
+  font-family:unset;
+}
+.settingsContainer {
+  display: flex;
+  justify-content: center;
+  margin-top:25px;
+}
+.settings {
+  border: 2px solid gray;
+  background-color: white;
+  border-radius: 25px;
+  padding: 25px;
+  width: 600px;
+}
+.settingsButton{
+  margin-left:10px;
+}
+.readOnly{
+  background-color:rgb(224, 224, 224);
+}

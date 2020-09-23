@@ -16,7 +16,11 @@ export default class App extends Component {
         <Route exact path="/" component={Home} />
         <Route path="/SignUp" component={SignUp} />
         <Route path="/Login" component={Login} />
-        <Route exact path="/Dashboard" component={Dashboard} />
+        <Route
+          exact
+          path="/Dashboard"
+          render={(props) => <Dashboard {...props} />}
+        />
         <Route
           path="/Dashboard/Settings"
           render={(props) => <Dashboard {...props} settingsActive={true} />}

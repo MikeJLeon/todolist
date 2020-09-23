@@ -10,13 +10,15 @@ export class Login extends Component {
     this.state = {
       user_name: "",
       password: "",
-      email: "",
-      authenticated: false,
       redirect: false,
       error: false,
       loading: false,
       recover: false,
       loginActive: false,
+      firstName: "",
+      lastName: "",
+      email: "",
+      authorized:false,
     };
     this.handleRecovery = this.handleRecovery.bind(this);
     this.fadeOut = this.fadeOut.bind(this);
@@ -28,7 +30,8 @@ export class Login extends Component {
           {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
-            email: response.data.email,
+            email: response.data.userName,
+            authorized: true,
           },
           () => {
             this.fadeOut();
@@ -106,7 +109,15 @@ export class Login extends Component {
     if (this.state.redirect) {
       return (
         <Redirect
-          to={"/Dashboard"}
+          to={{
+            path: "/Dashboard",
+            state: {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              email: this.state.email,
+              authorized: this.state.authorized,
+            },
+          }}
         />
       );
     }

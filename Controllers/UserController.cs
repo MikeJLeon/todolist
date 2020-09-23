@@ -65,7 +65,7 @@ namespace todolist.Controllers
                 var userToSend = new UserModel();
                 userToSend.FirstName = userToVerify.FirstName;
                 userToSend.LastName = userToVerify.LastName;
-                userToSend.UserName = userToVerify.NormalizedEmail;
+                userToSend.UserName = userToVerify.NormalizedEmail.ToLower();
                 return Ok(userToSend);
             }
             return Ok(false);
@@ -100,22 +100,40 @@ namespace todolist.Controllers
             Console.WriteLine("logged out");
             return Ok();
         }
+        [Authorize]
         [HttpPost]
         [Route("/account/update")]
-        public async Task<IActionResult> Update(string email, string firstName, string lastName, string newPassword)
+        public async Task<IActionResult> Update(string field, string value)
         {
-            Console.WriteLine(email);
-            Console.WriteLine(firstName);
-            Console.WriteLine(lastName);
-            Console.WriteLine(newPassword);
-            var user = await UserMgr.FindByEmailAsync(email);
-            user.FirstName = firstName;
-            user.LastName = lastName;
-            if (newPassword != null)
+            Console.WriteLine(field);
+            Console.WriteLine(value);
+            var username = User?.Identity.Name;
+            var user = await UserMgr.FindByNameAsync(username);
+            if (field == "firstName")
+            {
+                user.FirstName = value;
+            }
+            else if (field == "lastName")
+            {
+                user.LastName = value;
+            }
+            else if (field == "newPassword")
             {
                 await UserMgr.RemovePasswordAsync(user);
-                await UserMgr.AddPasswordAsync(user, newPassword);
+                await UserMgr.AddPasswordAsync(user, value);
             }
+            else if (field == "newEmail")
+            {
+                var checkEmail = await UserMgr.FindByEmailAsync(value);
+                if (checkEmail == null)
+                {
+                    await UserMgr.SetEmailAsync(user, value);
+                    await UserMgr.SetUserNameAsync(user, value);
+                }else{
+                    return Ok("Account update failed");
+                }
+            }
+
 
             IdentityResult result = await UserMgr.UpdateAsync(user);
             if (result.Succeeded)
