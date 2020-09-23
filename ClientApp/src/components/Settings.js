@@ -34,6 +34,7 @@ export class Settings extends Component {
         newEmail: "",
         firstNameEdit: false,
         lastNameEdit: false,
+        newEmailEdit: false,
         passwordEdit: false,
       });
     }
@@ -43,6 +44,8 @@ export class Settings extends Component {
       this.setState({ firstNameEdit: !this.state.firstNameEdit });
     } else if (e.target.id === "lastNameEdit") {
       this.setState({ lastNameEdit: !this.state.lastNameEdit });
+    } else if(e.target.id ==="newEmailEdit"){
+      this.setState({newEmailEdit: !this.state.newEmailEdit});
     }
   };
   handleChange = (e) => {
@@ -82,7 +85,43 @@ export class Settings extends Component {
         <form>
           <div className="userInfo">
             <dt>Email:</dt>
-            <dd>{this.state.currentEmail}</dd>
+            <dd>
+              {this.state.newEmailEdit ? (
+                <div className="inputContainer">
+                  <input
+                    id="newEmail"
+                    value={this.state.newEmail}
+                    onChange={this.handleChange}
+                  ></input>
+                  <div className="settingsButtonContainer">
+                    <div
+                      className="settingsButton"
+                      onClick={() => this.update("newEmail")}
+                    >
+                      Save
+                    </div>
+                    <div
+                      className="settingsButton"
+                      id="newEmailEdit"
+                      onClick={this.openEdit}
+                    >
+                      Exit
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="inputContainer">
+                  <div className="readOnly">{this.state.currentEmail}</div>
+                  <div
+                    className="settingsButtonContainer"
+                    id="newEmailEdit"
+                    onClick={this.openEdit}
+                  >
+                    Edit
+                  </div>
+                </div>
+              )}
+            </dd>
           </div>
           <div className="userInfo">
             <dt>First name:</dt>

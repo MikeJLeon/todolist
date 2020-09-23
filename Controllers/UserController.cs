@@ -128,17 +128,25 @@ namespace todolist.Controllers
                 if (checkEmail == null)
                 {
                     await UserMgr.SetEmailAsync(user, value);
-                    await UserMgr.SetUserNameAsync(user, value);
-                }else{
+                    var newUser = await UserMgr.FindByEmailAsync(value);
+                    await SignInMgr.SignOutAsync();
+                    await SignInMgr.SignInAsync(newUser, true);
+                    user = newUser;
+                }
+                else
+                {
                     return Ok("Account update failed");
                 }
             }
 
-
             IdentityResult result = await UserMgr.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return Ok("Account successfully updated");
+                var userToSend = new UserModel();
+                userToSend.FirstName = user.FirstName;
+                userToSend.LastName = user.LastName;
+                userToSend.UserName = user.NormalizedEmail;
+                return Ok(userToSend);
             }
             return Ok("Accout update failed");
 
