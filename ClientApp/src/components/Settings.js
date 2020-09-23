@@ -44,8 +44,12 @@ export class Settings extends Component {
       this.setState({ firstNameEdit: !this.state.firstNameEdit });
     } else if (e.target.id === "lastNameEdit") {
       this.setState({ lastNameEdit: !this.state.lastNameEdit });
-    } else if(e.target.id ==="newEmailEdit"){
-      this.setState({newEmailEdit: !this.state.newEmailEdit});
+    } else if (e.target.id === "newEmailEdit") {
+      this.setState({ newEmailEdit: !this.state.newEmailEdit });
+    } else if (e.target.id === "passwordEdit") {
+      this.setState({
+        passwordEdit: !this.state.passwordEdit,
+      });
     }
   };
   handleChange = (e) => {
@@ -211,11 +215,52 @@ export class Settings extends Component {
               )}
             </dd>
           </div>
-          <div className="userInfo">
-            <dt>New Password:</dt>
-            <dd>
-              <button>Update Password</button>
-            </dd>
+          <div className="userPassword">
+            {this.state.passwordEdit ? (
+              <div className="passwordContainer">
+                <div className="userInfo">
+                  <dt>Current Password:</dt>
+                  <dd className="inputContianer">
+                    <input></input>
+                  </dd>
+                </div>
+                <div className="userInfo">
+                  <dt>New Password:</dt>
+                  <dd className="inputContianer">
+                    <input></input>
+                  </dd>
+                </div>
+                <div className="userInfo">
+                  <dt>Confirm New Password:</dt>
+                  <dd className="inputContianer">
+                    <input></input>
+                  </dd>
+                </div>
+                <div className="settingsButtonContainer">
+                  <div
+                    className="settingsButton"
+                    onClick={() => this.update("passwordEdit")}
+                  >
+                    Save
+                  </div>
+                  <div
+                    className="settingsButton"
+                    id="passwordEdit"
+                    onClick={this.openEdit}
+                  >
+                    Exit
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div
+                id="passwordEdit"
+                className="updatePasswordBTN"
+                onClick={this.openEdit}
+              >
+                Update Password
+              </div>
+            )}
           </div>
           {/* <input
             onClick={() => this.update}

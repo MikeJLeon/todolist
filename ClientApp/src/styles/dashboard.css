@@ -89,18 +89,19 @@
   margin-top:5px;
 }
 .userInfo dt {
-  width: 25%;
+  width: 250px;
 }
 .userInfo dd {
-  width: 75%;
+  width: 350px;
+  margin:0;
 }
 .settingsButtonContainer {
   display:flex;
-  width: 100%;
+  width:150px;
   justify-content: flex-end;
 }
 .inputContainer input {
-  width: 100px;
+  width:200px;
   font-family:unset;
 }
 .settingsContainer {
@@ -120,4 +121,12 @@
 }
 .readOnly{
   background-color:rgb(224, 224, 224);
+}
+.userPassword{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.passwordContainer{
+  width:100%;
 }
