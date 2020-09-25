@@ -1,8 +1,5 @@
 .taskButtonContainer {
-  position: absolute;
   opacity: 1;
-  padding-left: 0;
-  top: 45px;
   transition: 0.5s all;
 }
 .taskButtonContainerInitial {
@@ -10,16 +7,17 @@
   top: -45px;
   transition: 0.5s all;
 }
-.task{
-  height:19px;
+.task, .createTask{
+  margin-top:10px;
+  margin-bottom:10px;
 }
-.ModifyTask {
-  position: relative;
-  height: 80px;
-  overflow: hidden;
-  border:none;
-  padding:0;
-  transition:height 0.5s;
+.task, .taskDesc{
+  height:19px;
+  border: 0.5px solid gray;
+  cursor: pointer;
+  padding: 10px;
+  color: gray;
+  border-radius: 10px;
 }
 .task{
   transition:height 0.5s;
@@ -37,4 +35,28 @@
 }
 .dateContainer, .login{
   background-color:rgba(255,255,255);
+}
+.createTask{
+  display:grid;
+  grid-template-columns: auto auto auto auto auto;
+}
+.taskDesc li{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+.taskDesc{
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  height: 19px;
+  resize: none;
+  overflow: hidden;
+  cursor: text;
+  grid-area: 1 / 1 / span 1 / span 5;
+}
+.counter{
+  grid-area: 3 / 1;
+}
+.createTask button{
+  margin-top:10px;
+  margin-bottom:10px;
 }

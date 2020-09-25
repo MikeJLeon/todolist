@@ -12,13 +12,15 @@ export class Settings extends Component {
       email: this.props.email,
       firstName: this.props.firstName,
       lastName: this.props.lastName,
+      confirmPassword: "",
+      confirmNewPassword: "",
       newPassword: "",
-      newEmail: "",
       firstNameEdit: false,
       lastNameEdit: false,
       passwordEdit: false,
     };
     this.openEdit = this.openEdit.bind(this);
+    this.confirmPassword = this.confirmPassword.bind(this);
   }
   componentDidUpdate(prevProps) {
     if (prevProps != this.props) {
@@ -30,8 +32,9 @@ export class Settings extends Component {
         email: this.props.email,
         firstName: this.props.firstName,
         lastName: this.props.lastName,
+        confirmPassword: "",
+        confirmNewPassword: "",
         newPassword: "",
-        newEmail: "",
         firstNameEdit: false,
         lastNameEdit: false,
         newEmailEdit: false,
@@ -39,6 +42,30 @@ export class Settings extends Component {
       });
     }
   }
+  confirmPassword = () => {
+    let url = "../../account/verifypassword";
+    if (this.state.newPassword === this.state.confirmNewPassword) {
+      Axios.post(url, null, {
+        params: {
+          password: this.state.confirmPassword,
+        },
+      }).then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          this.update("newPassword");
+        } else {
+          console.log("wrong old password");
+        }
+      });
+      console.log(
+        this.state.confirmPassword,
+        this.state.confirmNewPassword,
+        this.state.newPassword
+      );
+    } else {
+      console.log("new password confirmation failed.");
+    }
+  };
   openEdit = (e) => {
     if (e.target.id === "firstNameEdit") {
       this.setState({ firstNameEdit: !this.state.firstNameEdit });
@@ -68,7 +95,7 @@ export class Settings extends Component {
     } else if (field === "newPassword") {
       value = this.state.newPassword;
     } else if (field === "newEmail") {
-      value = this.state.newEmail;
+      value = this.state.email;
     }
     console.log(value);
     let url = "https://localhost:5001/account/update";
@@ -93,8 +120,8 @@ export class Settings extends Component {
               {this.state.newEmailEdit ? (
                 <div className="inputContainer">
                   <input
-                    id="newEmail"
-                    value={this.state.newEmail}
+                    id="email"
+                    value={this.state.email}
                     onChange={this.handleChange}
                   ></input>
                   <div className="settingsButtonContainer">
@@ -115,7 +142,11 @@ export class Settings extends Component {
                 </div>
               ) : (
                 <div className="inputContainer">
-                  <div className="readOnly">{this.state.currentEmail}</div>
+                  <input
+                    className="readOnly"
+                    readOnly
+                    value={this.state.currentEmail}
+                  ></input>
                   <div
                     className="settingsButtonContainer"
                     id="newEmailEdit"
@@ -215,41 +246,60 @@ export class Settings extends Component {
               )}
             </dd>
           </div>
+          <hr />
           <div className="userPassword">
             {this.state.passwordEdit ? (
               <div className="passwordContainer">
                 <div className="userInfo">
                   <dt>Current Password:</dt>
-                  <dd className="inputContianer">
-                    <input></input>
+                  <dd>
+                    <div className="inputContainer">
+                      <input
+                        id="confirmPassword"
+                        value={this.state.confirmPassword}
+                        onChange={this.handleChange}
+                      ></input>
+                    </div>
                   </dd>
                 </div>
                 <div className="userInfo">
                   <dt>New Password:</dt>
-                  <dd className="inputContianer">
-                    <input></input>
+                  <dd>
+                    <div className="inputContainer">
+                      <input
+                        id="newPassword"
+                        value={this.state.newPassword}
+                        onChange={this.handleChange}
+                      ></input>
+                    </div>
                   </dd>
                 </div>
                 <div className="userInfo">
-                  <dt>Confirm New Password:</dt>
-                  <dd className="inputContianer">
-                    <input></input>
+                  <dt>Confirm:</dt>
+                  <dd>
+                    <div className="inputContainer">
+                      <input
+                        id="confirmNewPassword"
+                        value={this.state.confirmNewPassword}
+                        onChange={this.handleChange}
+                      ></input>
+                      <div className="settingsButtonContainer">
+                        <div
+                          className="settingsButton"
+                          onClick={this.confirmPassword}
+                        >
+                          Save
+                        </div>
+                        <div
+                          className="settingsButton"
+                          id="passwordEdit"
+                          onClick={this.openEdit}
+                        >
+                          Exit
+                        </div>
+                      </div>
+                    </div>
                   </dd>
-                </div>
-                <div className="settingsButtonContainer">
-                  <div
-                    className="settingsButton"
-                    onClick={() => this.update("passwordEdit")}
-                  >
-                    Save
-                  </div>
-                  <div
-                    className="settingsButton"
-                    id="passwordEdit"
-                    onClick={this.openEdit}
-                  >
-                    Exit
-                  </div>
                 </div>
               </div>
             ) : (

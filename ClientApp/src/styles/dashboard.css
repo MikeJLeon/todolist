@@ -30,14 +30,12 @@
   justify-content: flex-end;
   align-items: center;
 }
-.buttonsUser a {
+.buttonsUser .dashSetBTN {
   border: 2px solid white;
   padding: 10px;
   margin-left: 10px;
   text-decoration: none;
-}
-.buttonsUser a:visited {
-  color: white;
+  color:white;
 }
 .dateContainer {
   overflow: hidden;
@@ -53,10 +51,6 @@
 .dateActive .createTask {
   height: unset;
 }
-.taskDesc {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
 .dateOverlay {
   position: absolute;
   top: 0;
@@ -67,8 +61,7 @@
 }
 .dateActive .dateOverlay {
   z-index: 2;
-}
-.taskDesc,
+} 
 .dateValue {
   position: relative;
   z-index: 3;
@@ -76,38 +69,34 @@
 .dateValue {
   font-weight: bold;
 }
-
-.tasks li {
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
 .userInfo,
 .inputContainer {
   display: flex;
 }
-.userInfo{
-  margin-top:5px;
+.userInfo {
+  margin-top: 5px;
 }
 .userInfo dt {
   width: 250px;
 }
 .userInfo dd {
   width: 350px;
-  margin:0;
+  margin: 0;
 }
 .settingsButtonContainer {
-  display:flex;
-  width:150px;
+  display: flex;
+  width: 150px;
   justify-content: flex-end;
 }
 .inputContainer input {
-  width:200px;
-  font-family:unset;
+  width: 200px;
+  font-family: unset;
+  box-sizing: border-box;
 }
 .settingsContainer {
   display: flex;
   justify-content: center;
-  margin-top:25px;
+  margin-top: 25px;
 }
 .settings {
   border: 2px solid gray;
@@ -116,17 +105,37 @@
   padding: 25px;
   width: 600px;
 }
-.settingsButton{
-  margin-left:10px;
+.settingsButton {
+  margin-left: 10px;
 }
-.readOnly{
-  background-color:rgb(224, 224, 224);
+.readOnly {
+  background-color: rgb(224, 224, 224);
 }
-.userPassword{
-  display:flex;
+.userPassword {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-.passwordContainer{
-  width:100%;
+.passwordContainer {
+  width: 100%;
+}
+.updatePasswordBTN {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px black solid;
+  margin-top: 10px;
+  padding: 10px;
+}
+.dashSetBTN {
+  width:100px;
+  text-align:center;
+  margin-left:10px;
+  margin-right:10px;
+  transition:background-color 0.2s, color 0.2s;
+}
+.dashSetBTN:hover{
+  color:blue;
+  background-color:white;
+  transition:background-color 0.2s, color 0.2s;
 }

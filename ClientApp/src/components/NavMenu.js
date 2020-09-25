@@ -22,24 +22,23 @@ export class NavMenu extends Component {
       <header>
         <Navbar>
           <div className="welcomeUser">
-            <span> 
+            <span>
               Hello, {this.props.firstName} {this.props.lastName}!
             </span>
           </div>
           <div className="buttonsUser">
-            {this.props.settingsActive ? (
-              <Link to="/Dashboard/" onClick={this.props.handleSettingsClick}>
-                Dashboard
-              </Link>
-            ) : (
-              <Link
-                to="/Dashboard/Settings/"
-                onClick={this.props.handleSettingsClick}
-              >
-                Settings
-              </Link>
-            )}
-            <div onClick={this.props.redirect}>Logout</div>
+            <Link
+              className="dashSetBTN"
+              to={
+                this.props.settingsActive
+                  ? "/Dashboard/"
+                  : "/Dashboard/Settings/"
+              }
+              onClick={this.props.handleSettingsClick}
+            >
+              {this.props.settingsActive ? "Dashboard" : "Settings"}
+            </Link>
+            <div className="dashSetBTN" onClick={this.props.redirect}>Logout</div>
           </div>
         </Navbar>
       </header>

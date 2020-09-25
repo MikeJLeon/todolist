@@ -11,6 +11,7 @@ using MimeKit;
 using todolist.Models;
 using MailKit.Net.Smtp;
 using System.Web;
+using todolist.Utility;
 
 namespace todolist.Controllers
 {
@@ -124,22 +125,31 @@ namespace todolist.Controllers
             }
             else if (field == "newEmail")
             {
-                var checkEmail = await UserMgr.FindByEmailAsync(value);
-                if (checkEmail == null)
+                Console.WriteLine(RegexUtilities.IsValidEmail(value));
+                if (RegexUtilities.IsValidEmail(value))
                 {
-                    await UserMgr.SetEmailAsync(user, value);
-                    var newUser = await UserMgr.FindByEmailAsync(value);
-                    await SignInMgr.SignOutAsync();
-                    await SignInMgr.SignInAsync(newUser, true);
-                    user = newUser;
+                    var checkEmail = await UserMgr.FindByEmailAsync(value);
+                    if (checkEmail == null)
+                    {
+                        await UserMgr.SetEmailAsync(user, value);
+                        var newUser = await UserMgr.FindByEmailAsync(value);
+                        await SignInMgr.SignOutAsync();
+                        await SignInMgr.SignInAsync(newUser, true);
+                        user = newUser;
+                    }
+                    else
+                    {
+                        return Ok("Email exists");
+                    }
                 }
                 else
                 {
-                    return Ok("Account update failed");
+                    return Ok("Email invalid");
                 }
             }
 
             IdentityResult result = await UserMgr.UpdateAsync(user);
+            Console.WriteLine(result.Succeeded + "<----");
             if (result.Succeeded)
             {
                 var userToSend = new UserModel();
@@ -151,7 +161,18 @@ namespace todolist.Controllers
             return Ok("Accout update failed");
 
         }
-
+        [HttpPost]
+        [Route("/account/verifypassword")]
+        public async Task<IActionResult> VerifyPassword(string password)
+        {
+            if (User?.Identity.IsAuthenticated == true)
+            {
+                var username = User?.Identity.Name;
+                var user = await UserMgr.FindByNameAsync(username);
+                return Ok(UserMgr.CheckPasswordAsync(user, password).Result);
+            }
+            return Ok(false);
+        }
 
         [HttpPost]
         [Route("/account/recover")]

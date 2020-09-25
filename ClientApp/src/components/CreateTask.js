@@ -20,34 +20,30 @@ export class CreateTask extends Component {
     this.setState({ charCount: e.currentTarget.value.length });
   }
   render() {
-    return (
+    return this.props.createMode === this.props.date ? (
       <div className="createTask">
-        {this.props.createMode === this.props.date ? (
-          <div>
-            <textarea
-              className="taskDesc"
-              rows="4"
-              cols="50"
-              onChange={(e) => this.handleChange(e)}
-              maxLength="100"
-            ></textarea>
-            <button onClick={(e) => this.props.addTask(e, this.props.date)}>
-              Create
-            </button>
-            <button onClick={this.props.handleComplete}>Cancel</button>
-            <div>
-              {this.state.charCount}/100
-              {this.state.charCount === 100 ? (
-                <span className="warningCount"> Max characters reached!</span>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+        <textarea
+          className="taskDesc"
+          rows="4"
+          cols="50"
+          onChange={(e) => this.handleChange(e)}
+          maxLength="100"
+        ></textarea>
+        <button onClick={(e) => this.props.addTask(e, this.props.date)}>
+          Create
+        </button>
+        <button onClick={this.props.handleComplete}>Cancel</button>
+        <div className="counter">
+          {this.state.charCount}/100
+          {this.state.charCount === 100 ? (
+            <span className="warningCount"> Max characters reached!</span>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
+    ) : (
+      ""
     );
   }
 }
