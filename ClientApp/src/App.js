@@ -18,7 +18,7 @@ export default class App extends Component {
         <Route path="/Login" component={Login} />
         <Route
           exact
-          path="/Dashboard"
+          path="/Dashboard/"
           render={(props) => <Dashboard {...props} />}
         />
         <Route

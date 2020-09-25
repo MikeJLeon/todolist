@@ -1,87 +1,16 @@
 body {
   margin: 0;
-  background-color: #eaeeee;
+  background-color: #f5f4ed;
   font-family: "Montserrat", sans-serif;
-  background-image: url("../img/dot-grid.png");
-  width:100vw;
-  overflow-x:hidden;
+  width: 100vw;
+  overflow-x: hidden;
 }
 .container {
   color: #2c4252;
 }
-.loading {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #2c4252 0%, #2c4252 35%, #7ae4dc 100%);
-  animation: 2s spinOuter infinite ease-in-out;
-  padding: 5px;
-}
-.loadingContainer {
-  display: flex;
-  align-self: center;
-  justify-self: center;
-  grid-row-start: 2;
-}
-.loadingBlank {
-  border-radius: 50%;
-  background-color: #eaeeee;
-  width: 90px;
-  height: 90px;
-  padding: 5px;
-  overflow: hidden;
-}
-.loadingInner {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #2c4252 0%, #2c4252 35%, #7ae4dc 100%);
-  animation: 2s spinInner infinite ease-in-out;
-  padding: 5px;
-  background-clip: padding-box;
-}
-.loadingInnerBlank {
-  display: Flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #eaeeee;
-}
-.loadingInnerBlankSlice {
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-top: 100px solid #eaeeee;
-  margin-bottom: 20px;
-}
-@keyframes spinOuter {
-  to {
-    transform: rotate(720deg);
-  }
-}
-@keyframes spinInner {
-  to {
-    transform: rotate(-1440deg);
-  }
-}
-
 .CalendarDate {
 }
-
-
-.signUpForm input,
-.loginForm input {
-  border: 0.5px solid gray;
-  cursor: pointer;
-  padding: 10px;
-  color: gray;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
+s
 .task:hover {
   border-color: black;
   color: black;
@@ -136,74 +65,11 @@ button {
   background-color: #254542;
   color: white;
 }
-.signUpContainer,
-.loginContainer,
-.homeContainer,
-.homeContainerInitial {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-}
-.homeContainer,
-.loginContainer {
-  opacity: 1;
-  transition: 0.5s opacity;
-}
-.signUp,
-.login,
-.home {
-  border: 2px solid gray;
-  background-color:white;
-  border-radius: 25px;
-  padding: 25px;
-  height: 600px;
-  width: 400px;
-  display: grid;
-  grid-template-rows: 25% 50% 25%;
-}
-.signUp h2,
-.login h2,
-.login h3 {
-  text-align: center;
-}
-.signUpForm,
-.loginForm {
-  width: 100%;
-}
-.signUpForm input,
-.loginForm input {
-  width: 100%;
-  box-sizing: border-box;
-}
-.signUpForm .submitButton,
-.loginForm .submitButton {
-  background-color: #7ae4dc;
-  color: #2c4252;
-}
 
-.signUpForm .submitButton:hover,
-.loginForm .submitButton:hover {
-  background-color: #2c4252;
-  color: #eaeeee;
-}
-.signUpForm .submitButton:active,
-.loginForm .submitButton:active {
-  transform: scale(10%);
-}
-.error {
-  color: rgb(158, 1, 1);
-  margin-bottom: 10px;
-}
-.loginFade {
-  opacity: 0;
-  transition: 0.5s all;
-}
 .fade-enter {
-  position:absolute;
-  top:0;
-  left:0;
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
   transition: 0.5s opacity;
 }
@@ -217,9 +83,9 @@ button {
 }
 
 .fade-exit {
-  position:absolute;
-  top:0;
-  left:0;
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 1;
   transition: 0.5s opacity;
 }
@@ -231,4 +97,3 @@ button {
   opacity: 0;
   transition: 0.5s opacity;
 }
-

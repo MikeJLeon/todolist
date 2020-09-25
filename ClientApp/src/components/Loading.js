@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../styles/styles.css";
+import "../styles/loading.css";
 export class Loading extends Component {
   static displayName = Loading.name;
   render() {

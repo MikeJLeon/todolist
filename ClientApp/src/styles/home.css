@@ -4,9 +4,26 @@
   align-items: center;
 }
 .SignUpBtn {
-  border: 1px solid black;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  color:#f5f4ed;
+  background-color:#4795f3;
+  border: 2px solid #f5f4ed;
   margin: 5px;
   padding: 5px;
+  height:50px;
+  width:100px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.SignUpBtn:hover{
+  background-color:#6175c3;
+}
+
+.SignUpBtn:visited{
+  color:white;
 }
 
 .mainContainer {
@@ -17,7 +34,10 @@
   align-items: center;
 }
 .upperHome {
-  display: Flex;
+  display: grid;
+  grid-template-columns: 250px 150px;
+  align-items: center;
+  border-bottom:2px solid #f5f4ed;
 }
 .handWave {
   font-size: 100px;
@@ -27,4 +47,26 @@
 .handWaveAnimate {
   transform: rotate(20deg);
   transition: 0.25s transform;
+}
+
+.home{
+  color:#f5f4ed;
+  background-color: #2e548e;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  height: 600px;
+  width: 400px;
+  display: grid;
+  grid-template-rows: 200px 150px 250px;
+}
+.home p{
+  font-size:18px;
+}
+
+.homeDescContainer{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom:2px solid #f5f4ed;
 }

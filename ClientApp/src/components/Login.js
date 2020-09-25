@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Loading } from "../components/Loading";
+import { SignUp } from "../components/SignUp";
 import Axios from "axios";
-
+import "../styles/login.css";
 export class Login extends Component {
   static displayName = Login.name;
   constructor(props) {
@@ -18,7 +19,7 @@ export class Login extends Component {
       firstName: "",
       lastName: "",
       email: "",
-      authorized:false,
+      authorized: false,
     };
     this.handleRecovery = this.handleRecovery.bind(this);
     this.fadeOut = this.fadeOut.bind(this);
@@ -123,12 +124,12 @@ export class Login extends Component {
     }
     return (
       <div className="mainContainer">
-        <div className="login">
-          {this.state.loading && !this.state.error ? (
+        {this.state.loading && !this.state.error ? (
             <div className="loadingContainer">
               <Loading />
             </div>
-          ) : this.state.recover ? (
+        ) : this.state.recover ? (
+          <div className="login">
             <div className="requirements">
               <h2>Mike's Todolist</h2>
               <h3>Please enter an email to recover</h3>
@@ -151,10 +152,12 @@ export class Login extends Component {
                 <input type="submit" className="submitButton" />
               </form>
             </div>
-          ) : (
+          </div>
+        ) : (
+          <div className="login">
             <div className="requirements">
-              <h2>Mike's Todolist</h2>
-              <h3>Welcome back! Please login :^</h3>
+              <h2>The Planner</h2>
+              <h3>Welcome! Please login :^)</h3>
 
               {this.state.error ? (
                 <div className="error">
@@ -163,33 +166,38 @@ export class Login extends Component {
               ) : (
                 ""
               )}
-              <form className="loginForm" onSubmit={this.handleSubmit}>
-                <div>Your user name</div>
-                <input
-                  type="text"
-                  id="user_name"
-                  name="username"
-                  value={this.state.user_name}
-                  onChange={this.handleChange}
-                  placeholder="Your user name goes here"
-                />
-                <br />
-                <div>Password</div>
-                <input
-                  type="password"
-                  id="password"
-                  name="passwordw"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  placeholder="password"
-                />
-                <br />
-                <input type="submit" className="submitButton" />
-              </form>
-              <div onClick={this.handleRecovery}>Forgot Password?</div>
             </div>
-          )}{" "}
-        </div>
+            <form className="loginForm" onSubmit={this.handleSubmit}>
+              <div>Email</div>
+              <input
+                type="text"
+                id="user_name"
+                name="username"
+                value={this.state.user_name}
+                onChange={this.handleChange}
+                placeholder="Email"
+              />
+              <br />
+              <div>Password</div>
+              <input
+                type="password"
+                id="password"
+                name="passwordw"
+                value={this.state.password}
+                onChange={this.handleChange}
+                placeholder="Password"
+              />
+              <br />
+              <input type="submit" className="submitButton" />{" "}
+              <div className="forgotPassBtn" onClick={this.handleRecovery}>Forgot Password?</div>
+            </form>
+            <div className="buttonContainer">
+              <Link to="/SignUp" className="SignUpBtn">
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

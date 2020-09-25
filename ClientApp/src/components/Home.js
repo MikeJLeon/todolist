@@ -19,7 +19,7 @@ export class Home extends Component {
       firstName: "",
       lastName: "",
       email: "",
-      authorized:false,
+      authorized: false,
     };
     this.fadeOut = this.fadeOut.bind(this);
     this.waveHandSetup = this.waveHandSetup.bind(this);
@@ -34,7 +34,7 @@ export class Home extends Component {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           email: response.data.userName,
-          authorized:true,
+          authorized: true,
           loading: true,
         });
         let container = document.getElementsByClassName("mainContainer")[0];
@@ -110,13 +110,19 @@ export class Home extends Component {
               </span>
             </div>
           </div>
-          <p>
-            This application allows you to create tasks and to check off that
-            you've done it to keep track of things you need to do.
-          </p>
+          <div className="homeDescContainer">
+            <p>
+              This application allows you to create tasks and to check off that
+              you've done it to keep track of things you need to do.
+            </p>
+          </div>
           <div className="buttonContainer">
-            <Link to="/SignUp" className="SignUpBtn" />
-            <Link to="/Login" className="SignUpBtn" />
+            <Link to="/SignUp" className="SignUpBtn">
+              Sign Up
+            </Link>
+            <Link to="/Login" className="SignUpBtn">
+              Login
+            </Link>
           </div>
         </div>
       </div>

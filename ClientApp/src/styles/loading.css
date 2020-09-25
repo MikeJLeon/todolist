@@ -1,0 +1,59 @@
+.loading {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #2e548e 0%, #6175c3 35%, #4796f3 100%);
+    animation: 2.5s spinOuter infinite ease-in-out;
+    padding: 5px;
+  }
+  .loadingContainer {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    grid-row-start: 2;
+  }
+  .loadingBlank {
+    border-radius: 50%;
+    background-color: #eaeeee;
+    width: 90px;
+    height: 90px;
+    padding: 5px;
+    overflow: hidden;
+  }
+  .loadingInner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #2e548e 0%, #6175c3 35%, #4796f3 100%);
+    animation: 2.5s spinInner infinite ease-in-out;
+    padding: 5px;
+    background-clip: padding-box;
+  }
+  .loadingInnerBlank {
+    display: Flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #eaeeee;
+  }
+  .loadingInnerBlankSlice {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 100px solid #eaeeee;
+    margin-bottom: 20px;
+  }
+  @keyframes spinOuter {
+    to {
+      transform: rotate(720deg);
+    }
+  }
+  @keyframes spinInner {
+    to {
+      transform: rotate(-1440deg);
+    }
+  }
+  

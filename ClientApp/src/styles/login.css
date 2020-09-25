@@ -1,0 +1,79 @@
+.loginContainer {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.loginContainer {
+  opacity: 1;
+  transition: 0.5s opacity;
+}
+.login {
+  color: #f5f4ed;
+  background-color: #2e548e;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  height: 600px;
+  width: 400px;
+  display: grid;
+}
+.login h2,
+.login h3 {
+  text-align: center;
+}
+.loginForm {
+  width: 100%;
+  font-size: 20px;
+}
+.loginForm input {
+  font-size: 20px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  border:1px solid #f5f4ed;
+}
+.loginForm input::placeholder{
+    color:#4795f3;
+}
+.loginForm input:focus,
+.loginForm input:focus::placeholder{
+  background-color: #6175c3;
+  color: #f5f4ed;
+}
+.loginForm input:focus::placeholder{
+    color:#2e548e;
+}
+.loginForm .submitButton {
+  font-weight: 500;
+  background-color: #4795f3;
+  color: #f5f4ed;
+}
+
+.loginForm .submitButton:hover {
+  background-color: #6175c3;
+  color: #f5f4ed;
+}
+.loginForm .submitButton:active {
+  transform: scale(10%);
+}
+.error {
+  color: rgb(158, 1, 1);
+  margin-bottom: 10px;
+}
+.loginFade {
+  opacity: 0;
+  transition: 0.5s all;
+}
+.forgotPassBtn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    cursor:pointer;
+}
+.forgotPassBtn:hover{
+    color:#7bb0e5;
+}
