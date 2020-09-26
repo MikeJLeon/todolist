@@ -155,7 +155,7 @@ export class Login extends Component {
           </div>
         ) : (
           <div className="login">
-            <div className="requirements">
+            <div>
               <h2>The Planner</h2>
               <h3>Welcome! Please login :^)</h3>
 

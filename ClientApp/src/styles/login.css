@@ -1,15 +1,19 @@
-.loginContainer {
+.loginContainer,
+.signUpContainer {
   display: flex;
   width: 100vw;
   height: 100vh;
   justify-content: center;
   align-items: center;
 }
-.loginContainer {
+.loginContainer,
+.signUpContainer {
   opacity: 1;
   transition: 0.5s opacity;
 }
-.login {
+
+.login,
+.signUp {
   color: #f5f4ed;
   background-color: #2e548e;
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
@@ -19,61 +23,76 @@
   width: 400px;
   display: grid;
 }
+.requirements {
+  font-size: 12px;
+}
 .login h2,
-.login h3 {
+.login h3,
+.signUp h2,
+.signUp h3 {
   text-align: center;
 }
-.loginForm {
+.loginForm,
+.signUpForm {
   width: 100%;
   font-size: 20px;
 }
-.loginForm input {
+.loginForm input,
+.signUpForm input {
   font-size: 20px;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 5px;
   box-sizing: border-box;
-  border:1px solid #f5f4ed;
+  border: 1px solid #f5f4ed;
 }
-.loginForm input::placeholder{
-    color:#4795f3;
+.loginForm input::placeholder,
+.signUpForm input::placeholder {
+  color: #4795f3;
 }
 .loginForm input:focus,
-.loginForm input:focus::placeholder{
+.loginForm input:focus::placeholder,
+.signUpForm input:focus,
+.signUpForm input:focus::placeholder {
   background-color: #6175c3;
   color: #f5f4ed;
 }
-.loginForm input:focus::placeholder{
-    color:#2e548e;
+.loginForm input:focus::placeholder,
+.signUpForm input:focus::placeholder {
+  color: #2e548e;
 }
-.loginForm .submitButton {
+.loginForm .submitButton,
+.signUpForm .submitButton {
   font-weight: 500;
   background-color: #4795f3;
   color: #f5f4ed;
 }
 
-.loginForm .submitButton:hover {
+.loginForm .submitButton:hover,
+.signUpForm .submitButton:hover {
   background-color: #6175c3;
   color: #f5f4ed;
 }
-.loginForm .submitButton:active {
+.loginForm .submitButton:active,
+.signUpForm .submitButton:active {
   transform: scale(10%);
 }
 .error {
-  color: rgb(158, 1, 1);
-  margin-bottom: 10px;
+  color: red;
+  font-size: 16px;
+  font-weight: 700;
 }
 .loginFade {
   opacity: 0;
   transition: 0.5s all;
 }
-.forgotPassBtn{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: 500;
-    cursor:pointer;
+.forgotPassBtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  cursor: pointer;
 }
-.forgotPassBtn:hover{
-    color:#7bb0e5;
+.forgotPassBtn:hover {
+  color: #7bb0e5;
 }

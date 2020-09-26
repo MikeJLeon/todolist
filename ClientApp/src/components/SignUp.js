@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import "../styles/login.css";
 import { Redirect } from "react-router-dom";
 export class SignUp extends Component {
   static displayName = SignUp.name;
