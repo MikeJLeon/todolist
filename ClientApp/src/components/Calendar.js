@@ -4,7 +4,7 @@ import "../styles/styles.css";
 import "../styles/taskStyle.css";
 import { CreateTask } from "./CreateTask";
 import { ModifyTask } from "./ModifyTask";
-import LazyLoad from "react-lazyload";
+import * as ScrollList from "../Utils/ScrollList";
 export class Calendar extends Component {
   static displayName = Calendar.name;
   constructor(props) {
@@ -12,10 +12,14 @@ export class Calendar extends Component {
     this.state = {
       dateActive: false,
       dates: [],
+      currentDates: [],
       currentTask: "",
       createMode: false,
       active: false,
       tasks: [],
+      currentView: 0,
+      min: 0,
+      max: 12,
     };
     this.addTask = this.addTask.bind(this);
     this.dateActive = this.dateActive.bind(this);
@@ -23,6 +27,16 @@ export class Calendar extends Component {
     this.resetCurrent = this.resetCurrent.bind(this);
     this.setCreateMode = this.setCreateMode.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
+    this.didScroll = this.didScroll.bind(this);
+    this.setCurrentDates = this.setCurrentDates.bind(this);
+  }
+  setCurrentDates(data){
+    this.setState({
+      currentDates:data["currentDates"],
+      min:data["min"],
+      max:data["max"],
+      currentView: data["currentView"],
+    });
   }
   componentDidUpdate(prevProps) {
     if (this.props.active !== prevProps.active) {
@@ -33,6 +47,7 @@ export class Calendar extends Component {
     }
   }
   componentDidMount() {
+    
     if (this.props.dates) {
       this.setState(
         {
@@ -96,6 +111,7 @@ export class Calendar extends Component {
     this.setState({ dates: dateArray }, () => {
       this.props.storeDates(this.state.dates);
     });
+     ScrollList.watchScroll(this.state, this.setCurrentDates);
   };
   dateActive(e) {
     e = e.currentTarget.parentElement;
@@ -171,6 +187,9 @@ export class Calendar extends Component {
       this.setState({ createMode: date });
     }
   }
+  didScroll(e){
+    console.log("scrolled");
+  }
   render() {
     return (
       <div
@@ -179,82 +198,84 @@ export class Calendar extends Component {
         }
       >
         {this.state.dates.map((date) => (
-          <LazyLoad key={date} height={200} offset={600}>
-            <div className="dateContainer">
-              <span className="dateValue">{date}</span>
-              <hr />
-              <ul className="tasks">
-                {this.state.tasks.some((task) => task.date === date) ? (
-                  this.state.tasks.map((key) =>
-                    key.date === date ? (
-                      <li key={key.id}>
-                        {key.id !== this.state.currentTask ? (
-                          <div
-                            className={
-                              key.completed
-                                ? "taskContainer taskComplete"
-                                : "taskContainer"
-                            }
-                            onClick={() => this.setTask(key.id)}
-                          >
-                            <div className="task">{key.desc}</div>
-                            {key.completed ? (
-                              <span>Task completed. :^)</span>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        ) : (
-                          <div className="taskContainer">
-                            <ModifyTask
-                              currentTask={this.state.currentTask}
-                              handleComplete={this.handleComplete}
-                              setTask={this.setTask}
-                              active={false}
-                              addTask={this.addTask}
-                              deleteTask={this.deleteTask}
-                              TaskID={key.id}
-                              TaskCompleted={key.completed}
-                              TaskDesc={key.desc}
-                              date={date}
-                            />
-                          </div>
-                        )}
-                      </li>
-                    ) : (
-                      ""
-                    )
+          <div
+            data-id={this.state.dates.indexOf(date)}
+            key={date}
+            className="dateContainer"
+          >
+            <span className="dateValue">{date}</span>
+            <hr />
+            <ul className="tasks">
+              {this.state.tasks.some((task) => task.date === date) ? (
+                this.state.tasks.map((key) =>
+                  key.date === date ? (
+                    <li key={key.id}>
+                      {key.id !== this.state.currentTask ? (
+                        <div
+                          className={
+                            key.completed
+                              ? "taskContainer taskComplete"
+                              : "taskContainer"
+                          }
+                          onClick={() => this.setTask(key.id)}
+                        >
+                          <div className="task">{key.desc}</div>
+                          {key.completed ? (
+                            <span>Task completed. :^)</span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      ) : (
+                        <div className="taskContainer">
+                          <ModifyTask
+                            currentTask={this.state.currentTask}
+                            handleComplete={this.handleComplete}
+                            setTask={this.setTask}
+                            active={false}
+                            addTask={this.addTask}
+                            deleteTask={this.deleteTask}
+                            TaskID={key.id}
+                            TaskCompleted={key.completed}
+                            TaskDesc={key.desc}
+                            date={date}
+                          />
+                        </div>
+                      )}
+                    </li>
+                  ) : (
+                    ""
                   )
-                ) : (
-                  <li>No tasks yet</li>
-                )}
-              </ul>
-              {this.state.createMode !== date ? (
+                )
+              ) : (
+                <li>No tasks yet</li>
+              )}
+            </ul>
+            {this.state.createMode !== date ? (
+              <span
+                className="newTask"
+                onClick={() => this.setCreateMode(date)}
+              >
+                + Add new task
+              </span>
+            ) : (
+              <div>
                 <span
                   className="newTask"
                   onClick={() => this.setCreateMode(date)}
                 >
-                  + Add new task
+                  - Add new task
                 </span>
-              ) : (
-                <div>
-                  <span
-                    className="newTask"
-                    onClick={() => this.setCreateMode(date)}
-                  >
-                    - Add new task
-                  </span>
-                  <CreateTask
-                    createMode={this.state.createMode}
-                    handleComplete={this.handleComplete}
-                    resetCurrent={this.resetCurrent}
-                    addTask={this.addTask}
-                    date={date}
-                  />
-                </div>
-              )}
-            </div>
-          </LazyLoad>
+                <CreateTask
+                  createMode={this.state.createMode}
+                  handleComplete={this.handleComplete}
+                  resetCurrent={this.resetCurrent}
+                  addTask={this.addTask}
+                  date={date}
+                />
+              </div>
+            )}
+          </div>
         ))}
       </div>
     );
