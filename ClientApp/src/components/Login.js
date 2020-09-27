@@ -93,6 +93,7 @@ export class Login extends Component {
               firstName: response.data.firstName,
               lastName: response.data.lastName,
               email: response.data.email,
+              authorized: true,
             },
             () => {
               this.fadeOut();
@@ -167,7 +168,7 @@ export class Login extends Component {
                 ""
               )}
             </div>
-            <div className="loginForm">
+            <form className="loginForm">
               <div>Email</div>
               <input
                 type="text"
@@ -188,13 +189,16 @@ export class Login extends Component {
                 placeholder="Password"
               />
               <br />
-              <div className="submitButton" onClick={this.handleSubmit}>
-                Submit
+              <div className="buttonContainer">
+                <button className="submitButton" onClick={this.handleSubmit}>
+                  Submit
+                </button>
               </div>
+
               <div className="forgotPassBtn" onClick={this.handleRecovery}>
                 Forgot Password?
               </div>
-            </div>
+            </form>
             <div className="buttonContainer">
               <Link to="/SignUp" className="SignUpBtn">
                 Sign Up

@@ -3,6 +3,10 @@
   width: 100%;
   opacity: 1;
   transition: 0.25s opacity;
+  background-color:#2e548e;
+}
+.calendarContainer{
+  padding-top:60px;
 }
 .dashboardInitial,
 .calendarContainerInitial {
@@ -10,13 +14,15 @@
   transition: 0.25s opacity;
 }
 .navbar {
+  position:fixed;
+  z-index:10;
+  width:100%;
   display: grid;
   grid-template-columns: 50% 50%;
   height: 50px;
-  background-color: rgb(40, 97, 255);
-  color: white;
+  background-color: #4795f3;
+  color: #f5f4ed;
   padding: 10px;
-  border-bottom: 2px gray solid;
   padding-right: 26px;
 }
 .welcomeUser {
@@ -42,8 +48,10 @@
   position: Relative;
   padding: 25px;
   margin: 0 auto;
-  width: 600px;
+  width: 800px;
   font-size: 16px;
+  background-color:#f5f4ed;
+  color:#2e548e;
 }
 .dateActive {
   border: 2px solid rebeccapurple;
@@ -132,10 +140,11 @@
   text-align:center;
   margin-left:10px;
   margin-right:10px;
+  font-weight:500;
   transition:background-color 0.2s, color 0.2s;
 }
 .dashSetBTN:hover{
-  color:blue;
-  background-color:white;
+  color:#4795f3;
+  background-color:#f5f4ed;
   transition:background-color 0.2s, color 0.2s;
 }

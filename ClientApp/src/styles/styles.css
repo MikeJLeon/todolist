@@ -1,3 +1,6 @@
+html{
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
   background-color: #f5f4ed;
@@ -8,9 +11,6 @@ body {
 .container {
   color: #2c4252;
 }
-.CalendarDate {
-}
-s
 .task:hover {
   border-color: black;
   color: black;
