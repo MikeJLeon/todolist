@@ -111,7 +111,7 @@ export class Login extends Component {
       return (
         <Redirect
           to={{
-            path: "/Dashboard",
+            pathname: "/Dashboard",
             state: {
               firstName: this.state.firstName,
               lastName: this.state.lastName,
@@ -125,9 +125,9 @@ export class Login extends Component {
     return (
       <div className="mainContainer">
         {this.state.loading && !this.state.error ? (
-            <div className="loadingContainer">
-              <Loading />
-            </div>
+          <div className="loadingContainer">
+            <Loading />
+          </div>
         ) : this.state.recover ? (
           <div className="login">
             <div className="requirements">
@@ -167,7 +167,7 @@ export class Login extends Component {
                 ""
               )}
             </div>
-            <form className="loginForm" onSubmit={this.handleSubmit}>
+            <div className="loginForm">
               <div>Email</div>
               <input
                 type="text"
@@ -182,15 +182,19 @@ export class Login extends Component {
               <input
                 type="password"
                 id="password"
-                name="passwordw"
+                name="password"
                 value={this.state.password}
                 onChange={this.handleChange}
                 placeholder="Password"
               />
               <br />
-              <input type="submit" className="submitButton" />{" "}
-              <div className="forgotPassBtn" onClick={this.handleRecovery}>Forgot Password?</div>
-            </form>
+              <div className="submitButton" onClick={this.handleSubmit}>
+                Submit
+              </div>
+              <div className="forgotPassBtn" onClick={this.handleRecovery}>
+                Forgot Password?
+              </div>
+            </div>
             <div className="buttonContainer">
               <Link to="/SignUp" className="SignUpBtn">
                 Sign Up

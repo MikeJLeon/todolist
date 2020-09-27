@@ -28,33 +28,34 @@ export class Home extends Component {
     clearInterval(this.state.handWaveID);
   }
   componentDidMount() {
-    Axios.get("https://localhost:5001/account/authorized").then((response) => {
-      if (response.data) {
-        this.setState({
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          email: response.data.userName,
-          authorized: true,
-          loading: true,
-        });
-        let container = document.getElementsByClassName("mainContainer")[0];
-        container.classList.add("fade-exit-active");
-        setTimeout(() => {
-          this.setState({
-            redirect: true,
-          });
-        }, 500);
-      } else {
-        this.setState({
-          loading: false,
-          homeActive: true,
-        });
-        let handWaveID = this.waveHandSetup();
-        this.setState({
-          handWaveID: handWaveID,
-        });
-      }
-    });
+    alert("yello");
+    // Axios.get("https://localhost:5001/account/authorized").then((response) => {
+    //   if (response.data) {
+    //     this.setState({
+    //       firstName: response.data.firstName,
+    //       lastName: response.data.lastName,
+    //       email: response.data.userName,
+    //       authorized: true,
+    //       loading: true,
+    //     });
+    //     let container = document.getElementsByClassName("mainContainer")[0];
+    //     container.classList.add("fade-exit-active");
+    //     setTimeout(() => {
+    //       this.setState({
+    //         redirect: true,
+    //       });
+    //     }, 500);
+    //   } else {
+    //     this.setState({
+    //       loading: false,
+    //       homeActive: true,
+    //     });
+    //     let handWaveID = this.waveHandSetup();
+    //     this.setState({
+    //       handWaveID: handWaveID,
+    //     });
+    //   }
+    // });
   }
   fadeOut() {
     this.setState({ homeActive: false });
