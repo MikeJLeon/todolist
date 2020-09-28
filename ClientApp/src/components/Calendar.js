@@ -30,11 +30,11 @@ export class Calendar extends Component {
     this.didScroll = this.didScroll.bind(this);
     this.setCurrentDates = this.setCurrentDates.bind(this);
   }
-  setCurrentDates(data){
+  setCurrentDates(data) {
     this.setState({
-      currentDates:data["currentDates"],
-      min:data["min"],
-      max:data["max"],
+      currentDates: data["currentDates"],
+      min: data["min"],
+      max: data["max"],
       currentView: data["currentView"],
     });
   }
@@ -47,7 +47,6 @@ export class Calendar extends Component {
     }
   }
   componentDidMount() {
-    
     if (this.props.dates) {
       this.setState(
         {
@@ -106,12 +105,12 @@ export class Calendar extends Component {
       if (dateArray.indexOf(date) === -1) {
         dateArray.push(date);
       }
-      currentDate.setDate(currentDate.getDate() + 1);
+      currentDate.setDate(currentDate.getDate() + 1); 
     }
-    this.setState({ dates: dateArray }, () => {
+    this.setState({ dates: dateArray, currentDates: dateArray }, () => {
       this.props.storeDates(this.state.dates);
+      ScrollList.watchScroll(this.state, this.setCurrentDates);
     });
-     ScrollList.watchScroll(this.state, this.setCurrentDates);
   };
   dateActive(e) {
     e = e.currentTarget.parentElement;
@@ -187,7 +186,7 @@ export class Calendar extends Component {
       this.setState({ createMode: date });
     }
   }
-  didScroll(e){
+  didScroll(e) {
     console.log("scrolled");
   }
   render() {
@@ -197,7 +196,7 @@ export class Calendar extends Component {
           this.state.active ? "calendarContainer" : "calendarContainerInitial"
         }
       >
-        {this.state.dates.map((date) => (
+        {this.state.currentDates.map((date) => (
           <div
             data-id={this.state.dates.indexOf(date)}
             key={date}
