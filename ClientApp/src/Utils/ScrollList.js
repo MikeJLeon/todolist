@@ -12,7 +12,6 @@ function trackHeight(dates) {
   let totalHeight = 0;
   for (let date of dates) {
     totalHeight += date.getBoundingClientRect().height;
-    date.setAttribute("compHeight", date.getBoundingClientRect().height);
   }
   calendar.style.height = totalHeight + "px";
 }

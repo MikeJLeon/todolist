@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
+import { CreateTask } from "./CreateTask";
+import { ModifyTask } from "./ModifyTask";
+import "../styles/taskStyle.css";
 
 export class DateBox extends Component {
   static displayName = Date.name;
@@ -8,22 +11,25 @@ export class DateBox extends Component {
     this.state = {
       date: "",
       id: "",
-      height:0
+      tasks: [],
+      height: 0,
     };
-    this.handleHeight = this.handleHeight.bind(this);
   }
-
-  handleHeight(){
-    this.setState({
-        height:this.dateRef.offsetHeight
-    })
-  }
-  componentDidMount(){
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
       this.setState({
-          date:this.props.date,
-          id:this.props.id,
-          height:this.dateRef.offsetHeight
-      })
+        height: parseFloat(this.dateRef.getBoundingClientRect().height),
+        tasks: this.props.tasks,
+      });
+    }
+  }
+  componentDidMount() {
+    this.setState({
+      date: this.props.date,
+      id: this.props.id,
+      height: parseFloat(this.dateRef.getBoundingClientRect().height),
+      tasks: this.props.tasks,
+    });
   }
 
   render() {
@@ -32,9 +38,16 @@ export class DateBox extends Component {
         data-id={this.state.id}
         date-height={this.state.height}
         className="dateContainer"
-        ref={(dateRef) => {this.dateRef = dateRef}}
+        ref={(dateRef) => {
+          this.dateRef = dateRef;
+        }}
       >
         <span className="dateValue">{this.state.date}</span>
+        <ul className="tasks">
+          {this.state.tasks.map((task, index) => (
+            <li key={index}>{task.desc}</li>
+          ))}
+        </ul>
       </div>
     );
   }

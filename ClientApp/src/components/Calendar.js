@@ -203,7 +203,7 @@ export class Calendar extends Component {
         }
       >
         {this.state.dates.slice(this.state.min, this.state.max).map((date, index) => (
-          <DateBox date={date} id={index} tasks={this.state.tasks.filter((key)=> date === key.date)}/>
+          <DateBox key={index} date={date} id={index} tasks={this.state.tasks.filter((key)=> date === key.date)}/>
         ))}
       </div>
     );
