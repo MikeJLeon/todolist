@@ -4,6 +4,7 @@ import "../styles/styles.css";
 import "../styles/taskStyle.css";
 import { CreateTask } from "./CreateTask";
 import { ModifyTask } from "./ModifyTask";
+import { DateBox } from "./Date";
 import * as ScrollList from "../Utils/ScrollList";
 export class Calendar extends Component {
   static displayName = Calendar.name;
@@ -77,6 +78,7 @@ export class Calendar extends Component {
   createCalendar = () => {
     let startDate = new Date();
     let endDate = new Date();
+    console.log(startDate, endDate);
     endDate.setFullYear(startDate.getFullYear() + 2);
     let currentDate = startDate;
     let dateArray = [];
@@ -105,12 +107,15 @@ export class Calendar extends Component {
       if (dateArray.indexOf(date) === -1) {
         dateArray.push(date);
       }
-      currentDate.setDate(currentDate.getDate() + 1); 
+      currentDate.setDate(currentDate.getDate() + 1);
     }
-    this.setState({ dates: dateArray, currentDates: dateArray }, () => {
-      this.props.storeDates(this.state.dates);
-      ScrollList.watchScroll(this.state, this.setCurrentDates);
-    });
+    this.setState(
+      { dates: dateArray, currentDates: dateArray.slice(0, 12) },
+      () => {
+        this.props.storeDates(this.state.dates);
+        ScrollList.watchScroll(this.state, this.setCurrentDates);
+      }
+    );
   };
   dateActive(e) {
     e = e.currentTarget.parentElement;
@@ -192,91 +197,102 @@ export class Calendar extends Component {
   render() {
     return (
       <div
+        style={{ marginTop: 0 + "px" }}
         className={
           this.state.active ? "calendarContainer" : "calendarContainerInitial"
         }
       >
-        {this.state.currentDates.map((date) => (
-          <div
-            data-id={this.state.dates.indexOf(date)}
-            key={date}
-            className="dateContainer"
-          >
-            <span className="dateValue">{date}</span>
-            <hr />
-            <ul className="tasks">
-              {this.state.tasks.some((task) => task.date === date) ? (
-                this.state.tasks.map((key) =>
-                  key.date === date ? (
-                    <li key={key.id}>
-                      {key.id !== this.state.currentTask ? (
-                        <div
-                          className={
-                            key.completed
-                              ? "taskContainer taskComplete"
-                              : "taskContainer"
-                          }
-                          onClick={() => this.setTask(key.id)}
-                        >
-                          <div className="task">{key.desc}</div>
-                          {key.completed ? (
-                            <span>Task completed. :^)</span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      ) : (
-                        <div className="taskContainer">
-                          <ModifyTask
-                            currentTask={this.state.currentTask}
-                            handleComplete={this.handleComplete}
-                            setTask={this.setTask}
-                            active={false}
-                            addTask={this.addTask}
-                            deleteTask={this.deleteTask}
-                            TaskID={key.id}
-                            TaskCompleted={key.completed}
-                            TaskDesc={key.desc}
-                            date={date}
-                          />
-                        </div>
-                      )}
-                    </li>
-                  ) : (
-                    ""
-                  )
-                )
-              ) : (
-                <li>No tasks yet</li>
-              )}
-            </ul>
-            {this.state.createMode !== date ? (
-              <span
-                className="newTask"
-                onClick={() => this.setCreateMode(date)}
-              >
-                + Add new task
-              </span>
-            ) : (
-              <div>
-                <span
-                  className="newTask"
-                  onClick={() => this.setCreateMode(date)}
-                >
-                  - Add new task
-                </span>
-                <CreateTask
-                  createMode={this.state.createMode}
-                  handleComplete={this.handleComplete}
-                  resetCurrent={this.resetCurrent}
-                  addTask={this.addTask}
-                  date={date}
-                />
-              </div>
-            )}
-          </div>
+        {this.state.dates.slice(this.state.min, this.state.max).map((date, index) => (
+          <DateBox date={date} id={index} tasks={this.state.tasks.filter((key)=> date === key.date)}/>
         ))}
       </div>
     );
   }
+}
+
+{
+  /* {this.state.dates.map((date) =>
+          this.state.currentDates.includes(date) ? (
+            <div
+              data-id={this.state.dates.indexOf(date)}
+              key={date}
+              className="dateContainer"
+            >
+              <span className="dateValue">{date}</span>
+              <hr />
+              <ul className="tasks">
+                {this.state.tasks.some((task) => task.date === date) ? (
+                  this.state.tasks.map((key) =>
+                    key.date === date ? (
+                      <li key={key.id}>
+                        {key.id !== this.state.currentTask ? (
+                          <div
+                            className={
+                              key.completed
+                                ? "taskContainer taskComplete"
+                                : "taskContainer"
+                            }
+                            onClick={() => this.setTask(key.id)}
+                          >
+                            <div className="task">{key.desc}</div>
+                            {key.completed ? (
+                              <span>Task completed. :^)</span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        ) : (
+                          <div className="taskContainer">
+                            <ModifyTask
+                              currentTask={this.state.currentTask}
+                              handleComplete={this.handleComplete}
+                              setTask={this.setTask}
+                              active={false}
+                              addTask={this.addTask}
+                              deleteTask={this.deleteTask}
+                              TaskID={key.id}
+                              TaskCompleted={key.completed}
+                              TaskDesc={key.desc}
+                              date={date}
+                            />
+                          </div>
+                        )}
+                      </li>
+                    ) : (
+                      ""
+                    )
+                  )
+                ) : (
+                  <li>No tasks yet</li>
+                )}
+              </ul>
+              {this.state.createMode !== date ? (
+                <span
+                  className="newTask"
+                  onClick={() => this.setCreateMode(date)}
+                >
+                  + Add new task
+                </span>
+              ) : (
+                <div>
+                  <span
+                    className="newTask"
+                    onClick={() => this.setCreateMode(date)}
+                  >
+                    - Add new task
+                  </span>
+                  <CreateTask
+                    createMode={this.state.createMode}
+                    handleComplete={this.handleComplete}
+                    resetCurrent={this.resetCurrent}
+                    addTask={this.addTask}
+                    date={date}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            ""
+          )
+        )} */
 }
