@@ -1,12 +1,19 @@
+body {
+  background-color: #2e548e;
+}
 .dashboard,
 .calendarContainer {
   width: 100%;
   opacity: 1;
   transition: 0.25s opacity;
-  background-color:#2e548e;
+  background-color: #2e548e;
 }
-.calendarContainer{
-  padding-top:60px;
+.calendarContainer {
+  backface-visibility: hidden;
+  margin: 0 auto;
+  width: 800px;
+  padding-top: 70px;
+  background-color: #f5f4ed;
 }
 .dashboardInitial,
 .calendarContainerInitial {
@@ -14,9 +21,9 @@
   transition: 0.25s opacity;
 }
 .navbar {
-  position:fixed;
-  z-index:10;
-  width:100%;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
   height: 50px;
@@ -41,17 +48,27 @@
   padding: 10px;
   margin-left: 10px;
   text-decoration: none;
-  color:white;
+  color: white;
 }
-.dateContainer {
+.dateContainer,
+.dateContainerInitial {
   overflow: hidden;
   position: Relative;
   padding: 25px;
+  width: 100%;
   margin: 0 auto;
-  width: 800px;
   font-size: 16px;
-  background-color:#f5f4ed;
-  color:#2e548e;
+  background-color: #f5f4ed;
+  color: #2e548e;
+  transition: 0.5s opacity;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+}
+.dateContainer {
+  opacity: 1;
+}
+.dateContainerInitial {
+  opacity: 0;
 }
 .dateActive {
   border: 2px solid rebeccapurple;
@@ -69,10 +86,11 @@
 }
 .dateActive .dateOverlay {
   z-index: 2;
-} 
+}
 .dateValue {
   position: relative;
   z-index: 3;
+  border-bottom:2px solid #2e548e;
 }
 .dateValue {
   font-weight: bold;
@@ -136,15 +154,18 @@
   padding: 10px;
 }
 .dashSetBTN {
-  width:100px;
-  text-align:center;
-  margin-left:10px;
-  margin-right:10px;
-  font-weight:500;
-  transition:background-color 0.2s, color 0.2s;
+  width: 100px;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
 }
-.dashSetBTN:hover{
-  color:#4795f3;
+.dashSetBTN:hover {
+  color: #4795f3;
+  background-color: #f5f4ed;
+  transition: background-color 0.2s, color 0.2s;
+}
+.lazyload-wrapper, .lazyload-placeholder{
   background-color:#f5f4ed;
-  transition:background-color 0.2s, color 0.2s;
 }

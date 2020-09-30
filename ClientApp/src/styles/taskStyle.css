@@ -29,10 +29,6 @@
 .taskContainer{
     transition:0.5s height;
 }
-.dateContainer{
-  border-left:2px rgb(219, 219, 219) solid;
-  border-right:2px rgb(219, 219, 219) solid;
-}
 .createTask{
   display:grid;
   grid-template-columns: auto auto auto auto auto;

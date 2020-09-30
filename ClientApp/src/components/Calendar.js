@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
 import "../styles/taskStyle.css";
-import { CreateTask } from "./CreateTask";
-import { ModifyTask } from "./ModifyTask";
 import { DateBox } from "./Date";
-import * as ScrollList from "../Utils/ScrollList";
+import LazyLoad from "react-lazyload";
 export class Calendar extends Component {
   static displayName = Calendar.name;
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       dateActive: false,
       dates: [],
+      dateBoxes: [],
+      calculated: {},
       currentDates: [],
       currentTask: "",
       createMode: false,
@@ -21,6 +22,7 @@ export class Calendar extends Component {
       currentView: 0,
       min: 0,
       max: 12,
+      bodyHeight: 0,
     };
     this.addTask = this.addTask.bind(this);
     this.dateActive = this.dateActive.bind(this);
@@ -29,16 +31,41 @@ export class Calendar extends Component {
     this.setCreateMode = this.setCreateMode.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
     this.didScroll = this.didScroll.bind(this);
-    this.setCurrentDates = this.setCurrentDates.bind(this);
   }
-  setCurrentDates(data) {
-    this.setState({
-      currentDates: data["currentDates"],
-      min: data["min"],
-      max: data["max"],
-      currentView: data["currentView"],
-    });
-  }
+  setHeight = (id, height) => {
+    if (this.state.loading) {
+      let heights = this.state.calculated;
+      console.log(this.state.bodyHeight);
+      heights[id] = height;
+      this.setState(
+        {
+          calculated: heights,
+        },
+        () => {
+          if (id === 730) {
+            let total = 0;
+            for (let x in this.state.calculated) {
+              total += this.state.calculated[x];
+            }
+            this.setState(
+              {
+                bodyHeight: total,
+                loading: false,
+              },
+              () => {
+                document.getElementsByClassName(
+                  "contentContainer"
+                )[0].style.height = this.state.bodyHeight + "px";
+                console.log(this.state.calculated);
+              }
+            );
+          }
+        }
+      );
+    }
+
+    //heights[id] = { date: heights[id], height: height };
+  };
   componentDidUpdate(prevProps) {
     if (this.props.active !== prevProps.active) {
       console.log("Update detected!" + this.props.active + " vs " + prevProps);
@@ -107,15 +134,21 @@ export class Calendar extends Component {
       if (dateArray.indexOf(date) === -1) {
         dateArray.push(date);
       }
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    this.setState(
-      { dates: dateArray, currentDates: dateArray.slice(0, 12) },
-      () => {
-        this.props.storeDates(this.state.dates);
-        ScrollList.watchScroll(this.state, this.setCurrentDates);
-      }
-    );
+
+    let dateBoxs = dateArray.map((date) => (
+      <DateBox
+        key={dateArray.indexOf(date)}
+        date={date}
+        id={dateArray.indexOf(date)}
+        tasks={this.state.tasks.filter((key) => date === key.date)}
+        setHeight={this.setHeight}
+      />
+    ));
+    console.log(dateArray);
+    this.setState({ dates: dateArray, dateBoxes: dateBoxs }, () => {});
   };
   dateActive(e) {
     e = e.currentTarget.parentElement;
@@ -195,16 +228,31 @@ export class Calendar extends Component {
     console.log("scrolled");
   }
   render() {
+    if (this.state.loading) {
+      return (
+        <div className="holdUp">
+          {this.state.dateBoxes.map((dateObj) => dateObj)}
+        </div>
+      );
+    }
     return (
       <div
-        style={{ marginTop: 0 + "px" }}
+        style={{height:this.state.bodyHeight + "px"}}
         className={
           this.state.active ? "calendarContainer" : "calendarContainerInitial"
         }
       >
-        {this.state.dates.slice(this.state.min, this.state.max).map((date, index) => (
-          <DateBox key={index} date={date} id={index} tasks={this.state.tasks.filter((key)=> date === key.date)}/>
+        {this.state.dateBoxes.map((dateObj, index) => (
+          <LazyLoad offset={200} height={this.state.calculated[index]}>{dateObj}</LazyLoad>
         ))}
+        {/* {this.state.dates.slice(this.state.min, this.state.max).map((date) => (
+          <DateBox
+            key={this.state.dates.indexOf(date)}
+            date={date}
+            id={this.state.dates.indexOf(date)}
+            tasks={this.state.tasks.filter((key) => date === key.date)}
+          />
+        ))} */}
       </div>
     );
   }
