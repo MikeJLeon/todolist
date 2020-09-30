@@ -21,19 +21,22 @@ export class CreateTask extends Component {
       <div className="createTask">
         <textarea
           className="taskDesc"
+          id="newTask"
           rows="4"
           cols="50"
           onChange={(e) => this.handleChange(e)}
           maxLength="100"
         ></textarea>
-        <div
-          className="taskButton"
-          onClick={(e) => this.handleSubmit(e, this.props.date)}
-        >
-          Create
-        </div>
-        <div className="taskButton" onClick={this.props.closeCreate}>
-          Cancel
+        <div className="taskButtonContainer">
+          <div
+            className="taskButton"
+            onClick={(e) => this.handleSubmit(e, this.props.date)}
+          >
+            Create
+          </div>
+          <div className="taskButton" onClick={this.props.closeCreate}>
+            Cancel
+          </div>
         </div>
         <div className="counter">
           {this.state.charCount}/100

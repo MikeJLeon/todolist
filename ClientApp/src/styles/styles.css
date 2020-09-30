@@ -16,6 +16,8 @@ body {
 .tasks {
   list-style: none;
   padding: 0;
+  margin:0;
+  margin-top:10px;
 }
 .newTask {
   cursor: pointer;
@@ -49,19 +51,6 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
-}
-.createTask button,
-.ModifyTask button {
-  background-color: #7ae4dc;
-  border: 2px solid black;
-  color: black;
-  padding: 5px;
-  margin: 5px;
-}
-.createTask button:hover,
-.ModifyTask button:hover {
-  background-color: #254542;
-  color: white;
 }
 
 .fade-enter {

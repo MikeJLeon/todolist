@@ -176,24 +176,3 @@
   z-index:20;
   top: 70px;
 }
-
-.taskButton{
-  background-color:#4795f3;
-  color:#f5f4ed;
-  border:2px solid #2e548e;
-  width:100px;
-  height:30px;
-  font-weight:600;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  cursor:pointer;
-  transition:background-color 0.15s;
-  margin-top:10px;
-  margin-bottom:10px;
-}
-
-.taskButton:hover{
-  background-color:#6175c3;
-  transition:background-color 0.15s;
-}

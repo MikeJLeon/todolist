@@ -86,7 +86,7 @@ export class DateBox extends Component {
         {this.state.tasks.length !== 0 ? (
           <ul className="tasks">
             {this.state.tasks.map((task, index) => (
-              <li key={index}>{task.desc}</li>
+              <li className={"taskDesc"} key={index}>{task.desc}</li>
             ))}
           </ul>
         ) : (

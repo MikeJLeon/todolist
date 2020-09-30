@@ -1,43 +1,70 @@
+.createTask{
+  display:grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
+} 
+.taskDesc{
+  margin-top:10px;
+}
 .taskButtonContainer {
   opacity: 1;
   transition: 0.5s all;
+  display: flex;
 }
 .taskButtonContainerInitial {
   opacity: 0;
   top: -45px;
   transition: 0.5s all;
 }
-.task, .createTask{
-  margin-top:10px;
-  margin-bottom:10px;
+
+.taskButton {
+  background-color: #4795f3;
+  color: #f5f4ed;
+  border: 2px solid #2e548e;
+  width: 100px;
+  height: 30px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  margin:10px;
 }
-.task, .taskDesc{
-  height:19px;
+
+.taskButton:hover {
+  background-color: #6175c3;
+  transition: background-color 0.15s;
+}
+
+.task{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.task,
+.taskDesc {
+  height: 19px;
   border: 0.5px solid gray;
   cursor: pointer;
   padding: 10px;
   color: gray;
   border-radius: 10px;
 }
-.task{
-  transition:height 0.5s;
+.task {
+  transition: height 0.5s;
 }
 .ModifyTask button {
   margin: 0;
   margin-left: 5px;
 }
-.taskContainer{
-    transition:0.5s height;
+.taskContainer {
+  transition: 0.5s height;
 }
-.createTask{
-  display:grid;
-  grid-template-columns: auto auto auto auto auto;
+.taskDesc li {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.taskDesc li{
-  margin-top:10px;
-  margin-bottom:10px;
-}
-.taskDesc{
+.taskDesc {
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   height: 19px;
@@ -46,10 +73,10 @@
   cursor: text;
   grid-area: 1 / 1 / span 1 / span 5;
 }
-.counter{
+.counter {
   grid-area: 3 / 1;
 }
-.createTask button{
-  margin-top:10px;
-  margin-bottom:10px;
+.createTask button {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

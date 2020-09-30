@@ -183,7 +183,8 @@ export class Calendar extends Component {
       });
   };
   addTask(event, date, closeCreate) {
-    let parent = event.currentTarget.parentElement;
+    let parent = event.currentTarget.parentElement.parentElement;
+    console.log(parent);
     let desc = parent.getElementsByClassName("taskDesc")[0].value;
     Axios.post("https://localhost:5001/account/tasks/create", null, {
       params: {
