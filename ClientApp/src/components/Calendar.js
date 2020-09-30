@@ -4,6 +4,8 @@ import "../styles/styles.css";
 import "../styles/taskStyle.css";
 import { DateBox } from "./Date";
 import LazyLoad from "react-lazyload";
+import { PlaceHolderComponent } from "./PlaceholderDate";
+
 export class Calendar extends Component {
   static displayName = Calendar.name;
   constructor(props) {
@@ -20,6 +22,8 @@ export class Calendar extends Component {
       active: false,
       tasks: [],
       currentView: 0,
+      minDate: "0000-00-00",
+      maxDate: "0000-00-00",
       min: 0,
       max: 12,
       bodyHeight: 0,
@@ -30,12 +34,10 @@ export class Calendar extends Component {
     this.resetCurrent = this.resetCurrent.bind(this);
     this.setCreateMode = this.setCreateMode.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
-    this.didScroll = this.didScroll.bind(this);
   }
   setHeight = (id, height) => {
     if (this.state.loading) {
       let heights = this.state.calculated;
-      console.log(this.state.bodyHeight);
       heights[id] = height;
       this.setState({
         calculated: heights,
@@ -84,7 +86,6 @@ export class Calendar extends Component {
   createCalendar = () => {
     let startDate = new Date();
     let endDate = new Date();
-    console.log(startDate, endDate);
     endDate.setFullYear(startDate.getFullYear() + 2);
     let currentDate = startDate;
     let dateArray = [];
@@ -123,12 +124,32 @@ export class Calendar extends Component {
         date={date}
         id={dateArray.indexOf(date)}
         tasks={this.state.tasks.filter((key) => date === key.date)}
+        initial={true}
         setHeight={this.setHeight}
         addTask={this.addTask}
       />
     ));
-    console.log(dateArray);
-    this.setState({ dates: dateArray, dateBoxes: dateBoxs }, () => {});
+    let minDate = dateArray[0];
+    let maxDate = dateArray[dateArray.length - 1];
+    minDate = minDate.split("/").reverse();
+    let tmp = "0" + minDate[2];
+    minDate[2] = minDate[1];
+    minDate[1] = tmp;
+    minDate = minDate.join("-");
+    maxDate = maxDate.split("/").reverse();
+    tmp = "0" + maxDate[2];
+    maxDate[2] = maxDate[1];
+    maxDate[1] = tmp;
+    maxDate = maxDate.join("-");
+    this.setState(
+      {
+        dates: dateArray,
+        dateBoxes: dateBoxs,
+        minDate: minDate,
+        maxDate: maxDate,
+      },
+      () => {}
+    );
   };
   dateActive(e) {
     e = e.currentTarget.parentElement;
@@ -161,7 +182,7 @@ export class Calendar extends Component {
         }
       });
   };
-  addTask(event, date) {
+  addTask(event, date, closeCreate) {
     let parent = event.currentTarget.parentElement;
     let desc = parent.getElementsByClassName("taskDesc")[0].value;
     Axios.post("https://localhost:5001/account/tasks/create", null, {
@@ -171,7 +192,8 @@ export class Calendar extends Component {
       },
     }).then((response) => {
       this.getTasks();
-    });
+      closeCreate();
+    })
   }
 
   setTask(id) {
@@ -204,9 +226,24 @@ export class Calendar extends Component {
       this.setState({ createMode: date });
     }
   }
-  didScroll(e) {
-    console.log("scrolled");
-  }
+  handleScroll = () => {
+    let date = document.getElementById("scrollTo").value;
+    date = date.split("-").reverse();
+    let tmp = date[0].replace(/^0+/, "");
+    date[0] = date[1].replace(/^0+/, "");
+    date[1] = tmp;
+    date = date.join("/");
+    var element = document.querySelector("[date='" + date + "']");
+    var headerOffset = 70;
+    var elementPosition =
+      document.documentElement.scrollTop + element.getBoundingClientRect().top;
+    var offsetPosition = elementPosition - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
   render() {
     if (this.state.loading) {
       return (
@@ -221,9 +258,38 @@ export class Calendar extends Component {
           this.state.active ? "calendarContainer" : "calendarContainerInitial"
         }
       >
+        <div className="datePicker">
+          <input
+            type="date"
+            id="scrollTo"
+            name="scrollTo"
+            min={this.state.minDate}
+            max={this.state.maxDate}
+            onChange={this.handleScroll}
+          />
+        </div>
         {this.state.dateBoxes.map((dateObj, index) => (
-          <LazyLoad offset={200} height={this.state.calculated[index]}>
-            {dateObj}
+          <LazyLoad
+            placeholder={
+              <PlaceHolderComponent
+                key={index}
+                date={this.state.dates[index]}
+                height={this.state.calculated[index]}
+              />
+            }
+            height={this.state.calculated[index]}
+          >
+            <DateBox
+              key={index}
+              date={this.state.dates[index]}
+              id={index}
+              tasks={this.state.tasks.filter(
+                (key) => this.state.dates[index] === key.date
+              )}
+              initial={false}
+              setHeight={this.setHeight}
+              addTask={this.addTask}
+            />
           </LazyLoad>
         ))}
         {/* {this.state.dates.slice(this.state.min, this.state.max).map((date) => (

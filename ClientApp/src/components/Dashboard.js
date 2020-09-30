@@ -109,6 +109,7 @@ export class Dashboard extends Component {
   storeDates = (dates) => {
     this.setState({ dates: dates });
   };
+
   render() {
     if (this.state.redirect) {
       return <Redirect to="/Login" />;

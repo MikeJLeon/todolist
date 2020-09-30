@@ -13,10 +13,16 @@ export class DateBox extends Component {
       date: "",
       id: "",
       tasks: [],
+      createActive: false,
       height: 0,
     };
   }
-  setupComponent = () =>{
+  turnOnCreate = () => {
+    this.setState({
+      createActive: !this.state.createActive,
+    });
+  };
+  setupComponent = () => {
     this.setState(
       {
         date: this.props.date,
@@ -37,15 +43,32 @@ export class DateBox extends Component {
         );
       }
     );
-  }
+  };
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setupComponent();
-
     }
   }
   componentDidMount() {
-    this.setupComponent();
+    if (this.props.initial) {
+      this.setupComponent();
+    } else {
+      this.setState(
+        {
+          date: this.props.date,
+          id: this.props.id,
+          tasks: this.props.tasks,
+          height: this.props.height,
+        },
+        () => {
+          setTimeout(() => {
+            this.setState({
+              active: true,
+            });
+          }, 10);
+        }
+      );
+    }
   }
 
   render() {
@@ -71,7 +94,13 @@ export class DateBox extends Component {
             <li>No tasks yet!</li>
           </ul>
         )}
-        <CreateTask addTask={this.props.addTask} date={this.state.date} />
+        {this.state.createActive ? (
+          <CreateTask closeCreate={this.turnOnCreate} addTask={this.props.addTask} date={this.state.date} />
+        ) : (
+          <div onClick={this.turnOnCreate} className="taskButton">
+            Create
+          </div>
+        )}
       </div>
     );
   }

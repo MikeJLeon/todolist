@@ -1,10 +1,12 @@
-
 .dashboard,
 .calendarContainer {
   width: 100%;
   opacity: 1;
   transition: 0.25s opacity;
   background-color: #2e548e;
+}
+.contentContainer {
+  backface-visibility: hidden;
 }
 .calendarContainer {
   backface-visibility: hidden;
@@ -24,7 +26,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
-  height: 50px;
+  box-sizing:border-box;
   background-color: #4795f3;
   color: #f5f4ed;
   padding: 10px;
@@ -58,7 +60,7 @@
   font-size: 16px;
   background-color: #f5f4ed;
   color: #2e548e;
-  transition: 0.5s opacity;
+  transition: 0.25s opacity;
   box-sizing: border-box;
   backface-visibility: hidden;
 }
@@ -88,7 +90,7 @@
 .dateValue {
   position: relative;
   z-index: 3;
-  border-bottom:2px solid #2e548e;
+  border-bottom: 2px solid #2e548e;
 }
 .dateValue {
   font-weight: bold;
@@ -164,6 +166,34 @@
   background-color: #f5f4ed;
   transition: background-color 0.2s, color 0.2s;
 }
-.lazyload-wrapper, .lazyload-placeholder{
-  background-color:#f5f4ed;
+.lazyload-wrapper,
+.lazyload-placeholder {
+  background-color: #f5f4ed;
+}
+
+.datePicker {
+  position: fixed;
+  z-index:20;
+  top: 70px;
+}
+
+.taskButton{
+  background-color:#4795f3;
+  color:#f5f4ed;
+  border:2px solid #2e548e;
+  width:100px;
+  height:30px;
+  font-weight:600;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  cursor:pointer;
+  transition:background-color 0.15s;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.taskButton:hover{
+  background-color:#6175c3;
+  transition:background-color 0.15s;
 }

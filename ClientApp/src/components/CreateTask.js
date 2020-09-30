@@ -13,6 +13,9 @@ export class CreateTask extends Component {
     console.log(e.currentTarget.value);
     this.setState({ charCount: e.currentTarget.value.length });
   }
+  handleSubmit = (e, date) => {
+    this.props.addTask(e, date, this.props.closeCreate);
+  };
   render() {
     return (
       <div className="createTask">
@@ -23,10 +26,15 @@ export class CreateTask extends Component {
           onChange={(e) => this.handleChange(e)}
           maxLength="100"
         ></textarea>
-        <button onClick={(e) => this.props.addTask(e, this.props.date)}>
+        <div
+          className="taskButton"
+          onClick={(e) => this.handleSubmit(e, this.props.date)}
+        >
           Create
-        </button>
-        <button onClick={this.props.handleComplete}>Cancel</button>
+        </div>
+        <div className="taskButton" onClick={this.props.closeCreate}>
+          Cancel
+        </div>
         <div className="counter">
           {this.state.charCount}/100
           {this.state.charCount === 100 ? (
