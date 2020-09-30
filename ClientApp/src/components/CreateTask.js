@@ -7,20 +7,14 @@ export class CreateTask extends Component {
     this.state = {
       charCount: 0,
     };
-    this.activeCreate = this.activeCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  activeCreate() {
-    this.props.resetCurrent();
-  }
-
   handleChange(e) {
     console.log(e.currentTarget.value);
     this.setState({ charCount: e.currentTarget.value.length });
   }
   render() {
-    return this.props.createMode === this.props.date ? (
+    return (
       <div className="createTask">
         <textarea
           className="taskDesc"
@@ -42,8 +36,6 @@ export class CreateTask extends Component {
           )}
         </div>
       </div>
-    ) : (
-      ""
     );
   }
 }

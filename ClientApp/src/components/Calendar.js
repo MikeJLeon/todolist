@@ -37,31 +37,10 @@ export class Calendar extends Component {
       let heights = this.state.calculated;
       console.log(this.state.bodyHeight);
       heights[id] = height;
-      this.setState(
-        {
-          calculated: heights,
-        },
-        () => {
-          if (id === 730) {
-            let total = 0;
-            for (let x in this.state.calculated) {
-              total += this.state.calculated[x];
-            }
-            this.setState(
-              {
-                bodyHeight: total,
-                loading: false,
-              },
-              () => {
-                document.getElementsByClassName(
-                  "contentContainer"
-                )[0].style.height = this.state.bodyHeight + "px";
-                console.log(this.state.calculated);
-              }
-            );
-          }
-        }
-      );
+      this.setState({
+        calculated: heights,
+        loading: false,
+      });
     }
 
     //heights[id] = { date: heights[id], height: height };
@@ -145,6 +124,7 @@ export class Calendar extends Component {
         id={dateArray.indexOf(date)}
         tasks={this.state.tasks.filter((key) => date === key.date)}
         setHeight={this.setHeight}
+        addTask={this.addTask}
       />
     ));
     console.log(dateArray);
@@ -237,13 +217,14 @@ export class Calendar extends Component {
     }
     return (
       <div
-        style={{height:this.state.bodyHeight + "px"}}
         className={
           this.state.active ? "calendarContainer" : "calendarContainerInitial"
         }
       >
         {this.state.dateBoxes.map((dateObj, index) => (
-          <LazyLoad offset={200} height={this.state.calculated[index]}>{dateObj}</LazyLoad>
+          <LazyLoad offset={200} height={this.state.calculated[index]}>
+            {dateObj}
+          </LazyLoad>
         ))}
         {/* {this.state.dates.slice(this.state.min, this.state.max).map((date) => (
           <DateBox

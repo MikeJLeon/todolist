@@ -16,7 +16,7 @@ export class DateBox extends Component {
       height: 0,
     };
   }
-  componentDidMount() {
+  setupComponent = () =>{
     this.setState(
       {
         date: this.props.date,
@@ -38,6 +38,15 @@ export class DateBox extends Component {
       }
     );
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setupComponent();
+
+    }
+  }
+  componentDidMount() {
+    this.setupComponent();
+  }
 
   render() {
     return (
@@ -51,11 +60,18 @@ export class DateBox extends Component {
         }}
       >
         <div className="dateValue">{this.state.date}</div>
-        <ul className="tasks">
-          {this.state.tasks.map((task, index) => (
-            <li key={index}>{task.desc}</li>
-          ))}
-        </ul>
+        {this.state.tasks.length !== 0 ? (
+          <ul className="tasks">
+            {this.state.tasks.map((task, index) => (
+              <li key={index}>{task.desc}</li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="tasks">
+            <li>No tasks yet!</li>
+          </ul>
+        )}
+        <CreateTask addTask={this.props.addTask} date={this.state.date} />
       </div>
     );
   }
