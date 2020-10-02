@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { Loading } from "../components/Loading";
-import { SignUp } from "../components/SignUp";
 import Axios from "axios";
 import "../styles/login.css";
 export class Login extends Component {

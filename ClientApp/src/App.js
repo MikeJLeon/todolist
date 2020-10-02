@@ -5,7 +5,6 @@ import { SignUp } from "./components/SignUp";
 import { Login } from "./components/Login";
 import { Dashboard } from "./components/Dashboard";
 import { Recover } from "./components/Recover";
-import { Settings } from "./components/Settings";
 
 export default class App extends Component {
   static displayName = App.name;

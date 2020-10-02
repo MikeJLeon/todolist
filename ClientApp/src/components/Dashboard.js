@@ -29,16 +29,13 @@ export class Dashboard extends Component {
     this.storeDates = this.storeDates.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.location);
     if (this.props.settingsActive) {
       this.setState({
         calendarActive: false,
       });
     }
-    console.log("woo");
     if (this.props.location.state) {
       if (this.props.location.state.authorized) {
-        console.log("valid :D");
         this.setState({
           firstName: this.props.location.state.firstName,
           lastName: this.props.location.state.lastName,
@@ -102,8 +99,12 @@ export class Dashboard extends Component {
       calendarLoading: false,
     });
   };
-  storeTasks = (tasks) => {
-    this.setState({ tasks: tasks });
+  storeTasks = (tasks, callback=false) => {
+    this.setState({ tasks: tasks }, () => {
+      if (callback) {
+        callback();
+      }
+    });
   };
 
   storeDates = (dates) => {
@@ -124,14 +125,12 @@ export class Dashboard extends Component {
           lastName={this.state.lastName}
         />
         {this.state.settingsActive ? (
-          <div className="settingsContainer">
             <Settings
               authorized={this.authorized}
               email={this.state.email}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
             />
-          </div>
         ) : (
           <div className="contentContainer">
             <Calendar

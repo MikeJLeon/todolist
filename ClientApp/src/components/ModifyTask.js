@@ -2,27 +2,33 @@ import React, { Component } from "react";
 import Axios from "axios";
 import "../styles/styles.css";
 import "../styles/taskStyle.css";
+import { WordCounter } from "./WordCounter";
 export class ModifyTask extends Component {
   static displayName = ModifyTask.name;
   constructor(props) {
     super(props);
     this.state = {
-      active: this.props.active,
-      desc: this.props.TaskDesc,
+      charCount: 0,
+      desc: this.props.desc,
     };
     this.updateTask = this.updateTask.bind(this);
     this.completeTask = this.completeTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
-    this.handleText = this.handleText.bind(this);
   }
-  componentDidMount(){
-    let buttonContainer = document.getElementsByClassName("taskButtonContainerInitial")[0];
-    setTimeout(function(){
+  handleChange = (e) => {
+    console.log(e.currentTarget.value);
+    this.setState({
+      charCount: e.currentTarget.value.length,
+      desc: e.currentTarget.value,
+    });
+  };
+  componentDidMount() {
+    let buttonContainer = document.getElementsByClassName(
+      "taskButtonContainerInitial"
+    )[0];
+    setTimeout(function () {
       buttonContainer.classList.remove("taskButtonContainerInitial");
     }, 5);
-  }
-  handleText(e) {
-    this.setState({ desc: e.currentTarget.value });
   }
   updateTask(e, taskID) {
     let desc = this.state.desc;
@@ -36,7 +42,7 @@ export class ModifyTask extends Component {
         },
       }
     ).then((response) => {
-      this.props.handleComplete();
+      this.props.handleComplete(this.props.activeText);
     });
   }
 
@@ -46,7 +52,7 @@ export class ModifyTask extends Component {
         taskID: taskID,
       },
     }).then((response) => {
-      this.props.handleComplete();
+      this.props.handleComplete(this.props.activeText);
     });
   }
 
@@ -61,37 +67,46 @@ export class ModifyTask extends Component {
         },
       }
     ).then((response) => {
-      this.props.handleComplete();
+      this.props.handleComplete(this.props.activeText);
     });
   }
   render() {
     return (
       <div className="createTask">
-          <textarea
-            className="taskDesc"
-            rows="4"
-            cols="50"
-            value={this.state.desc}
-            maxLength="100"
-            onChange={this.handleText}
-          ></textarea>
-          <div className="taskButtonContainer taskButtonContainerInitial">
-            <button onClick={(e) => this.updateTask(e, this.props.TaskID)}>
-              Update
-            </button>
-            <button onClick={() => this.deleteTask(this.props.TaskID)}>
-              Delete
-            </button>
-            <button
-              onClick={() =>
-                this.completeTask(this.props.TaskID, this.props.TaskCompleted)
-              }
-            >
-              Completed?
-            </button>
-            <button onClick={this.props.handleComplete}>Cancel</button>
+        <textarea
+          className="taskDesc"
+          id="modifyTask"
+          value={this.state.desc}
+          maxLength="100"
+          onChange={this.handleChange}
+        ></textarea>
+        <div className="taskButtonContainer taskButtonContainerInitial">
+          <div
+            className="taskButton"
+            onClick={(e) => this.updateTask(e, this.props.TaskID)}
+          >
+            Update
+          </div>
+          <div
+            className="taskButton"
+            onClick={() => this.deleteTask(this.props.TaskID)}
+          >
+            Delete
+          </div>
+          <div
+            className="taskButton"
+            onClick={() =>
+              this.completeTask(this.props.TaskID, this.props.TaskCompleted)
+            }
+          >
+            Done?
+          </div>
+          <div className="taskButton" onClick={this.props.handleComplete}>
+            Cancel
           </div>
         </div>
+        <WordCounter charCount={this.state.charCount} />
+      </div>
     );
   }
 }

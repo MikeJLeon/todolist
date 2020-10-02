@@ -26,7 +26,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
-  box-sizing:border-box;
+  box-sizing: border-box;
   background-color: #4795f3;
   color: #f5f4ed;
   padding: 10px;
@@ -95,23 +95,29 @@
 .dateValue {
   font-weight: bold;
 }
-.userInfo,
-.inputContainer {
-  display: flex;
-}
 .userInfo {
-  margin-top: 5px;
+  display: grid;
+  grid-template-columns:500px 150px 1fr;
+  justify-content: center;
 }
 .userInfo dt {
-  width: 250px;
+  display: flex;
+  text-align:end;
+  justify-content:flex-end;
+  align-items: center;
+  padding-right:20px;
+  grid-column:2;
 }
 .userInfo dd {
-  width: 350px;
+  grid-column: 3;
   margin: 0;
+}
+.inputContainer {
+  display: flex;
+  margin-top:10px;
 }
 .settingsButtonContainer {
   display: flex;
-  width: 150px;
   justify-content: flex-end;
 }
 .inputContainer input {
@@ -120,20 +126,38 @@
   box-sizing: border-box;
 }
 .settingsContainer {
-  display: flex;
+  display: grid;
+  color:#2e548e;
+  grid-template-rows: 70px auto;
+  grid-template-columns: 100%;
   justify-content: center;
-  margin-top: 25px;
+  height: 100vh;
+  box-sizing: border-box;
+  padding-top: 70px;
+  background-color: #f5f4ed;
 }
-.settings {
-  border: 2px solid gray;
-  background-color: white;
-  border-radius: 25px;
-  padding: 25px;
-  width: 600px;
+.settingsContainer h1 {
+  text-align: center;
 }
 .settingsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f4ed;
+  color: #4795f3;
+  border: 2px solid #4795f3;
+  width: 100px;
+  padding: 10px;
   margin-left: 10px;
 }
+
+.settingsButton:hover{
+  background-color:#4795f3;
+  color:#f5f4ed;
+  border:2px solid #4795f3;
+  cursor:pointer;
+}
+
 .readOnly {
   background-color: rgb(224, 224, 224);
 }
@@ -173,6 +197,6 @@
 
 .datePicker {
   position: fixed;
-  z-index:20;
+  z-index: 20;
   top: 70px;
 }

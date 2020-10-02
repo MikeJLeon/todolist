@@ -23,7 +23,7 @@ export class Settings extends Component {
     this.confirmPassword = this.confirmPassword.bind(this);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps != this.props) {
+    if (prevProps !== this.props) {
       console.log("component updated!");
       this.setState({
         currentEmail: this.props.email,
@@ -111,7 +111,7 @@ export class Settings extends Component {
 
   render() {
     return (
-      <div className="settings">
+      <div className="settingsContainer">
         <h1>Settings</h1>
         <form>
           <div className="userInfo">
@@ -147,12 +147,14 @@ export class Settings extends Component {
                     readOnly
                     value={this.state.currentEmail}
                   ></input>
-                  <div
-                    className="settingsButtonContainer"
-                    id="newEmailEdit"
-                    onClick={this.openEdit}
-                  >
-                    Edit
+                  <div className="settingsButtonContainer">
+                    <div
+                      className="settingsButton"
+                      id="newEmailEdit"
+                      onClick={this.openEdit}
+                    >
+                      Edit
+                    </div>
                   </div>
                 </div>
               )}
@@ -191,12 +193,14 @@ export class Settings extends Component {
                     value={this.state.currentFirstName}
                     readOnly
                   ></input>
-                  <div
-                    className="settingsButtonContainer"
-                    id="firstNameEdit"
-                    onClick={this.openEdit}
-                  >
-                    Edit
+                  <div className="settingsButtonContainer">
+                      <div
+                        className="settingsButton"
+                        id="firstNameEdit"
+                        onClick={this.openEdit}
+                      >
+                        Edit
+                      </div>
                   </div>
                 </div>
               )}
@@ -235,12 +239,14 @@ export class Settings extends Component {
                     value={this.state.currentLastName}
                     readOnly
                   ></input>
-                  <div
-                    className="settingsButtonContainer"
-                    id="lastNameEdit"
-                    onClick={this.openEdit}
-                  >
-                    Edit
+                  <div className="settingsButtonContainer">
+                    <div
+                      className="settingsButton"
+                      id="lastNameEdit"
+                      onClick={this.openEdit}
+                    >
+                      Edit
+                    </div>
                   </div>
                 </div>
               )}
@@ -305,18 +311,13 @@ export class Settings extends Component {
             ) : (
               <div
                 id="passwordEdit"
-                className="updatePasswordBTN"
+                className="settingsButton"
                 onClick={this.openEdit}
               >
                 Update Password
               </div>
             )}
           </div>
-          {/* <input
-            onClick={() => this.update}
-            type="submit"
-            className="submitButton"
-          /> */}
         </form>
       </div>
     );

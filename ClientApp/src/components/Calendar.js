@@ -13,7 +13,7 @@ export class Calendar extends Component {
     this.state = {
       loading: true,
       dateActive: false,
-      dates: [],
+      dates: false,
       dateBoxes: [],
       calculated: {},
       currentDates: [],
@@ -132,13 +132,31 @@ export class Calendar extends Component {
     let minDate = dateArray[0];
     let maxDate = dateArray[dateArray.length - 1];
     minDate = minDate.split("/").reverse();
-    let tmp = "0" + minDate[2];
-    minDate[2] = minDate[1];
+
+    let tmp = -1;
+    if (minDate[2].length !== 2) {
+      tmp = "0" + minDate[2];
+    } else {
+      tmp = minDate[2];
+    }
+    if (minDate[1].length !== 2) {
+      minDate[2] = "0" + minDate[1];
+    } else {
+      minDate[2] = minDate[1];
+    }
     minDate[1] = tmp;
     minDate = minDate.join("-");
     maxDate = maxDate.split("/").reverse();
-    tmp = "0" + maxDate[2];
-    maxDate[2] = maxDate[1];
+    if (maxDate[2].length !== 2) {
+      tmp = "0" + maxDate[2];
+    } else {
+      tmp = maxDate[2];
+    }
+    if (maxDate[1].length !== 2) {
+      maxDate[2] = "0" + maxDate[1];
+    } else {
+      maxDate[2] = maxDate[1];
+    }
     maxDate[1] = tmp;
     maxDate = maxDate.join("-");
     this.setState(
@@ -167,16 +185,16 @@ export class Calendar extends Component {
       e.classList.add("dateActive");
     }
   }
-  getTasks = () => {
+  getTasks = (callback = false) => {
     Axios.get("https://localhost:5001/account/tasks/get/")
       .then((response) => {
         this.setState({ tasks: response.data }, () => {
-          this.props.storeTasks(this.state.tasks);
+          this.props.storeTasks(this.state.tasks, callback);
         });
         this.props.loadCalendar();
       })
       .then((response) => {
-        if (!this.props.dates) {
+        if (!this.state.dates) {
           this.createCalendar();
           this.resetCurrent();
         }
@@ -194,7 +212,7 @@ export class Calendar extends Component {
     }).then((response) => {
       this.getTasks();
       closeCreate();
-    })
+    });
   }
 
   setTask(id) {
@@ -209,9 +227,8 @@ export class Calendar extends Component {
       });
     }
   }
-  handleComplete() {
-    this.setTask(this.state.currentTask);
-    this.getTasks();
+  handleComplete(callback = false) {
+    this.getTasks(callback);
   }
   resetCurrent() {
     this.setState({
@@ -271,9 +288,9 @@ export class Calendar extends Component {
         </div>
         {this.state.dateBoxes.map((dateObj, index) => (
           <LazyLoad
+            key={index}
             placeholder={
               <PlaceHolderComponent
-                key={index}
                 date={this.state.dates[index]}
                 height={this.state.calculated[index]}
               />
@@ -290,105 +307,12 @@ export class Calendar extends Component {
               initial={false}
               setHeight={this.setHeight}
               addTask={this.addTask}
+              getTask={this.getTasks}
+              handleComplete={this.handleComplete}
             />
           </LazyLoad>
         ))}
-        {/* {this.state.dates.slice(this.state.min, this.state.max).map((date) => (
-          <DateBox
-            key={this.state.dates.indexOf(date)}
-            date={date}
-            id={this.state.dates.indexOf(date)}
-            tasks={this.state.tasks.filter((key) => date === key.date)}
-          />
-        ))} */}
       </div>
     );
   }
-}
-
-{
-  /* {this.state.dates.map((date) =>
-          this.state.currentDates.includes(date) ? (
-            <div
-              data-id={this.state.dates.indexOf(date)}
-              key={date}
-              className="dateContainer"
-            >
-              <span className="dateValue">{date}</span>
-              <hr />
-              <ul className="tasks">
-                {this.state.tasks.some((task) => task.date === date) ? (
-                  this.state.tasks.map((key) =>
-                    key.date === date ? (
-                      <li key={key.id}>
-                        {key.id !== this.state.currentTask ? (
-                          <div
-                            className={
-                              key.completed
-                                ? "taskContainer taskComplete"
-                                : "taskContainer"
-                            }
-                            onClick={() => this.setTask(key.id)}
-                          >
-                            <div className="task">{key.desc}</div>
-                            {key.completed ? (
-                              <span>Task completed. :^)</span>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        ) : (
-                          <div className="taskContainer">
-                            <ModifyTask
-                              currentTask={this.state.currentTask}
-                              handleComplete={this.handleComplete}
-                              setTask={this.setTask}
-                              active={false}
-                              addTask={this.addTask}
-                              deleteTask={this.deleteTask}
-                              TaskID={key.id}
-                              TaskCompleted={key.completed}
-                              TaskDesc={key.desc}
-                              date={date}
-                            />
-                          </div>
-                        )}
-                      </li>
-                    ) : (
-                      ""
-                    )
-                  )
-                ) : (
-                  <li>No tasks yet</li>
-                )}
-              </ul>
-              {this.state.createMode !== date ? (
-                <span
-                  className="newTask"
-                  onClick={() => this.setCreateMode(date)}
-                >
-                  + Add new task
-                </span>
-              ) : (
-                <div>
-                  <span
-                    className="newTask"
-                    onClick={() => this.setCreateMode(date)}
-                  >
-                    - Add new task
-                  </span>
-                  <CreateTask
-                    createMode={this.state.createMode}
-                    handleComplete={this.handleComplete}
-                    resetCurrent={this.resetCurrent}
-                    addTask={this.addTask}
-                    date={date}
-                  />
-                </div>
-              )}
-            </div>
-          ) : (
-            ""
-          )
-        )} */
 }

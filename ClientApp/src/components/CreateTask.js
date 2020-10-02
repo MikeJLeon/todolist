@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { WordCounter } from "./WordCounter";
 import "../styles/styles.css";
 export class CreateTask extends Component {
   static displayName = CreateTask.name;
@@ -22,8 +23,6 @@ export class CreateTask extends Component {
         <textarea
           className="taskDesc"
           id="newTask"
-          rows="4"
-          cols="50"
           onChange={(e) => this.handleChange(e)}
           maxLength="100"
         ></textarea>
@@ -38,14 +37,7 @@ export class CreateTask extends Component {
             Cancel
           </div>
         </div>
-        <div className="counter">
-          {this.state.charCount}/100
-          {this.state.charCount === 100 ? (
-            <span className="warningCount"> Max characters reached!</span>
-          ) : (
-            ""
-          )}
-        </div>
+        <WordCounter charCount={this.state.charCount} />
       </div>
     );
   }

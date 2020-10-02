@@ -1,10 +1,10 @@
-.createTask{
-  display:grid;
+.createTask {
+  display: grid;
   grid-template-rows: auto auto auto;
   grid-template-columns: 1fr;
-} 
-.taskDesc{
-  margin-top:10px;
+}
+.taskDesc {
+  margin-top: 10px;
 }
 .taskButtonContainer {
   opacity: 1;
@@ -29,7 +29,7 @@
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s;
-  margin:10px;
+  margin: 10px 10px 10px 0;
 }
 
 .taskButton:hover {
@@ -37,18 +37,23 @@
   transition: background-color 0.15s;
 }
 
-.task{
+.task {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 .task,
 .taskDesc {
-  height: 19px;
-  border: 0.5px solid gray;
+  min-height: 20px;
+  border: 0.5px solid #2e548e;
   cursor: pointer;
   padding: 10px;
-  color: gray;
+  color: #2e548e;
   border-radius: 10px;
+}
+.taskCompleted{
+  border: 0.5px solid green;
+  color: green;
+  opacity:0.5;
 }
 .task {
   transition: height 0.5s;
@@ -67,11 +72,25 @@
 .taskDesc {
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
-  height: 19px;
   resize: none;
-  overflow: hidden;
+  word-break:break-word;
+  white-space: pre-wrap;
   cursor: text;
   grid-area: 1 / 1 / span 1 / span 5;
+  scrollbar-width: thin;
+}
+.taskDesc::-webkit-scrollbar {
+  width: 12px;
+}
+.taskDesc::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #4795f3;
+}
+ul .taskDesc:hover {
+  cursor: pointer;
+  border: 0.5px solid #4795f3;
+  color: #4795f3;
+  opacity:1;
 }
 .counter {
   grid-area: 3 / 1;

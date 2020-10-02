@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect, Link } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
 import { ModifyTask } from "./ModifyTask";
 import "../styles/taskStyle.css";
@@ -14,13 +13,27 @@ export class DateBox extends Component {
       id: "",
       tasks: [],
       createActive: false,
+      modifyActive: false,
       height: 0,
     };
   }
-  turnOnCreate = () => {
-    this.setState({
-      createActive: !this.state.createActive,
-    });
+  activeText = (target = "none", task = -1) => {
+    if (target === "Create") {
+      this.setState({
+        createActive: !this.state.createActive,
+        modifyActive: false,
+      });
+    } else if (target === "Modify") {
+      this.setState({
+        modifyActive: task,
+        createActive: false,
+      });
+    } else {
+      this.setState({
+        modifyActive: false,
+        createActive: false,
+      });
+    }
   };
   setupComponent = () => {
     this.setState(
@@ -30,13 +43,9 @@ export class DateBox extends Component {
         tasks: this.props.tasks,
       },
       () => {
-        setTimeout(() => {
-          this.setState({
-            active: true,
-          });
-        }, 10);
         this.setState(
           {
+            active: true,
             height: parseFloat(this.dateRef.getBoundingClientRect().height),
           },
           () => this.props.setHeight(this.state.id, this.state.height)
@@ -85,9 +94,31 @@ export class DateBox extends Component {
         <div className="dateValue">{this.state.date}</div>
         {this.state.tasks.length !== 0 ? (
           <ul className="tasks">
-            {this.state.tasks.map((task, index) => (
-              <li className={"taskDesc"} key={index}>{task.desc}</li>
-            ))}
+            {this.state.tasks.map((task, index) =>
+              this.state.modifyActive === index ? (
+                <ModifyTask
+                  desc={task.desc}
+                  task={task}
+                  TaskID={task.id}
+                  TaskCompleted={task.completed}
+                  activeText={this.activeText}
+                  setHeight={this.props.setHeight}
+                  addTask={this.props.addTask}
+                  getTask={this.props.getTasks}
+                  handleComplete={this.props.handleComplete}
+                />
+              ) : (
+                <li
+                  className={
+                    task.completed ? "taskDesc taskCompleted" : "taskDesc"
+                  }
+                  key={index}
+                  onClick={() => this.activeText("Modify", index)}
+                >
+                  {task.desc}
+                </li>
+              )
+            )}
           </ul>
         ) : (
           <ul className="tasks">
@@ -95,9 +126,13 @@ export class DateBox extends Component {
           </ul>
         )}
         {this.state.createActive ? (
-          <CreateTask closeCreate={this.turnOnCreate} addTask={this.props.addTask} date={this.state.date} />
+          <CreateTask
+            closeCreate={() => this.activeText("Create")}
+            addTask={this.props.addTask}
+            date={this.state.date}
+          />
         ) : (
-          <div onClick={this.turnOnCreate} className="taskButton">
+          <div onClick={() => this.activeText("Create")} className="taskButton">
             Create
           </div>
         )}
