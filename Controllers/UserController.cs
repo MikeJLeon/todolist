@@ -85,7 +85,8 @@ namespace todolist.Controllers
                 var userToSend = new UserModel();
                 userToSend.FirstName = userToVerify.FirstName;
                 userToSend.LastName = userToVerify.LastName;
-                userToSend.UserName = userToVerify.NormalizedEmail;
+                userToSend.UserName = userToVerify.NormalizedEmail.ToLower();
+                userToSend.Email = userToVerify.NormalizedEmail.ToLower();
                 Console.WriteLine(userToSend + "<-----");
                 return Ok(userToSend);
             }

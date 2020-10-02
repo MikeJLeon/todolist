@@ -30,7 +30,8 @@ export class Login extends Component {
           {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
-            email: response.data.userName,
+            username:response.data.userName,
+            email: response.data.email,
             authorized: true,
           },
           () => {
@@ -91,10 +92,13 @@ export class Login extends Component {
             {
               firstName: response.data.firstName,
               lastName: response.data.lastName,
+              username:response.data.userName,
               email: response.data.email,
               authorized: true,
             },
             () => {
+              console.log(response.data);
+
               this.fadeOut();
             }
           );

@@ -115,8 +115,7 @@ export class Settings extends Component {
         <h1>Settings</h1>
         <form>
           <div className="userInfo">
-            <dt>Email:</dt>
-            <dd>
+            <div className="settingsTitle">Email:</div>
               {this.state.newEmailEdit ? (
                 <div className="inputContainer">
                   <input
@@ -158,11 +157,10 @@ export class Settings extends Component {
                   </div>
                 </div>
               )}
-            </dd>
           </div>
           <div className="userInfo">
-            <dt>First name:</dt>
-            <dd>
+            <div className="settingsTitle">First name:</div>
+            
               {this.state.firstNameEdit ? (
                 <div className="inputContainer">
                   <input
@@ -204,11 +202,11 @@ export class Settings extends Component {
                   </div>
                 </div>
               )}
-            </dd>
+            
           </div>
           <div className="userInfo">
-            <dt>Last name:</dt>
-            <dd>
+            <div className="settingsTitle">Last name:</div>
+            
               {this.state.lastNameEdit ? (
                 <div className="inputContainer">
                   <input
@@ -250,42 +248,44 @@ export class Settings extends Component {
                   </div>
                 </div>
               )}
-            </dd>
+            
           </div>
-          <hr />
           <div className="userPassword">
             {this.state.passwordEdit ? (
               <div className="passwordContainer">
                 <div className="userInfo">
-                  <dt>Current Password:</dt>
-                  <dd>
+                  <div className="settingsTitle">Current Password:</div>
+                  
                     <div className="inputContainer">
                       <input
                         id="confirmPassword"
+                        type="password"
                         value={this.state.confirmPassword}
                         onChange={this.handleChange}
                       ></input>
                     </div>
-                  </dd>
+                  
                 </div>
                 <div className="userInfo">
-                  <dt>New Password:</dt>
-                  <dd>
+                  <div className="settingsTitle">New Password:</div>
+                  
                     <div className="inputContainer">
                       <input
                         id="newPassword"
+                        type="password"
                         value={this.state.newPassword}
                         onChange={this.handleChange}
                       ></input>
                     </div>
-                  </dd>
+                  
                 </div>
                 <div className="userInfo">
-                  <dt>Confirm:</dt>
-                  <dd>
+                  <div className="settingsTitle">Confirm:</div>
+                  
                     <div className="inputContainer">
                       <input
                         id="confirmNewPassword"
+                        type="password"
                         value={this.state.confirmNewPassword}
                         onChange={this.handleChange}
                       ></input>
@@ -305,13 +305,13 @@ export class Settings extends Component {
                         </div>
                       </div>
                     </div>
-                  </dd>
+                  
                 </div>
               </div>
             ) : (
               <div
                 id="passwordEdit"
-                className="settingsButton"
+                className="settingsButton settingsPasswordButton"
                 onClick={this.openEdit}
               >
                 Update Password

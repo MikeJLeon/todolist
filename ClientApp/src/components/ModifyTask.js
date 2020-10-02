@@ -101,7 +101,7 @@ export class ModifyTask extends Component {
           >
             Done?
           </div>
-          <div className="taskButton" onClick={this.props.handleComplete}>
+          <div className="taskButton" onClick={this.props.closeCreate}>
             Cancel
           </div>
         </div>

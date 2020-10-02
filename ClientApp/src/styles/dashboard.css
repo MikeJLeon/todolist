@@ -8,7 +8,7 @@
 .contentContainer {
   backface-visibility: hidden;
 }
-.calendarContainer {
+.calendarContainer, .calendarContainerInitial {
   backface-visibility: hidden;
   margin: 0 auto;
   width: 800px;
@@ -96,38 +96,40 @@
   font-weight: bold;
 }
 .userInfo {
-  display: grid;
-  grid-template-columns:500px 150px 1fr;
-  justify-content: center;
-}
-.userInfo dt {
-  display: flex;
-  text-align:end;
-  justify-content:flex-end;
-  align-items: center;
-  padding-right:20px;
-  grid-column:2;
-}
-.userInfo dd {
-  grid-column: 3;
-  margin: 0;
-}
-.inputContainer {
-  display: flex;
+  display:flex;
+  height:50px;
   margin-top:10px;
+}
+.settingsTitle {
+  display: flex;
+  text-align: end;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  width:100px;
+}
+
+.inputContainer {
+  display:grid;
+  grid-template-columns:1fr 300px;
 }
 .settingsButtonContainer {
   display: flex;
-  justify-content: flex-end;
 }
 .inputContainer input {
   width: 200px;
   font-family: unset;
   box-sizing: border-box;
 }
+.settingsContainer form {
+  display: grid;
+  grid-template-rows:auto auto auto auto 1fr;
+  justify-content: center;
+  align-items: center;
+}
 .settingsContainer {
   display: grid;
-  color:#2e548e;
+  color: #2e548e;
   grid-template-rows: 70px auto;
   grid-template-columns: 100%;
   justify-content: center;
@@ -151,13 +153,15 @@
   margin-left: 10px;
 }
 
-.settingsButton:hover{
-  background-color:#4795f3;
-  color:#f5f4ed;
-  border:2px solid #4795f3;
-  cursor:pointer;
+.settingsButton:hover {
+  background-color: #4795f3;
+  color: #f5f4ed;
+  border: 2px solid #4795f3;
+  cursor: pointer;
 }
-
+.settingsPasswordButton{
+  width:150px;
+}
 .readOnly {
   background-color: rgb(224, 224, 224);
 }
@@ -165,9 +169,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.passwordContainer {
-  width: 100%;
+  border-top:2px solid #2e548e;
+  margin-top:20px;
+  padding-top:20px;
 }
 .updatePasswordBTN {
   display: flex;

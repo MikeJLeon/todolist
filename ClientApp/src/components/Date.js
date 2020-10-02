@@ -106,6 +106,7 @@ export class DateBox extends Component {
                   addTask={this.props.addTask}
                   getTask={this.props.getTasks}
                   handleComplete={this.props.handleComplete}
+                  closeCreate={() => this.activeText("Modify")}
                 />
               ) : (
                 <li
