@@ -7,7 +7,6 @@ export class SignUp extends Component {
   constructor() {
     super();
     this.state = {
-      user_name: "",
       email: "",
       first_name: "",
       last_name: "",
@@ -24,22 +23,23 @@ export class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let { user_name, email, first_name, last_name, password } = this.state;
-    let url = "planner.michaeljleon.com/account/create";
-    console.log(user_name, first_name, last_name, password);
+    let { email, first_name, last_name, password } = this.state;
+    let url = "./account/create";
+    console.log(email, first_name, last_name, password);
     Axios.post(url, null, {
       params: {
-        user_name: user_name,
+        user_name: email,
         email: email,
         first_name: first_name,
         last_name: last_name,
         password: password,
       },
     }).then((response) => {
-      url = "planner.michaeljleon.com/account/login/";
+      console.log(response);
+      url = "./account/login/";
       Axios.post(url, null, {
         params: {
-          user_name: user_name,
+          user_email: email,
           password: password,
         },
       }).then((response) => {

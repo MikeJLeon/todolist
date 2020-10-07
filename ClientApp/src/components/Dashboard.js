@@ -50,7 +50,7 @@ export class Dashboard extends Component {
     }
   }
   authorized = () => {
-    Axios.get("planner.michaeljleon.com/account/authorized").then((response) => {
+    Axios.get("./account/authorized").then((response) => {
       if (response.data) {
         this.setState({
           firstName: response.data.firstName,
@@ -67,7 +67,7 @@ export class Dashboard extends Component {
     });
   };
   logout = () => {
-    Axios.get("planner.michaeljleon.com/account/logout").then(() => {
+    Axios.get("./account/logout").then(() => {
       this.setState({ redirect: true });
     });
   };

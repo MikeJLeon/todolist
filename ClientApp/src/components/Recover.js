@@ -33,7 +33,7 @@ export class Recover extends Component {
     });
     e.preventDefault();
     let { email, token, newPassword } = this.state;
-    let url = "planner.michaeljleon.com/account/recover";
+    let url = "./account/recover";
     Axios.post(url, null, {
       params: {
         email: email,

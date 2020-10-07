@@ -186,7 +186,7 @@ export class Calendar extends Component {
     }
   }
   getTasks = (callback = false) => {
-    Axios.get("planner.michaeljleon.com/account/tasks/get/")
+    Axios.get("./account/tasks/get/")
       .then((response) => {
         this.setState({ tasks: response.data }, () => {
           this.props.storeTasks(this.state.tasks, callback);
@@ -204,7 +204,7 @@ export class Calendar extends Component {
     let parent = event.currentTarget.parentElement.parentElement;
     console.log(parent);
     let desc = parent.getElementsByClassName("taskDesc")[0].value;
-    Axios.post("planner.michaeljleon.com/account/tasks/create", null, {
+    Axios.post("./account/tasks/create", null, {
       params: {
         desc: desc,
         date: date,

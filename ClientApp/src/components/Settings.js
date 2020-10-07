@@ -43,7 +43,7 @@ export class Settings extends Component {
     }
   }
   confirmPassword = () => {
-    let url = "../..planner.michaeljleon.com/account/verifypassword";
+    let url = "./account/verifypassword";
     if (this.state.newPassword === this.state.confirmNewPassword) {
       Axios.post(url, null, {
         params: {
@@ -98,7 +98,7 @@ export class Settings extends Component {
       value = this.state.email;
     }
     console.log(value);
-    let url = "planner.michaeljleon.com/account/update";
+    let url = "./account/update";
     Axios.post(url, null, {
       params: {
         field: field,

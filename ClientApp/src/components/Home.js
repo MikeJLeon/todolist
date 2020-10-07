@@ -28,7 +28,7 @@ export class Home extends Component {
     clearInterval(this.state.handWaveID);
   }
   componentDidMount() {
-    Axios.get("planner.michaeljleon.com/account/authorized").then((response) => {
+    Axios.get("./account/authorized").then((response) => {
       if (response.data) {
         this.setState({
           firstName: response.data.firstName,
@@ -99,7 +99,7 @@ export class Home extends Component {
       <div className="mainContainer">
         <div className="home">
           <div className="upperHome">
-            <h1>The Planner</h1>
+            <h1>The http://planner</h1>
             <div
               className={
                 this.state.handWave ? "handWave handWaveAnimate" : "handWave"

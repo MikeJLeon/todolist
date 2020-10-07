@@ -24,7 +24,7 @@ export class Login extends Component {
     this.fadeOut = this.fadeOut.bind(this);
   }
   componentDidMount() {
-    Axios.get("planner.michaeljleon.com/account/authorized").then((response) => {
+    Axios.get("./account/authorized").then((response) => {
       if (response.data) {
         this.setState(
           {
@@ -58,7 +58,7 @@ export class Login extends Component {
   }
   handleRecoverySubmit = (e) => {
     let email = this.state.email;
-    let url = "..planner.michaeljleon.com/account/forgot/";
+    let url = "./account/forgot/";
     e.preventDefault();
     Axios.post(url, null, {
       params: {
@@ -79,7 +79,7 @@ export class Login extends Component {
     });
     e.preventDefault();
     let { user_name, password } = this.state;
-    let url = "..planner.michaeljleon.com/account/login/";
+    let url = "./account/login/";
     Axios.post(url, null, {
       params: {
         user_email: user_name,
@@ -160,7 +160,7 @@ export class Login extends Component {
         ) : (
           <div className="login">
             <div>
-              <h2>The Planner</h2>
+              <h2>The http://planner</h2>
               <h3>Welcome! Please login :^)</h3>
 
               {this.state.error ? (

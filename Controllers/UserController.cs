@@ -39,13 +39,14 @@ namespace todolist.Controllers
                 if (user == null)
                 {
                     user = new UserModel();
+                    user.UserName = email;
                     user.Email = email;
                     user.FirstName = first_name;
                     user.LastName = last_name;
                     IdentityResult result = await UserMgr.CreateAsync(user, password);
                     Console.WriteLine(user.UserName + user.Email + user.FirstName + user.LastName);
                     Console.WriteLine(result);
-                    return Ok("Account Created!");
+                    return Ok(result);
                 }
                 return Ok("Account exists...");
             }
@@ -91,7 +92,7 @@ namespace todolist.Controllers
                 return Ok(userToSend);
             }
 
-            return Unauthorized();
+            return Ok(user_email);
         }
         [Authorize]
         [HttpGet]

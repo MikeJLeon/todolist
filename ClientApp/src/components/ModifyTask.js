@@ -33,7 +33,7 @@ export class ModifyTask extends Component {
   updateTask(e, taskID) {
     let desc = this.state.desc;
     Axios.post(
-      "planner.michaeljleon.com/account/tasks/update/description/" + taskID,
+      "./account/tasks/update/description/" + taskID,
       null,
       {
         params: {
@@ -47,7 +47,7 @@ export class ModifyTask extends Component {
   }
 
   deleteTask(taskID) {
-    Axios.delete("planner.michaeljleon.com/account/tasks/delete/" + taskID, {
+    Axios.delete("./account/tasks/delete/" + taskID, {
       data: {
         taskID: taskID,
       },
@@ -58,7 +58,7 @@ export class ModifyTask extends Component {
 
   completeTask(taskID, completed) {
     Axios.post(
-      "planner.michaeljleon.com/account/tasks/update/completed/" + taskID,
+      "./account/tasks/update/completed/" + taskID,
       null,
       {
         params: {
