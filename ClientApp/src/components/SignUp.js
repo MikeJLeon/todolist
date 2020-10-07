@@ -25,7 +25,7 @@ export class SignUp extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { user_name, email, first_name, last_name, password } = this.state;
-    let url = "https://localhost:5001/account/create";
+    let url = "planner.michaeljleon.com/account/create";
     console.log(user_name, first_name, last_name, password);
     Axios.post(url, null, {
       params: {
@@ -36,7 +36,7 @@ export class SignUp extends Component {
         password: password,
       },
     }).then((response) => {
-      url = "https://localhost:5001/account/login/";
+      url = "planner.michaeljleon.com/account/login/";
       Axios.post(url, null, {
         params: {
           user_name: user_name,

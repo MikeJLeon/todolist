@@ -28,7 +28,7 @@ export class Home extends Component {
     clearInterval(this.state.handWaveID);
   }
   componentDidMount() {
-    Axios.get("https://localhost:5001/account/authorized").then((response) => {
+    Axios.get("planner.michaeljleon.com/account/authorized").then((response) => {
       if (response.data) {
         this.setState({
           firstName: response.data.firstName,
