@@ -4,26 +4,26 @@
   align-items: center;
 }
 .SignUpBtn {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  color:#f5f4ed;
-  background-color:#4795f3;
+  color: #f5f4ed;
+  background-color: #4795f3;
   border: 2px solid #f5f4ed;
   margin: 5px;
   padding: 5px;
-  height:50px;
-  width:100px;
+  height: 50px;
+  width: 100px;
   font-weight: 500;
   text-decoration: none;
 }
 
-.SignUpBtn:hover{
-  background-color:#6175c3;
+.SignUpBtn:hover {
+  background-color: #6175c3;
 }
 
-.SignUpBtn:visited{
-  color:white;
+.SignUpBtn:visited {
+  color: white;
 }
 
 .mainContainer {
@@ -37,7 +37,7 @@
   display: grid;
   grid-template-columns: 250px 150px;
   align-items: center;
-  border-bottom:2px solid #f5f4ed;
+  border-bottom: 2px solid #f5f4ed;
 }
 .handWave {
   font-size: 100px;
@@ -49,8 +49,8 @@
   transition: 0.25s transform;
 }
 
-.home{
-  color:#f5f4ed;
+.home {
+  color: #f5f4ed;
   background-color: #2e548e;
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
     0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
@@ -60,13 +60,332 @@
   display: grid;
   grid-template-rows: 200px 150px 250px;
 }
-.home p{
-  font-size:18px;
+.home p {
+  font-size: 18px;
 }
 
-.homeDescContainer{
-  display:flex;
+.homeDescContainer {
+  display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom:2px solid #f5f4ed;
+  border-bottom: 2px solid #f5f4ed;
+}
+@media only screen and (max-device-width: 280px) {
+  .mainContainer,
+  .home {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+  }
+  .home {
+    padding: 10px;
+  }
+  .upperHome {
+    grid-template-columns: auto 40px;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .mainContainer {
+    width: 100%;
+    overflow: hidden;
+  }
+  .home {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+  .upperHome {
+    grid-template-columns: 250px 80px;
+  }
+  .upperHome h1 {
+    font-size: 30px;
+  }
+  .handWave {
+    font-size: 80px;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (max-width: 719px) {
+  .mainContainer,
+  .home {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .home {
+    grid-template-rows: auto auto auto;
+  }
+  .handWave {
+    font-size: 50px;
+  }
+  .upperHome {
+    padding-right: 10px;
+    grid-template-columns: auto 50px;
+  }
+  .upperHome h1 {
+    font-size: 30px;
+  }
+  .SignUpBtn {
+    width: 75px;
+    height: 25px;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width: 320px) {
+  .upperHome {
+    grid-template-columns: 210px 50px;
+  }
+  .upperHome h1 {
+    text-align: center;
+  }
+  .handWave {
+    font-size: 50px;
+  }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .buttonContainer {
+    display: Flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .SignUpBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f5f4ed;
+    background-color: #4795f3;
+    border: 2px solid #f5f4ed;
+    margin: 5px;
+    padding: 5px;
+    height: 50px;
+    width: 100px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .SignUpBtn:hover {
+    background-color: #6175c3;
+  }
+
+  .SignUpBtn:visited {
+    color: white;
+  }
+
+  .mainContainer {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  .upperHome {
+    display: grid;
+    grid-template-columns: 250px 150px;
+    align-items: center;
+    border-bottom: 2px solid #f5f4ed;
+  }
+  .handWave {
+    font-size: 100px;
+    transform: rotate(-20deg);
+    transition: 0.25s transform;
+  }
+  .handWaveAnimate {
+    transform: rotate(20deg);
+    transition: 0.25s transform;
+  }
+
+  .home {
+    color: #f5f4ed;
+    background-color: #2e548e;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+      0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    height: 600px;
+    width: 400px;
+    display: grid;
+    grid-template-rows: 200px 150px 250px;
+  }
+  .home p {
+    font-size: 18px;
+  }
+
+  .homeDescContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #f5f4ed;
+  }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  /* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  /* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 720px) {
+  .buttonContainer {
+    display: Flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .SignUpBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f5f4ed;
+    background-color: #4795f3;
+    border: 2px solid #f5f4ed;
+    margin: 5px;
+    padding: 5px;
+    height: 50px;
+    width: 100px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .SignUpBtn:hover {
+    background-color: #6175c3;
+  }
+
+  .SignUpBtn:visited {
+    color: white;
+  }
+
+  .mainContainer {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  .upperHome {
+    display: grid;
+    grid-template-columns: 250px 150px;
+    align-items: center;
+    border-bottom: 2px solid #f5f4ed;
+  }
+  .handWave {
+    font-size: 100px;
+    transform: rotate(-20deg);
+    transition: 0.25s transform;
+  }
+  .handWaveAnimate {
+    transform: rotate(20deg);
+    transition: 0.25s transform;
+  }
+
+  .home {
+    color: #f5f4ed;
+    background-color: #2e548e;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+      0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    height: 600px;
+    width: 400px;
+    display: grid;
+    grid-template-rows: 200px 150px 250px;
+  }
+  .home p {
+    font-size: 18px;
+  }
+
+  .homeDescContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #f5f4ed;
+  }
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width: 1824px) {
+  .buttonContainer {
+    display: Flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .SignUpBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f5f4ed;
+    background-color: #4795f3;
+    border: 2px solid #f5f4ed;
+    margin: 5px;
+    padding: 5px;
+    height: 50px;
+    width: 100px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .SignUpBtn:hover {
+    background-color: #6175c3;
+  }
+
+  .SignUpBtn:visited {
+    color: white;
+  }
+
+  .mainContainer {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  .upperHome {
+    display: grid;
+    grid-template-columns: 250px 150px;
+    align-items: center;
+    border-bottom: 2px solid #f5f4ed;
+  }
+  .handWave {
+    font-size: 100px;
+    transform: rotate(-20deg);
+    transition: 0.25s transform;
+  }
+  .handWaveAnimate {
+    transform: rotate(20deg);
+    transition: 0.25s transform;
+  }
+
+  .home {
+    color: #f5f4ed;
+    background-color: #2e548e;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+      0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    height: 600px;
+    width: 400px;
+    display: grid;
+    grid-template-rows: 200px 150px 250px;
+  }
+  .home p {
+    font-size: 18px;
+  }
+
+  .homeDescContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #f5f4ed;
+  }
+}
+
+/* iPhone 4 ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (min-device-pixel-ratio: 1.5) {
+  /* Styles */
 }

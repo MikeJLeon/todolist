@@ -99,7 +99,7 @@ export class Home extends Component {
       <div className="mainContainer">
         <div className="home">
           <div className="upperHome">
-            <h1>The http://planner</h1>
+            <h1>The Planner</h1>
             <div
               className={
                 this.state.handWave ? "handWave handWaveAnimate" : "handWave"
