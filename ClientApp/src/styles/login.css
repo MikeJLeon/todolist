@@ -96,3 +96,20 @@
 .forgotPassBtn:hover {
   color: #7bb0e5;
 }
+@media only screen and (max-width:720px) and (orientation:portrait){
+  .login, .signUp{
+    height:100%;
+    width:100%;
+    box-shadow:none;
+    box-sizing: border-box;
+  }
+}
+@media only screen and (max-width:823px) and (orientation:landscape){
+  .mainContainer, .signUpContainer{
+    height:unset;
+    width:unset;
+  }
+  .login, .signUp{
+    width:100%;
+  }
+}

@@ -160,7 +160,7 @@ export class Login extends Component {
         ) : (
           <div className="login">
             <div>
-              <h2>The http://planner</h2>
+              <h2>The Planner</h2>
               <h3>Welcome! Please login :^)</h3>
 
               {this.state.error ? (
