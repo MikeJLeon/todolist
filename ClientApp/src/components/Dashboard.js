@@ -99,7 +99,7 @@ export class Dashboard extends Component {
       calendarLoading: false,
     });
   };
-  storeTasks = (tasks, callback=false) => {
+  storeTasks = (tasks, callback = false) => {
     this.setState({ tasks: tasks }, () => {
       if (callback) {
         callback();
@@ -125,13 +125,13 @@ export class Dashboard extends Component {
           lastName={this.state.lastName}
         />
         {this.state.settingsActive ? (
-            <Settings
-              authorized={this.authorized}
-              email={this.state.email}
-              firstName={this.state.firstName}
-              lastName={this.state.lastName}
-            />
-        ) : (
+          <Settings
+            authorized={this.authorized}
+            email={this.state.email}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+          />
+        ) : this.state.authorized ? (
           <div className="contentContainer">
             <Calendar
               active={this.state.calendarActive}
@@ -142,6 +142,8 @@ export class Dashboard extends Component {
               loadCalendar={this.loadCalendar}
             />
           </div>
+        ) : (
+          ""
         )}
       </div>
     );

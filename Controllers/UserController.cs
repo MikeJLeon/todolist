@@ -203,6 +203,7 @@ namespace todolist.Controllers
             var user = await UserMgr.FindByEmailAsync(email);
             var todoEmail = Environment.GetEnvironmentVariable("TODOLIST_EMAIL");
             var password = Environment.GetEnvironmentVariable("TODOLIST_EMAIL_PASSWORD");
+            var route = Request.Host.Value;
             if (user != null)
             {
                 var token = await UserMgr.GeneratePasswordResetTokenAsync(user);
@@ -212,7 +213,7 @@ namespace todolist.Controllers
                 message.Subject = "Password Recovery - Mike's Todolist";
                 message.Body = new TextPart("plain")
                 {
-                    Text = "https://localhost:5001/Recover/" + email + "/" + HttpUtility.UrlEncode(token)
+                    Text = "https://" + route + "/Recover/" + email + "/" + HttpUtility.UrlEncode(token)
                 };
 
                 using (var client = new SmtpClient())
