@@ -43,7 +43,7 @@
   justify-content: flex-end;
   align-items: center;
 }
-.buttonsUser .dashSetBTN {
+.dashSetBTN {
   border: 2px solid white;
   padding: 10px;
   margin-left: 10px;
@@ -203,4 +203,54 @@
   position: fixed;
   z-index: 20;
   top: 70px;
+}
+@media only screen and (max-width:720px) and (orientation:portrait){
+  .calendarContainer, .settingsContainer{
+    width:100%;
+  }
+  .navbar{
+    grid-template-columns: auto auto;
+    font-size:12px;
+    padding-right:10px;
+  }
+  .taskButton, .dashSetBTN, .settingsButton{
+    width:60px;
+    height:10px;
+    padding:5px;
+    font-size:10px;
+    margin-right:5px;
+  }
+  .settingsButton{
+    font-size:10px;
+  }
+  .settingsContainer{
+    padding:10px;
+    padding-top:70px;
+    width:100%;
+    font-size:12px;
+  }
+  .settingsContainer, .settingsContainer form, .userInfo, .settingsTitle, .inputContainer{
+    display:block;
+    height:unset;
+  } 
+  .passwordContainer{
+    width:100%;
+    font-size:12px;
+  }
+  .userInfo{
+    height:unset;
+  }
+  .settingsTitle{
+    text-align: left;
+    width:100%;
+  }
+  .settingsButton{
+    margin:0;
+    margin-top:10px;
+    margin-right: 10px;
+  }
+  .settingsPasswordButton{
+    text-align: center;
+    height:30px;
+  }
 }
